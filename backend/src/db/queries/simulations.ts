@@ -86,3 +86,41 @@ export async function getSimulationsByProject(projectId: string): Promise<Simula
   );
   return result.rows;
 }
+
+export interface SimulationEventRow {
+  id: number;
+  simulation_id: string;
+  branch_id: string | null;
+  agent_id: string | null;
+  event_type: string;
+  platform: string | null;
+  content: string | null;
+  sim_timestamp: number;
+  metadata: Record<string, unknown>;
+}
+
+export async function getSimulationEvents(
+  simulationId: string,
+  opts?: { limit?: number; offset?: number; eventType?: string }
+): Promise<SimulationEventRow[]> {
+  const params: unknown[] = [simulationId];
+  let whereClause = "WHERE simulation_id = $1";
+  let paramIndex = 2;
+
+  if (opts?.eventType) {
+    whereClause += ` AND event_type = $${paramIndex++}`;
+    params.push(opts.eventType);
+  }
+
+  const limit = opts?.limit || 1000;
+  const offset = opts?.offset || 0;
+  params.push(limit, offset);
+
+  const result = await query<SimulationEventRow>(
+    `SELECT * FROM simulation_events ${whereClause}
+     ORDER BY sim_timestamp ASC
+     LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+    params
+  );
+  return result.rows;
+}
