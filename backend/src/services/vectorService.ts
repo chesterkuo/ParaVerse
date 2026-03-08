@@ -1,0 +1,85 @@
+import { query } from "../db/client";
+import { logger } from "../utils/logger";
+
+export class VectorService {
+  formatVector(embedding: number[]): string {
+    return `[${embedding.join(",")}]`;
+  }
+
+  async upsertDocument(params: {
+    projectId: string; filename: string; content: string;
+    chunkIndex: number; embedding: number[]; metadata?: Record<string, unknown>;
+  }) {
+    const vec = this.formatVector(params.embedding);
+    const result = await query(
+      `INSERT INTO documents (project_id, filename, content, chunk_index, embedding, metadata)
+       VALUES ($1, $2, $3, $4, $5::vector, $6) RETURNING id`,
+      [params.projectId, params.filename, params.content, params.chunkIndex, vec, JSON.stringify(params.metadata || {})]
+    );
+    return result.rows[0].id as string;
+  }
+
+  async similaritySearch(params: {
+    table: "documents" | "agent_profiles" | "simulation_events";
+    embedding: number[]; projectId?: string; simulationId?: string;
+    limit?: number; threshold?: number;
+  }) {
+    const vec = this.formatVector(params.embedding);
+    const limit = params.limit || 10;
+    const threshold = params.threshold || 0.7;
+
+    let whereClause = "";
+    const queryParams: unknown[] = [vec, limit];
+    let paramIndex = 3;
+
+    if (params.table === "documents" && params.projectId) {
+      whereClause = `WHERE project_id = $${paramIndex}`;
+      queryParams.push(params.projectId);
+      paramIndex++;
+    } else if (params.simulationId) {
+      whereClause = `WHERE simulation_id = $${paramIndex}`;
+      queryParams.push(params.simulationId);
+      paramIndex++;
+    }
+
+    const result = await query(
+      `SELECT *, 1 - (embedding <=> $1::vector) AS similarity
+       FROM ${params.table} ${whereClause}
+       ORDER BY embedding <=> $1::vector LIMIT $2`,
+      queryParams
+    );
+    return result.rows.filter((r: any) => r.similarity >= threshold);
+  }
+
+  async upsertOntologyNode(params: {
+    projectId: string; type: string; name: string; description: string;
+    embedding: number[]; properties?: Record<string, unknown>;
+  }) {
+    const vec = this.formatVector(params.embedding);
+    const result = await query(
+      `INSERT INTO ontology_nodes (project_id, type, name, description, embedding, properties)
+       VALUES ($1, $2, $3, $4, $5::vector, $6) RETURNING id`,
+      [params.projectId, params.type, params.name, params.description, vec, JSON.stringify(params.properties || {})]
+    );
+    return result.rows[0].id as string;
+  }
+
+  async upsertAgentProfile(params: {
+    simulationId: string; name: string; persona: string;
+    embedding: number[]; demographics: Record<string, unknown>;
+  }) {
+    const vec = this.formatVector(params.embedding);
+    const result = await query(
+      `INSERT INTO agent_profiles (simulation_id, name, persona, embedding, demographics)
+       VALUES ($1, $2, $3, $4::vector, $5) RETURNING id`,
+      [params.simulationId, params.name, params.persona, vec, JSON.stringify(params.demographics)]
+    );
+    return result.rows[0].id as string;
+  }
+}
+
+let instance: VectorService | null = null;
+export function getVectorService(): VectorService {
+  if (!instance) instance = new VectorService();
+  return instance;
+}
