@@ -1,0 +1,88 @@
+import { query } from "../client";
+
+export interface SimulationRow {
+  id: string;
+  project_id: string;
+  engine: string;
+  status: string;
+  config: Record<string, unknown>;
+  checkpoint_path: string | null;
+  grounded_vars: Record<string, number>;
+  stats: Record<string, unknown>;
+  started_at: string | null;
+  completed_at: string | null;
+  created_at: string;
+}
+
+export async function createSimulation(params: {
+  projectId: string;
+  engine: string;
+  config: Record<string, unknown>;
+}): Promise<SimulationRow> {
+  const result = await query<SimulationRow>(
+    `INSERT INTO simulations (project_id, engine, status, config, grounded_vars, stats)
+     VALUES ($1, $2, 'pending', $3, '{}', '{}')
+     RETURNING *`,
+    [params.projectId, params.engine, JSON.stringify(params.config)]
+  );
+  return result.rows[0];
+}
+
+export async function updateSimulation(
+  id: string,
+  updates: Partial<Pick<SimulationRow, "status" | "checkpoint_path" | "grounded_vars" | "stats" | "started_at" | "completed_at">>
+): Promise<SimulationRow | null> {
+  const setClauses: string[] = [];
+  const values: unknown[] = [];
+  let paramIndex = 1;
+
+  if (updates.status !== undefined) {
+    setClauses.push(`status = $${paramIndex++}`);
+    values.push(updates.status);
+  }
+  if (updates.checkpoint_path !== undefined) {
+    setClauses.push(`checkpoint_path = $${paramIndex++}`);
+    values.push(updates.checkpoint_path);
+  }
+  if (updates.grounded_vars !== undefined) {
+    setClauses.push(`grounded_vars = $${paramIndex++}`);
+    values.push(JSON.stringify(updates.grounded_vars));
+  }
+  if (updates.stats !== undefined) {
+    setClauses.push(`stats = $${paramIndex++}`);
+    values.push(JSON.stringify(updates.stats));
+  }
+  if (updates.started_at !== undefined) {
+    setClauses.push(`started_at = $${paramIndex++}`);
+    values.push(updates.started_at);
+  }
+  if (updates.completed_at !== undefined) {
+    setClauses.push(`completed_at = $${paramIndex++}`);
+    values.push(updates.completed_at);
+  }
+
+  if (setClauses.length === 0) return null;
+
+  values.push(id);
+  const result = await query<SimulationRow>(
+    `UPDATE simulations SET ${setClauses.join(", ")} WHERE id = $${paramIndex} RETURNING *`,
+    values
+  );
+  return result.rows[0] || null;
+}
+
+export async function getSimulation(id: string): Promise<SimulationRow | null> {
+  const result = await query<SimulationRow>(
+    `SELECT * FROM simulations WHERE id = $1`,
+    [id]
+  );
+  return result.rows[0] || null;
+}
+
+export async function getSimulationsByProject(projectId: string): Promise<SimulationRow[]> {
+  const result = await query<SimulationRow>(
+    `SELECT * FROM simulations WHERE project_id = $1 ORDER BY created_at DESC`,
+    [projectId]
+  );
+  return result.rows;
+}
