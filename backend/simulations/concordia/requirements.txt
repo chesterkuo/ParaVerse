@@ -1,0 +1,2 @@
+concordia>=2.0
+openai
