@@ -49,7 +49,11 @@ export class LlmService {
     tier?: ModelTier; temperature?: number; maxTokens?: number;
   }): Promise<T> {
     const content = await this.chat(messages, { ...options, responseFormat: { type: "json_object" } });
-    return JSON.parse(content) as T;
+    try {
+      return JSON.parse(content) as T;
+    } catch {
+      throw new Error(`LLM returned invalid JSON: ${content.slice(0, 200)}`);
+    }
   }
 
   async *chatStream(messages: OpenAI.ChatCompletionMessageParam[], options?: {

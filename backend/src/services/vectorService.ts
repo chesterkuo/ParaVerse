@@ -1,6 +1,9 @@
 import { query } from "../db/client";
 import { logger } from "../utils/logger";
 
+const ALLOWED_TABLES = new Set(["documents", "agent_profiles", "simulation_events"] as const);
+type SearchableTable = "documents" | "agent_profiles" | "simulation_events";
+
 export class VectorService {
   formatVector(embedding: number[]): string {
     return `[${embedding.join(",")}]`;
@@ -13,17 +16,24 @@ export class VectorService {
     const vec = this.formatVector(params.embedding);
     const result = await query(
       `INSERT INTO documents (project_id, filename, content, chunk_index, embedding, metadata)
-       VALUES ($1, $2, $3, $4, $5::vector, $6) RETURNING id`,
+       VALUES ($1, $2, $3, $4, $5::vector, $6)
+       ON CONFLICT (project_id, filename, chunk_index) DO UPDATE SET
+         content = EXCLUDED.content, embedding = EXCLUDED.embedding, metadata = EXCLUDED.metadata
+       RETURNING id`,
       [params.projectId, params.filename, params.content, params.chunkIndex, vec, JSON.stringify(params.metadata || {})]
     );
     return result.rows[0].id as string;
   }
 
   async similaritySearch(params: {
-    table: "documents" | "agent_profiles" | "simulation_events";
+    table: SearchableTable;
     embedding: number[]; projectId?: string; simulationId?: string;
     limit?: number; threshold?: number;
   }) {
+    if (!ALLOWED_TABLES.has(params.table)) {
+      throw new Error(`Invalid table: ${params.table}`);
+    }
+
     const vec = this.formatVector(params.embedding);
     const limit = params.limit || 10;
     const threshold = params.threshold || 0.7;
@@ -58,7 +68,10 @@ export class VectorService {
     const vec = this.formatVector(params.embedding);
     const result = await query(
       `INSERT INTO ontology_nodes (project_id, type, name, description, embedding, properties)
-       VALUES ($1, $2, $3, $4, $5::vector, $6) RETURNING id`,
+       VALUES ($1, $2, $3, $4, $5::vector, $6)
+       ON CONFLICT (project_id, name) DO UPDATE SET
+         type = EXCLUDED.type, description = EXCLUDED.description, embedding = EXCLUDED.embedding, properties = EXCLUDED.properties
+       RETURNING id`,
       [params.projectId, params.type, params.name, params.description, vec, JSON.stringify(params.properties || {})]
     );
     return result.rows[0].id as string;

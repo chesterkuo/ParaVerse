@@ -34,8 +34,8 @@ Return JSON:
 Extract only clearly stated facts. Do not infer or hallucinate entities.`;
 
 export class GraphService {
-  private llm = getLlmService();
-  private vectors = getVectorService();
+  private get llm() { return getLlmService(); }
+  private get vectors() { return getVectorService(); }
 
   async extractOntology(projectId: string, chunks: string[], onProgress?: (progress: number) => void): Promise<{ nodeCount: number; edgeCount: number }> {
     const allEntities: Map<string, OntologyEntity> = new Map();
@@ -91,7 +91,13 @@ export class GraphService {
 
   async searchGraph(projectId: string, queryText: string, limit = 10) {
     const embedding = await this.llm.embedSingle(queryText);
-    return this.vectors.similaritySearch({ table: "documents", embedding, projectId, limit });
+    const nodes = await query(
+      `SELECT id, type, name, description, properties, 1 - (embedding <=> $1::vector) AS similarity
+       FROM ontology_nodes WHERE project_id = $2
+       ORDER BY embedding <=> $1::vector LIMIT $3`,
+      [new VectorService().formatVector(embedding), projectId, limit]
+    );
+    return nodes.rows;
   }
 }
 

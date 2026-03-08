@@ -1,15 +1,15 @@
-import pdfParse from "pdf-parse";
 import { chunkText } from "../utils/chunkText";
 import { getLlmService } from "./llmService";
 import { getVectorService } from "./vectorService";
 import { logger } from "../utils/logger";
 
 export class DocumentService {
-  private llm = getLlmService();
-  private vectors = getVectorService();
+  private get llm() { return getLlmService(); }
+  private get vectors() { return getVectorService(); }
 
   async extractText(buffer: Buffer, filename: string): Promise<string> {
     if (filename.toLowerCase().endsWith(".pdf")) {
+      const pdfParse = (await import("pdf-parse")).default;
       const result = await pdfParse(buffer);
       return result.text;
     }
