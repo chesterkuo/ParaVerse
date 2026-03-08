@@ -186,17 +186,14 @@ class ConcordiaSimulation:
 
 
 def main() -> None:
-    """Entry point."""
-    if len(sys.argv) < 2:
-        send_error("Missing configuration argument")
+    """Entry point. Reads start_simulation command from stdin."""
+    # Wait for start_simulation command
+    cmd = read_command()
+    if cmd is None or cmd.get("type") != "start_simulation":
+        send_error("Expected start_simulation command")
         sys.exit(1)
 
-    try:
-        config = json.loads(sys.argv[1])
-    except json.JSONDecodeError as e:
-        send_error(f"Invalid configuration JSON: {e}")
-        sys.exit(1)
-
+    config = cmd.get("config", {})
     sim = ConcordiaSimulation(config)
 
     def handle_signal(signum: int, frame: Any) -> None:

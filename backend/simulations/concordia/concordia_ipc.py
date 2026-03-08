@@ -79,11 +79,24 @@ def send_simulation_complete(stats: Optional[Dict[str, Any]] = None) -> None:
     send_event("simulation_complete", stats=stats or {})
 
 
+CHECKPOINT_DIR = os.environ.get("CHECKPOINT_DIR", "/tmp/paraverse_checkpoints")
+
+
+def _validate_checkpoint_path(path: str) -> str:
+    """Ensure checkpoint path is within the allowed directory."""
+    resolved = os.path.realpath(path)
+    allowed = os.path.realpath(CHECKPOINT_DIR)
+    if not resolved.startswith(allowed + os.sep) and resolved != allowed:
+        raise ValueError(f"Checkpoint path must be within {CHECKPOINT_DIR}")
+    return resolved
+
+
 def save_checkpoint(state: Any, path: Optional[str] = None) -> str:
     """Save simulation state to a checkpoint file using pickle."""
     if path is None:
-        path = f"/tmp/concordia_checkpoint_{os.getpid()}.pkl"
-    os.makedirs(os.path.dirname(path) if os.path.dirname(path) else ".", exist_ok=True)
+        path = os.path.join(CHECKPOINT_DIR, f"checkpoint_{os.getpid()}.pkl")
+    path = _validate_checkpoint_path(path)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "wb") as f:
         pickle.dump(state, f)
     send_status("checkpoint_saved", {"path": path})
@@ -92,6 +105,7 @@ def save_checkpoint(state: Any, path: Optional[str] = None) -> str:
 
 def load_checkpoint(path: str) -> Any:
     """Load simulation state from a checkpoint file."""
+    path = _validate_checkpoint_path(path)
     if not os.path.exists(path):
         send_error(f"Checkpoint not found: {path}")
         return None

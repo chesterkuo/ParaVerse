@@ -16,6 +16,8 @@ export function serializeCommand(cmd: IpcCommand): string {
 
 export type EventHandler = (event: IpcEvent) => void;
 
+const MAX_STDERR_ENTRIES = 100;
+
 export abstract class BaseRunner {
   protected process: ReturnType<typeof Bun.spawn> | null = null;
   protected eventHandlers: EventHandler[] = [];
@@ -39,16 +41,27 @@ export abstract class BaseRunner {
   }
 
   async start(simId: string, config: Record<string, unknown>): Promise<void> {
-    const configJson = JSON.stringify({ simulation_id: simId, ...config });
+    const maxMemory = parseInt(process.env.SIM_MAX_MEMORY_MB || "2048");
 
-    this.process = Bun.spawn([this.pythonPath, this.scriptPath, configJson], {
+    this.process = Bun.spawn([this.pythonPath, this.scriptPath], {
       stdin: "pipe",
       stdout: "pipe",
       stderr: "pipe",
+      env: {
+        ...process.env,
+        SIMULATION_ID: simId,
+        MAX_MEMORY_MB: String(maxMemory),
+      },
     });
 
     this.readStdout();
     this.readStderr();
+
+    // Send start command via stdin
+    await this.sendCommand({
+      type: "start_simulation",
+      config: { simulation_id: simId, ...config },
+    } as IpcCommand);
 
     logger.info({ simId, script: this.scriptPath }, "Runner started");
   }
@@ -95,6 +108,9 @@ export abstract class BaseRunner {
         const { done, value } = await reader.read();
         if (done) break;
         const text = decoder.decode(value, { stream: true });
+        if (this.stderrBuffer.length >= MAX_STDERR_ENTRIES) {
+          this.stderrBuffer.shift();
+        }
         this.stderrBuffer.push(text);
         logger.warn({ text }, "Runner stderr");
       }

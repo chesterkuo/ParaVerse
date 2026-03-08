@@ -130,6 +130,11 @@ export class SimulationService {
     if (event.type === "error") {
       logger.error({ simId, error: event.message }, "Simulation error event");
       await updateSimulation(simId, { status: "failed" });
+      const runner = this.runners.get(simId);
+      if (runner) {
+        try { await runner.stop("error"); } catch { /* already dead */ }
+        this.runners.delete(simId);
+      }
     }
   }
 }

@@ -1,6 +1,8 @@
 """Main OASIS simulation runner. Communicates with Bun backend via stdin/stdout JSONL."""
+import json
 import os
 import sys
+import select
 import traceback
 from oasis_ipc import read_commands, emit_event, emit_error, emit_status
 
@@ -36,6 +38,38 @@ def run():
 
         else:
             emit_error(f"Unknown command: {cmd_type}")
+
+
+def check_pending_command():
+    """Non-blocking check for pending stdin commands between ticks."""
+    if select.select([sys.stdin], [], [], 0)[0]:
+        line = sys.stdin.readline().strip()
+        if line:
+            try:
+                return json.loads(line)
+            except json.JSONDecodeError:
+                pass
+    return None
+
+
+def process_inter_tick_commands():
+    """Process any commands received between ticks."""
+    while True:
+        cmd = check_pending_command()
+        if cmd is None:
+            break
+        cmd_type = cmd.get("type")
+        if cmd_type == "inject_event":
+            handle_inject(cmd)
+        elif cmd_type == "interview_agent":
+            handle_interview(cmd)
+        elif cmd_type == "get_status":
+            handle_status()
+        elif cmd_type == "stop_simulation":
+            emit_event({"type": "simulation_complete", "stats": get_stats()})
+            sys.exit(0)
+        else:
+            emit_error(f"Unknown command during simulation: {cmd_type}")
 
 
 # Global state
@@ -89,6 +123,10 @@ def handle_start(config: dict):
 
         for tick in range(1, total_ticks + 1):
             _current_tick = tick
+
+            # Check for commands between ticks
+            process_inter_tick_commands()
+
             tick_events = _simulation.step()
 
             for event in tick_events:
