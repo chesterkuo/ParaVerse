@@ -3,7 +3,7 @@ import { z } from "zod";
 import { HTTPException } from "hono/http-exception";
 import { hashPassword, verifyPassword, generateTokens, verifyRefreshToken } from "../services/authService";
 import { createUser, findUserByEmail, findUserById } from "../db/queries/users";
-import type { ApiResponse } from "../../../shared/types/api";
+import type { ApiResponse } from "@shared/types/api";
 
 const auth = new Hono();
 
@@ -42,7 +42,10 @@ auth.post("/refresh", async (c) => {
     if (!user) throw new HTTPException(401, { message: "User not found" });
     const tokens = await generateTokens({ id: user.id, email: user.email, role: user.role });
     return c.json({ success: true, data: tokens, error: null } satisfies ApiResponse);
-  } catch { throw new HTTPException(401, { message: "Invalid refresh token" }); }
+  } catch (err) {
+    if (err instanceof HTTPException) throw err;
+    throw new HTTPException(401, { message: "Invalid refresh token" });
+  }
 });
 
 export { auth };

@@ -6,7 +6,7 @@ CREATE TABLE simulation_events (
   event_type VARCHAR(50) NOT NULL,
   platform VARCHAR(30),
   content TEXT,
-  embedding vector(1536),
+  embedding vector(768),
   sim_timestamp INTEGER,
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMPTZ DEFAULT NOW()

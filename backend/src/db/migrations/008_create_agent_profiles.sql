@@ -3,7 +3,7 @@ CREATE TABLE agent_profiles (
   simulation_id UUID REFERENCES simulations(id) ON DELETE CASCADE,
   name VARCHAR(100),
   persona TEXT NOT NULL,
-  embedding vector(1536),
+  embedding vector(768),
   demographics JSONB NOT NULL,
   memory JSONB[] DEFAULT ARRAY[]::JSONB[]
 );

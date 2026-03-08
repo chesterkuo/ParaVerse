@@ -4,7 +4,7 @@ CREATE TABLE ontology_nodes (
   type VARCHAR(50) NOT NULL CHECK (type IN ('person','org','event','concept','location')),
   name VARCHAR(200) NOT NULL,
   description TEXT,
-  embedding vector(1536),
+  embedding vector(768),
   properties JSONB DEFAULT '{}'
 );
 CREATE INDEX idx_ontology_nodes_project ON ontology_nodes(project_id);

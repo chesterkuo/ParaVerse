@@ -6,7 +6,7 @@ import { auth } from "./routes/auth";
 
 const app = new Hono();
 app.use("*", errorHandler);
-app.use("*", cors());
+app.use("*", cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000" }));
 app.use("*", honoLogger());
 app.get("/health", (c) => c.json({ status: "ok" }));
 

@@ -4,7 +4,7 @@ CREATE TABLE documents (
   filename VARCHAR(500),
   content TEXT NOT NULL,
   chunk_index INTEGER DEFAULT 0,
-  embedding vector(1536),
+  embedding vector(768),
   metadata JSONB DEFAULT '{}',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
