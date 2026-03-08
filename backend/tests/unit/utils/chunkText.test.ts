@@ -12,6 +12,11 @@ describe("chunkText", () => {
     expect(chunks).toHaveLength(1);
     expect(chunks[0]).toBe("Hello world");
   });
+  test("preserves paragraph boundaries when possible", () => {
+    const text = "Paragraph one content.\n\nParagraph two content.\n\nParagraph three content.";
+    const chunks = chunkText(text, { chunkSize: 5, overlap: 1 });
+    expect(chunks.length).toBeGreaterThan(1);
+  });
   test("handles empty text", () => {
     expect(chunkText("", { chunkSize: 100, overlap: 10 })).toHaveLength(0);
   });

@@ -23,7 +23,7 @@ export function parseOntologyResponse(raw: { entities: OntologyEntity[]; relatio
   return { entities: raw.entities || [], relations: raw.relations || [] };
 }
 
-const ONTOLOGY_PROMPT = `You are an expert knowledge graph builder. Analyze the following text and extract:
+export const ONTOLOGY_PROMPT = `You are an expert knowledge graph builder. Analyze the following text and extract:
 1. **Entities**: people, organizations, events, concepts, and locations mentioned.
 2. **Relations**: how these entities are connected.
 
