@@ -7,7 +7,9 @@ import {
   createSimulation,
   updateSimulation,
   getSimulation,
+  type SimulationRow,
 } from "../db/queries/simulations";
+import { getAgentService } from "./agentService";
 import { logger } from "../utils/logger";
 
 const CONCORDIA_ONLY_COMMANDS = new Set([
@@ -24,6 +26,76 @@ export function getEngineForScenario(scenarioType: ScenarioType): EngineType {
 
 export class SimulationService {
   private runners = new Map<string, BaseRunner>();
+
+  async create(
+    projectId: string,
+    config: SimConfig
+  ): Promise<SimulationRow> {
+    const engine = getEngineForScenario(config.scenario_type);
+    const simRow = await createSimulation({
+      projectId,
+      engine,
+      config: config as unknown as Record<string, unknown>,
+    });
+    logger.info({ simId: simRow.id, engine, scenario: config.scenario_type }, "Simulation created");
+    return simRow;
+  }
+
+  async start(
+    simulationId: string,
+    config: SimConfig
+  ): Promise<void> {
+    const engine = getEngineForScenario(config.scenario_type);
+    const runner =
+      engine === "oasis" ? new OasisRunner() : new ConcordiaRunner();
+
+    runner.onEvent(async (event: IpcEvent) => {
+      try {
+        await this.handleEvent(simulationId, event);
+      } catch (err) {
+        logger.error({ err, simId: simulationId }, "Error handling event");
+      }
+    });
+
+    await updateSimulation(simulationId, {
+      status: "running",
+      started_at: new Date().toISOString(),
+    });
+
+    await runner.start(simulationId, config as unknown as Record<string, unknown>);
+    this.runners.set(simulationId, runner);
+    logger.info({ simId: simulationId, engine }, "Simulation started");
+  }
+
+  getRunner(simId: string): BaseRunner | undefined {
+    return this.runners.get(simId);
+  }
+
+  async forkScenario(
+    simId: string,
+    branchLabel: string,
+    overrideVars: Record<string, unknown>
+  ): Promise<void> {
+    await this.forwardCommand(simId, {
+      type: "fork_scenario",
+      branch_label: branchLabel,
+      override_vars: overrideVars,
+    });
+  }
+
+  async saveCheckpoint(simId: string): Promise<void> {
+    await this.forwardCommand(simId, { type: "save_checkpoint" });
+  }
+
+  async injectManualAction(
+    simId: string,
+    action: Record<string, unknown>
+  ): Promise<void> {
+    await this.forwardCommand(simId, {
+      type: "inject_manual_action",
+      ...action,
+    });
+  }
 
   async startSimulation(
     projectId: string,
