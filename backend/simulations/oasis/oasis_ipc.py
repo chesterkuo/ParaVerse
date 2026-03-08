@@ -1,60 +1,32 @@
-"""IPC layer for OASIS simulation runner.
-
-Handles JSON-line communication between the TypeScript backend and the Python
-OASIS simulation process over stdin/stdout.
-"""
-
-import json
+"""IPC protocol for OASIS simulation engine."""
 import sys
-from typing import Any, Dict, Optional
+import json
+from typing import Any, Generator
 
 
-def send_event(event_type: str, **kwargs: Any) -> None:
-    """Send a JSON-line event to the parent process via stdout."""
-    event = {"type": event_type, **kwargs}
-    sys.stdout.write(json.dumps(event) + "\n")
+def read_commands() -> Generator[dict, None, None]:
+    """Read JSONL commands from stdin."""
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            yield json.loads(line)
+        except json.JSONDecodeError as e:
+            emit_event({"type": "error", "message": f"Invalid command JSON: {e}"})
+
+
+def emit_event(event: dict[str, Any]) -> None:
+    """Write a JSONL event to stdout."""
+    sys.stdout.write(json.dumps(event, ensure_ascii=False) + "\n")
     sys.stdout.flush()
 
 
-def read_command() -> Optional[Dict[str, Any]]:
-    """Read a JSON-line command from stdin. Returns None on EOF."""
-    try:
-        line = sys.stdin.readline()
-        if not line:
-            return None
-        return json.loads(line.strip())
-    except (json.JSONDecodeError, IOError):
-        return None
+def emit_error(message: str) -> None:
+    """Emit an error event."""
+    emit_event({"type": "error", "message": message})
 
 
-def send_error(message: str, details: Optional[Dict[str, Any]] = None) -> None:
-    """Send an error event."""
-    send_event("error", message=message, details=details or {})
-
-
-def send_agent_action(
-    agent_id: str,
-    content: str,
-    platform: str = "twitter",
-    sim_timestamp: int = 0,
-    metadata: Optional[Dict[str, Any]] = None,
-) -> None:
-    """Send an agent action event."""
-    send_event(
-        "agent_action",
-        agent_id=agent_id,
-        content=content,
-        platform=platform,
-        sim_timestamp=sim_timestamp,
-        metadata=metadata or {},
-    )
-
-
-def send_status(status: str, details: Optional[Dict[str, Any]] = None) -> None:
-    """Send a status event."""
-    send_event("status", status=status, details=details or {})
-
-
-def send_simulation_complete(stats: Optional[Dict[str, Any]] = None) -> None:
-    """Send simulation complete event."""
-    send_event("simulation_complete", stats=stats or {})
+def emit_status(progress: int, events_count: int) -> None:
+    """Emit a status event."""
+    emit_event({"type": "status", "progress": progress, "events_count": events_count})

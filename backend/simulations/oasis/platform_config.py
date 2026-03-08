@@ -1,44 +1,36 @@
-"""Platform configuration for OASIS social simulations.
-
-Defines platform-specific settings (Twitter, Reddit) for the OASIS engine.
-"""
-
-from typing import Any, Dict, Optional
+"""Platform configuration for OASIS social simulation."""
 
 
-PLATFORM_DEFAULTS: Dict[str, Dict[str, Any]] = {
-    "twitter": {
-        "max_post_length": 280,
-        "actions": ["post", "repost", "like", "reply", "quote"],
-        "visibility": "public",
-        "trending_enabled": True,
-        "follower_network": True,
-    },
-    "reddit": {
-        "max_post_length": 10000,
-        "actions": ["post", "comment", "upvote", "downvote"],
-        "visibility": "subreddit",
-        "trending_enabled": False,
-        "follower_network": False,
-    },
-}
+def create_twitter_platform(num_agents: int):
+    """Create a Twitter-like platform environment."""
+    try:
+        from oasis.social_platform.platform import Platform
+        from oasis.social_platform.config import PlatformConfig
+    except ImportError as e:
+        raise ImportError(f"OASIS not installed: {e}")
+
+    config = PlatformConfig(
+        platform_type="twitter",
+        num_agents=num_agents,
+        recommendation_algorithm="interest_based",
+        max_posts_per_tick=5,
+        trending_decay_factor=0.95,
+    )
+    return Platform(config)
 
 
-def get_platform_config(
-    platform: str = "twitter",
-    overrides: Optional[Dict[str, Any]] = None,
-) -> Dict[str, Any]:
-    """Get platform configuration with optional overrides."""
-    config = PLATFORM_DEFAULTS.get(platform, PLATFORM_DEFAULTS["twitter"]).copy()
-    if overrides:
-        config.update(overrides)
-    config["platform_name"] = platform
-    return config
+def create_reddit_platform(num_agents: int):
+    """Create a Reddit-like platform environment."""
+    try:
+        from oasis.social_platform.platform import Platform
+        from oasis.social_platform.config import PlatformConfig
+    except ImportError as e:
+        raise ImportError(f"OASIS not installed: {e}")
 
-
-def validate_platform_action(platform: str, action: str) -> bool:
-    """Check if an action is valid for the given platform."""
-    config = PLATFORM_DEFAULTS.get(platform)
-    if not config:
-        return False
-    return action in config.get("actions", [])
+    config = PlatformConfig(
+        platform_type="reddit",
+        num_agents=num_agents,
+        recommendation_algorithm="hot_ranking",
+        max_posts_per_tick=3,
+    )
+    return Platform(config)

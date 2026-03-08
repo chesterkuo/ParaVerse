@@ -39,17 +39,17 @@ class CrisisPrGameMaster(BaseGameMaster):
 
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
-        self.brand_reputation_score: float = 50.0
+        self.brand_reputation_score: float = 75.0
         self.crisis_severity: float = config.get("crisis_severity", 0.7)
-        self.media_attention: float = 0.5
-        self.public_sentiment: float = 0.5
+        self.media_pressure: float = 0.0
+        self.public_anger: float = 0.0
 
     def _initialize_grounded_vars(self) -> None:
         """Set initial grounded variables for crisis PR."""
         self.set_grounded_var("brand_reputation_score", self.brand_reputation_score)
         self.set_grounded_var("crisis_severity", self.crisis_severity)
-        self.set_grounded_var("media_attention", self.media_attention)
-        self.set_grounded_var("public_sentiment", self.public_sentiment)
+        self.set_grounded_var("media_pressure", self.media_pressure)
+        self.set_grounded_var("public_anger", self.public_anger)
 
     def setup(self, agents: List[Dict[str, Any]]) -> None:
         """Setup crisis PR game master and create default branches."""
@@ -66,30 +66,30 @@ class CrisisPrGameMaster(BaseGameMaster):
 
     def _on_tick(self) -> None:
         """Update crisis dynamics each tick."""
-        self._update_media_attention()
+        self._update_media_pressure()
         self._update_reputation()
-        self._update_public_sentiment()
+        self._update_public_anger()
 
-    def _update_media_attention(self) -> None:
+    def _update_media_pressure(self) -> None:
         """Media attention decays over time but spikes with events."""
         decay = 0.02
-        self.media_attention = max(0.0, self.media_attention - decay)
-        self.set_grounded_var("media_attention", self.media_attention)
+        self.media_pressure = max(0.0, self.media_pressure - decay)
+        self.set_grounded_var("media_pressure", self.media_pressure)
 
     def _update_reputation(self) -> None:
         """Update brand reputation based on current dynamics."""
-        impact = -self.crisis_severity * self.media_attention * 2.0
+        impact = -self.crisis_severity * self.media_pressure * 2.0
         self.brand_reputation_score = max(
             0.0, min(100.0, self.brand_reputation_score + impact)
         )
         self.set_grounded_var("brand_reputation_score", self.brand_reputation_score)
 
-    def _update_public_sentiment(self) -> None:
+    def _update_public_anger(self) -> None:
         """Public sentiment tracks loosely with reputation."""
         target = self.brand_reputation_score / 100.0
-        self.public_sentiment += (target - self.public_sentiment) * 0.1
-        self.public_sentiment = max(0.0, min(1.0, self.public_sentiment))
-        self.set_grounded_var("public_sentiment", self.public_sentiment)
+        self.public_anger += (target - self.public_anger) * 0.1
+        self.public_anger = max(0.0, min(1.0, self.public_anger))
+        self.set_grounded_var("public_anger", self.public_anger)
 
     def is_complete(self) -> bool:
         """Crisis simulation ends when ticks exhausted or reputation hits zero."""

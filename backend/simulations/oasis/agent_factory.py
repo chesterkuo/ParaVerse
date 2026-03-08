@@ -1,67 +1,50 @@
-"""Agent factory for OASIS simulations.
-
-Creates and configures OASIS social agents from ParaVerse agent profiles.
-"""
-
-from typing import Any, Dict, List, Optional
-
-try:
-    from camel.agents import ChatAgent
-    from camel.messages import BaseMessage
-    from camel.types import ModelType
-except ImportError:
-    ChatAgent = None
-    BaseMessage = None
-    ModelType = None
+"""Build OASIS agents from persona JSON configs."""
+from typing import Any
 
 
-def build_agent_profile(
-    name: str,
-    persona: str,
-    demographics: Dict[str, Any],
-    model_type: Optional[str] = None,
-) -> Dict[str, Any]:
-    """Build an agent profile dictionary for OASIS."""
-    return {
-        "name": name,
-        "persona": persona,
-        "demographics": demographics,
-        "model_type": model_type or "gpt-4o-mini",
-        "system_message": _build_system_message(name, persona, demographics),
-    }
+def build_oasis_agents(agent_configs: list[dict[str, Any]], model_name: str, api_key: str, base_url: str):
+    """
+    Convert persona configs to OASIS-compatible agent objects.
 
+    Args:
+        agent_configs: List of agent persona dicts with keys: id, name, persona, demographics
+        model_name: LLM model name for agent inference
+        api_key: API key for the LLM
+        base_url: Base URL for the LLM API
 
-def _build_system_message(
-    name: str, persona: str, demographics: Dict[str, Any]
-) -> str:
-    """Build a system message for the agent's LLM."""
-    group = demographics.get("group", "general")
-    occupation = demographics.get("occupation", "unknown")
-    personality = demographics.get("personality_type", "")
+    Returns:
+        List of configured OASIS agent objects
+    """
+    try:
+        from camel.models import ModelFactory
+        from camel.types import ModelPlatformType, ModelType
+        from oasis.social_agent import SocialAgent
+        from oasis.social_platform.typing import ActionType
+    except ImportError as e:
+        raise ImportError(f"OASIS dependencies not installed: {e}. Run: pip install camel-ai camel-oasis")
 
-    return (
-        f"You are {name}, a simulated social media user.\n"
-        f"Background: {persona}\n"
-        f"Demographic group: {group}\n"
-        f"Occupation: {occupation}\n"
-        f"Personality: {personality}\n\n"
-        "Respond authentically as this persona would. "
-        "Keep responses concise and natural."
-    )
-
-
-def create_oasis_agents(
-    agent_profiles: List[Dict[str, Any]],
-    model_type: Optional[str] = None,
-) -> List[Dict[str, Any]]:
-    """Create OASIS agent configurations from ParaVerse profiles."""
     agents = []
-    for profile in agent_profiles:
-        agent = build_agent_profile(
-            name=profile["name"],
-            persona=profile.get("persona", ""),
-            demographics=profile.get("demographics", {}),
-            model_type=model_type,
+    for config in agent_configs:
+        persona_text = (
+            f"Name: {config['name']}\n"
+            f"Role: {config['demographics'].get('role', 'general user')}\n"
+            f"Personality: {config['persona']}\n"
+            f"Age: {config['demographics'].get('age_range', '25-45')}\n"
+            f"Occupation: {config['demographics'].get('occupation', 'professional')}"
+        )
+
+        model = ModelFactory.create(
+            model_platform=ModelPlatformType.OPENAI_COMPATIBLE_MODEL,
+            model_type=model_name,
+            api_key=api_key,
+            url=base_url,
+        )
+
+        agent = SocialAgent(
+            agent_id=config["id"],
+            model=model,
+            persona=persona_text,
         )
         agents.append(agent)
+
     return agents
