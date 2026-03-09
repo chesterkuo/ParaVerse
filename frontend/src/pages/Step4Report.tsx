@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { useSimulationStore } from "@/store/simulationStore";
 import { useReport, useGenerateReport } from "@/hooks/useReport";
@@ -7,6 +8,9 @@ import { TaskProgress } from "@/components/ui/TaskProgress";
 import { ReportViewer } from "@/components/report/ReportViewer";
 import { EmotionChart } from "@/components/report/EmotionChart";
 import { ExportButton } from "@/components/report/ExportButton";
+import { AcceptanceMatrixHeatmap } from "@/components/simulation/AcceptanceMatrix";
+import { projectsApi } from "@/api/projects";
+import type { ScenarioType } from "@shared/types/project";
 
 export default function Step4Report() {
   const { projectId } = useParams();
@@ -15,6 +19,14 @@ export default function Step4Report() {
 
   const [reportTaskId, setReportTaskId] = useState<string | null>(null);
   const [reportReady, setReportReady] = useState(false);
+
+  const { data: project } = useQuery({
+    queryKey: ["project", projectId],
+    queryFn: () => projectsApi.get(projectId!).then((r) => r.data.data),
+    enabled: !!projectId,
+  });
+  const scenarioType = (project?.scenario_type ?? "") as ScenarioType;
+  const isPolicyLab = scenarioType === "policy_lab";
 
   const { data: report, refetch } = useReport(reportReady ? simId : null);
   const generateMutation = useGenerateReport();
@@ -88,6 +100,11 @@ export default function Step4Report() {
               taskType="Report Generation"
               onComplete={handleReportComplete}
             />
+          )}
+
+          {/* Acceptance Matrix (PolicyLab only) */}
+          {isPolicyLab && simId && (
+            <AcceptanceMatrixHeatmap simulationId={simId} />
           )}
 
           {/* Report Content */}
