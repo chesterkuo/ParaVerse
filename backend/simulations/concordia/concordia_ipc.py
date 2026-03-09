@@ -19,8 +19,20 @@ def send_event(event_type: str, **kwargs: Any) -> None:
     sys.stdout.flush()
 
 
-def read_command() -> Optional[Dict[str, Any]]:
-    """Read a JSON-line command from stdin. Returns None on EOF."""
+def read_command(blocking: bool = True) -> Optional[Dict[str, Any]]:
+    """Read a JSON-line command from stdin.
+
+    Args:
+        blocking: If True, blocks until a command is available.
+                  If False, returns None immediately if no data.
+    """
+    import select
+
+    if not blocking:
+        # Non-blocking: check if data is available
+        if not select.select([sys.stdin], [], [], 0.1)[0]:
+            return None
+
     try:
         line = sys.stdin.readline()
         if not line:

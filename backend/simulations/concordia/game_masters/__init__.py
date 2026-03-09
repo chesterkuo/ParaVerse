@@ -1,6 +1,6 @@
 """Game masters for Concordia simulations."""
 
-from .base_gm import BaseGameMaster
-from .crisis_pr_gm import CrisisPrGameMaster
+from game_masters.base_gm import BaseGameMaster
+from game_masters.crisis_pr_gm import CrisisPrGameMaster
 
 __all__ = ["BaseGameMaster", "CrisisPrGameMaster"]

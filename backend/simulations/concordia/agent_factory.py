@@ -2,34 +2,102 @@
 
 Builds Concordia EntityAgent objects from ParaVerse agent profiles.
 """
+from typing import Any
 
-from typing import Any, Dict, List, Optional
+from concordia.agents.entity_agent import EntityAgent
+from concordia.components.agent.concat_act_component import ConcatActComponent
+from concordia.components.agent.instructions import Instructions
+from concordia.components.agent.memory import ListMemory
+from concordia.components.agent.observation import (
+    ObservationsSinceLastPreAct,
+    ObservationToMemory,
+)
+from concordia.components.agent.plan import Plan
+from concordia.language_model.language_model import LanguageModel
 
-try:
-    from concordia.agents import entity_agent
-    from concordia.components import agent as agent_components
-except ImportError:
-    entity_agent = None
-    agent_components = None
+
+def create_concordia_agents(
+    agent_profiles: list[dict[str, Any]],
+    model: LanguageModel,
+) -> list[EntityAgent]:
+    """Create Concordia EntityAgent instances from ParaVerse profiles.
+
+    Args:
+        agent_profiles: List of agent profile dicts with name, persona, demographics
+        model: Concordia LanguageModel instance
+
+    Returns:
+        List of configured EntityAgent objects
+    """
+    agents = []
+    for profile in agent_profiles:
+        name = profile["name"]
+        persona = profile.get("persona", "")
+        demographics = profile.get("demographics", {})
+        goal = profile.get("goal") or _infer_goal(demographics)
+
+        agent = _build_entity_agent(name, persona, goal, model)
+        agents.append(agent)
+
+    return agents
 
 
-def build_agent_config(
+def _build_entity_agent(
     name: str,
     persona: str,
-    demographics: Dict[str, Any],
-    goal: Optional[str] = None,
-) -> Dict[str, Any]:
-    """Build a Concordia agent configuration dictionary."""
-    return {
-        "name": name,
-        "persona": persona,
-        "demographics": demographics,
-        "goal": goal or _infer_goal(demographics),
-        "components": _build_default_components(name, persona),
-    }
+    goal: str,
+    model: LanguageModel,
+) -> EntityAgent:
+    """Build a single Concordia EntityAgent with standard components."""
+    # Memory component
+    initial_memories = [
+        f"{name}'s background: {persona}",
+        f"{name}'s current goal: {goal}",
+    ]
+    memory = ListMemory(memory_bank=initial_memories)
+
+    # Observation component - stores observations into memory
+    obs_to_memory = ObservationToMemory()
+    observations = ObservationsSinceLastPreAct()
+
+    # Instructions component
+    instructions = Instructions(agent_name=name)
+
+    # Planning component
+    plan = Plan(
+        model=model,
+        components=[
+            observations.get_pre_act_label(),
+        ],
+    )
+
+    # Acting component - combines all context to decide actions
+    act_component = ConcatActComponent(
+        model=model,
+        component_order=[
+            instructions.get_pre_act_label(),
+            observations.get_pre_act_label(),
+            plan.get_pre_act_label(),
+        ],
+    )
+
+    # Build the agent
+    agent = EntityAgent(
+        agent_name=name,
+        act_component=act_component,
+        context_components={
+            "__memory__": memory,
+            "__obs_to_memory__": obs_to_memory,
+            instructions.get_pre_act_label(): instructions,
+            observations.get_pre_act_label(): observations,
+            plan.get_pre_act_label(): plan,
+        },
+    )
+
+    return agent
 
 
-def _infer_goal(demographics: Dict[str, Any]) -> str:
+def _infer_goal(demographics: dict[str, Any]) -> str:
     """Infer a default goal from demographics."""
     group = demographics.get("group", "general")
     goals = {
@@ -48,31 +116,3 @@ def _infer_goal(demographics: Dict[str, Any]) -> str:
         "regulator": "Ensure compliance and proper governance",
     }
     return goals.get(group, "Participate meaningfully in the simulation")
-
-
-def _build_default_components(name: str, persona: str) -> List[Dict[str, str]]:
-    """Build default component configuration for a Concordia agent."""
-    return [
-        {"type": "memory", "description": f"Memory for {name}"},
-        {"type": "observation", "description": f"Observations for {name}"},
-        {"type": "planning", "description": f"Planning for {name}"},
-    ]
-
-
-def create_concordia_agents(
-    agent_profiles: List[Dict[str, Any]],
-    model_name: Optional[str] = None,
-) -> List[Dict[str, Any]]:
-    """Create Concordia agent configurations from ParaVerse profiles."""
-    agents = []
-    for profile in agent_profiles:
-        agent = build_agent_config(
-            name=profile["name"],
-            persona=profile.get("persona", ""),
-            demographics=profile.get("demographics", {}),
-            goal=profile.get("goal"),
-        )
-        if model_name:
-            agent["model_name"] = model_name
-        agents.append(agent)
-    return agents

@@ -1,2 +1,2 @@
-concordia>=2.0
-openai
+gdm-concordia>=2.4.0
+openai>=1.0.0

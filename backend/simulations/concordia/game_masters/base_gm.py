@@ -6,7 +6,7 @@ simulation flow, inject events, and manage grounded variables.
 
 from typing import Any, Dict, List, Optional
 
-from ..concordia_ipc import send_event, send_grounded_var, send_status
+from concordia_ipc import send_event, send_grounded_var, send_status
 
 
 class BaseGameMaster:

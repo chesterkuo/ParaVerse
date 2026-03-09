@@ -6,8 +6,8 @@ A/B/C response strategy branches.
 
 from typing import Any, Dict, List, Optional
 
-from .base_gm import BaseGameMaster
-from ..concordia_ipc import send_grounded_var, send_status
+from game_masters.base_gm import BaseGameMaster
+from concordia_ipc import send_grounded_var, send_status
 
 
 class CrisisPrGameMaster(BaseGameMaster):

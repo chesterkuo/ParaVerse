@@ -12,7 +12,17 @@ const SUPPORTED_COMMANDS = new Set([
 
 export class OasisRunner extends BaseRunner {
   get pythonPath(): string {
-    return process.env.OASIS_PYTHON || "python3";
+    if (process.env.OASIS_PYTHON) return process.env.OASIS_PYTHON;
+    // Try venv Python first
+    const venvPython = path.resolve(
+      import.meta.dir,
+      "../../../simulations/oasis/.venv/bin/python3"
+    );
+    try {
+      const stat = Bun.file(venvPython);
+      if (stat.size > 0) return venvPython;
+    } catch { /* fallback */ }
+    return "python3";
   }
 
   get scriptPath(): string {

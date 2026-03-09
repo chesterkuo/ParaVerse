@@ -10,6 +10,7 @@ import {
   getSimulationForOwner,
   getSimulationEvents,
 } from "../db/queries/simulations";
+import { getAgentsBySimulation } from "../db/queries/agents";
 import type { ApiResponse } from "@shared/types/api";
 import { logger } from "../utils/logger";
 
@@ -85,8 +86,22 @@ simulation.post("/:simulationId/start", async (c) => {
   const sim = await getSimulationForOwner(simulationId, auth.userId);
   if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
 
+  // Fetch generated agents and include in config
+  const agents = await getAgentsBySimulation(simulationId);
+  if (agents.length === 0) {
+    throw new HTTPException(400, { message: "No agents generated yet. Wait for agent generation to complete." });
+  }
+
   const simService = getSimulationService();
-  const config = sim.config as Record<string, unknown>;
+  const config = {
+    ...(sim.config as Record<string, unknown>),
+    agents: agents.map((a) => ({
+      id: a.id,
+      name: a.name,
+      persona: a.persona,
+      demographics: a.demographics,
+    })),
+  };
   await simService.start(simulationId, config as any);
 
   return c.json({

@@ -1,3 +1,4 @@
+import path from "path";
 import { logger } from "../../utils/logger";
 import type { IpcCommand, IpcEvent } from "@shared/types/simulation";
 
@@ -47,14 +48,19 @@ export abstract class BaseRunner {
   async start(simId: string, config: Record<string, unknown>): Promise<void> {
     const maxMemory = parseInt(process.env.SIM_MAX_MEMORY_MB || "2048");
 
+    // Set cwd to the script's directory so relative imports work
+    const scriptDir = path.dirname(this.scriptPath);
+
     this.process = Bun.spawn([this.pythonPath, this.scriptPath], {
       stdin: "pipe",
       stdout: "pipe",
       stderr: "pipe",
+      cwd: scriptDir,
       env: {
         ...process.env,
         SIMULATION_ID: simId,
         MAX_MEMORY_MB: String(maxMemory),
+        PYTHONPATH: scriptDir,
       },
     });
 

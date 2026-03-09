@@ -1,3 +1,2 @@
-camel-ai>=0.2.78
-camel-oasis>=0.2.5
-openai
+# camel-oasis requires Python <3.12, so we use camel-ai directly
+camel-ai[openai]>=0.2.78
