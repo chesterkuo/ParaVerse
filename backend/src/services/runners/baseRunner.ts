@@ -26,8 +26,12 @@ export abstract class BaseRunner {
   abstract get pythonPath(): string;
   abstract get scriptPath(): string;
 
-  onEvent(handler: EventHandler): void {
+  onEvent(handler: EventHandler): () => void {
     this.eventHandlers.push(handler);
+    return () => {
+      const idx = this.eventHandlers.indexOf(handler);
+      if (idx >= 0) this.eventHandlers.splice(idx, 1);
+    };
   }
 
   protected emit(event: IpcEvent): void {

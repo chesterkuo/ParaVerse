@@ -15,24 +15,41 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Mutex for token refresh to prevent race conditions
+let refreshPromise: Promise<string> | null = null;
+
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && !error.config._retried) {
       const refreshToken = localStorage.getItem("refresh_token");
-      if (refreshToken) {
-        try {
-          const res = await axios.post(`${API_BASE}/auth/refresh`, { refresh_token: refreshToken });
-          localStorage.setItem("access_token", res.data.data.access_token);
-          localStorage.setItem("refresh_token", res.data.data.refresh_token);
-          error.config.headers.Authorization = `Bearer ${res.data.data.access_token}`;
-          return api(error.config);
-        } catch {
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
-          window.location.href = "/login";
+      if (!refreshToken) {
+        window.location.href = "/login";
+        return Promise.reject(error);
+      }
+
+      try {
+        // Reuse in-flight refresh request
+        if (!refreshPromise) {
+          refreshPromise = axios
+            .post(`${API_BASE}/auth/refresh`, { refresh_token: refreshToken })
+            .then((res) => {
+              localStorage.setItem("access_token", res.data.data.access_token);
+              localStorage.setItem("refresh_token", res.data.data.refresh_token);
+              return res.data.data.access_token as string;
+            });
         }
-      } else {
+
+        const newToken = await refreshPromise;
+        refreshPromise = null;
+
+        error.config._retried = true;
+        error.config.headers.Authorization = `Bearer ${newToken}`;
+        return api(error.config);
+      } catch {
+        refreshPromise = null;
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
         window.location.href = "/login";
       }
     }

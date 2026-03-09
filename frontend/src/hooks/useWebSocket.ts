@@ -12,11 +12,20 @@ export function useWebSocket(path: string) {
   const [connected, setConnected] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const retriesRef = useRef(0);
 
   const connect = useCallback(() => {
-    const ws = new WebSocket(`${WS_BASE}${path}`);
+    const token = localStorage.getItem("access_token");
+    const url = token
+      ? `${WS_BASE}${path}?token=${encodeURIComponent(token)}`
+      : `${WS_BASE}${path}`;
 
-    ws.onopen = () => setConnected(true);
+    const ws = new WebSocket(url);
+
+    ws.onopen = () => {
+      setConnected(true);
+      retriesRef.current = 0;
+    };
 
     ws.onmessage = (msg) => {
       try {
@@ -27,7 +36,10 @@ export function useWebSocket(path: string) {
 
     ws.onclose = () => {
       setConnected(false);
-      reconnectTimeout.current = setTimeout(connect, 3000);
+      // Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
+      const delay = Math.min(1000 * Math.pow(2, retriesRef.current), 30000);
+      retriesRef.current++;
+      reconnectTimeout.current = setTimeout(connect, delay);
     };
 
     ws.onerror = () => ws.close();

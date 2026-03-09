@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { createBunWebSocket } from "hono/bun";
-import type { ServerWebSocket } from "bun";
 import { getSimulationService } from "../services/simulationService";
 import { verifyAccessToken } from "../services/authService";
 import { query } from "../db/client";
@@ -15,16 +14,34 @@ interaction.get(
   "/simulations/:id",
   upgradeWebSocket((c) => {
     const simId = c.req.param("id");
+    const token = c.req.query("token");
+
+    let unsubscribe: (() => void) | null = null;
 
     return {
-      onOpen(evt, ws) {
+      async onOpen(_evt, ws) {
+        // Authenticate via query param token
+        if (!token) {
+          (ws as any).send(JSON.stringify({ type: "error", message: "Authentication required" }));
+          ws.close(4001, "Authentication required");
+          return;
+        }
+
+        try {
+          await verifyAccessToken(token);
+        } catch {
+          (ws as any).send(JSON.stringify({ type: "error", message: "Invalid token" }));
+          ws.close(4001, "Invalid token");
+          return;
+        }
+
         logger.info({ simId }, "WebSocket connected for simulation");
 
         const simService = getSimulationService();
         const runner = simService.getRunner(simId);
 
         if (runner) {
-          runner.onEvent((event) => {
+          unsubscribe = runner.onEvent((event) => {
             try {
               (ws as any).send(JSON.stringify(event));
             } catch {
@@ -42,12 +59,13 @@ interaction.get(
           if (runner && cmd.type) {
             runner.sendCommand(cmd);
           }
-        } catch (err) {
+        } catch {
           (ws as any).send(JSON.stringify({ type: "error", message: "Invalid command" }));
         }
       },
 
       onClose() {
+        unsubscribe?.();
         logger.info({ simId }, "WebSocket disconnected");
       },
     };
@@ -59,9 +77,26 @@ interaction.get(
   "/interactions/:id",
   upgradeWebSocket((c) => {
     const sessionId = c.req.param("id");
+    const token = c.req.query("token");
+
+    let interviewUnsubscribe: (() => void) | null = null;
 
     return {
-      onOpen(evt, ws) {
+      async onOpen(_evt, ws) {
+        if (!token) {
+          (ws as any).send(JSON.stringify({ type: "error", message: "Authentication required" }));
+          ws.close(4001, "Authentication required");
+          return;
+        }
+
+        try {
+          await verifyAccessToken(token);
+        } catch {
+          (ws as any).send(JSON.stringify({ type: "error", message: "Invalid token" }));
+          ws.close(4001, "Invalid token");
+          return;
+        }
+
         logger.info({ sessionId }, "Interaction session opened");
       },
 
@@ -88,11 +123,12 @@ interaction.get(
                 prompt: msg.content,
               });
 
-              runner.onEvent((event) => {
+              // Clean up previous listener before adding new one
+              interviewUnsubscribe?.();
+              interviewUnsubscribe = runner.onEvent((event) => {
                 if ((event as any).type === "interview_response" && (event as any).agent_id === msg.agent_id) {
                   (ws as any).send(JSON.stringify(event));
 
-                  // Store response
                   query(
                     `UPDATE interaction_sessions
                      SET messages = array_append(messages, $2::jsonb)
@@ -103,12 +139,13 @@ interaction.get(
               });
             }
           }
-        } catch (err) {
+        } catch {
           (ws as any).send(JSON.stringify({ type: "error", message: "Invalid message format" }));
         }
       },
 
       onClose() {
+        interviewUnsubscribe?.();
         logger.info({ sessionId }, "Interaction session closed");
       },
     };
