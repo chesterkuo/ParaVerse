@@ -229,7 +229,7 @@ ${localeInstruction}`;
   const response = await llm.chat([
     { role: "system", content: systemPrompt },
     { role: "user", content: question },
-  ], { temperature: 0.8, maxTokens: 300 });
+  ], { temperature: 0.8, maxTokens: 3200 });
 
   ws.send(JSON.stringify({
     type: "interview_response",
