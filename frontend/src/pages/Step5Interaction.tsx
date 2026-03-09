@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { useSimulationStore } from "@/store/simulationStore";
 import { useWebSocket } from "@/hooks/useWebSocket";
@@ -12,7 +12,6 @@ interface ChatMessage {
 export default function Step5Interaction() {
   const simId = useSimulationStore((s) => s.simId);
   const [selectedAgent, setSelectedAgent] = useState("");
-  const [agentIds, setAgentIds] = useState<string[]>([]);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -21,50 +20,53 @@ export default function Step5Interaction() {
     simId ? `/ws/simulations/${simId}` : "",
   );
 
-  // Extract unique agent IDs from events
-  useEffect(() => {
+  // Derive unique agent IDs from events (no setState needed)
+  const agentIds = useMemo(() => {
     const ids = new Set<string>();
     for (const ev of events) {
       const agentId = ev.agent_id as string | undefined;
       if (agentId) ids.add(agentId);
     }
-    const arr = Array.from(ids);
-    setAgentIds(arr);
-    if (!selectedAgent && arr.length > 0) {
-      setSelectedAgent(arr[0]);
-    }
-  }, [events, selectedAgent]);
+    return Array.from(ids);
+  }, [events]);
 
-  // Process interview responses (track last processed index)
+  // Auto-select first agent when none selected
+  const effectiveAgent = selectedAgent || agentIds[0] || "";
+
+  // Process interview responses via ref-based tracking
   const lastProcessedIdx = useRef(0);
-  useEffect(() => {
+  const processNewEvents = useCallback(() => {
     if (events.length <= lastProcessedIdx.current) return;
+    const newMessages: ChatMessage[] = [];
     for (let i = lastProcessedIdx.current; i < events.length; i++) {
       const ev = events[i];
       if (ev.type === "interview_response") {
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: "agent",
-            content: (ev.response as string) ?? (ev.content as string) ?? "",
-            agentId: ev.agent_id as string,
-          },
-        ]);
+        newMessages.push({
+          role: "agent",
+          content: (ev.response as string) ?? (ev.content as string) ?? "",
+          agentId: ev.agent_id as string,
+        });
       }
     }
     lastProcessedIdx.current = events.length;
+    if (newMessages.length > 0) {
+      setMessages((prev) => [...prev, ...newMessages]);
+    }
   }, [events]);
+
+  // eslint-disable-next-line react-hooks/set-state-in-effect
+  useEffect(() => { processNewEvents(); }, [processNewEvents]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length]);
 
   const handleSend = () => {
-    if (!input.trim() || !selectedAgent) return;
+    if (!input.trim() || !effectiveAgent) return;
     setMessages((prev) => [...prev, { role: "user", content: input }]);
     send({
       type: "interview_agent",
-      agent_id: selectedAgent,
+      agent_id: effectiveAgent,
       question: input,
     });
     setInput("");
@@ -106,7 +108,7 @@ export default function Step5Interaction() {
                     key={id}
                     onClick={() => setSelectedAgent(id)}
                     className={`w-full text-left px-3 py-2 text-sm border-b border-gray-100 last:border-b-0 transition-colors
-                      ${selectedAgent === id ? "bg-violet/10 text-violet font-medium" : "hover:bg-gray-50 text-gray-700"}
+                      ${effectiveAgent === id ? "bg-violet/10 text-violet font-medium" : "hover:bg-gray-50 text-gray-700"}
                     `}
                   >
                     Agent {id.slice(0, 8)}
@@ -120,7 +122,7 @@ export default function Step5Interaction() {
               <input
                 type="text"
                 placeholder="Enter agent ID..."
-                value={selectedAgent}
+                value={effectiveAgent}
                 onChange={(e) => setSelectedAgent(e.target.value)}
                 className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-violet"
               />
@@ -167,13 +169,13 @@ export default function Step5Interaction() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
-                placeholder={selectedAgent ? "Type your question..." : "Select an agent first"}
-                disabled={!selectedAgent}
+                placeholder={effectiveAgent ? "Type your question..." : "Select an agent first"}
+                disabled={!effectiveAgent}
                 className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-violet disabled:opacity-50"
               />
               <button
                 onClick={handleSend}
-                disabled={!selectedAgent || !input.trim()}
+                disabled={!effectiveAgent || !input.trim()}
                 className="bg-violet text-white px-4 py-2 rounded hover:bg-violet/90 disabled:opacity-50"
               >
                 Send

@@ -14,53 +14,60 @@ export function useWebSocket(path: string) {
   const reconnectTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
   const retriesRef = useRef(0);
   const closedIntentionally = useRef(false);
+  const pathRef = useRef(path);
 
-  const connect = useCallback(() => {
-    if (!path) return;
-
-    closedIntentionally.current = false;
-    const token = localStorage.getItem("access_token");
-    const url = token
-      ? `${WS_BASE}${path}?token=${encodeURIComponent(token)}`
-      : `${WS_BASE}${path}`;
-
-    const ws = new WebSocket(url);
-
-    ws.onopen = () => {
-      setConnected(true);
-      retriesRef.current = 0;
-    };
-
-    ws.onmessage = (msg) => {
-      try {
-        const event: SimEvent = JSON.parse(msg.data);
-        setEvents((prev) => [...prev.slice(-200), event]);
-      } catch { /* ignore invalid */ }
-    };
-
-    ws.onclose = () => {
-      setConnected(false);
-      if (closedIntentionally.current) return;
-      // Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
-      const delay = Math.min(1000 * Math.pow(2, retriesRef.current), 30000);
-      retriesRef.current++;
-      reconnectTimeout.current = setTimeout(connect, delay);
-    };
-
-    ws.onerror = () => ws.close();
-
-    wsRef.current = ws;
+  useEffect(() => {
+    pathRef.current = path;
   }, [path]);
 
   useEffect(() => {
     if (!path) return;
+
+    function connect() {
+      const currentPath = pathRef.current;
+      if (!currentPath) return;
+
+      closedIntentionally.current = false;
+      const token = localStorage.getItem("access_token");
+      const url = token
+        ? `${WS_BASE}${currentPath}?token=${encodeURIComponent(token)}`
+        : `${WS_BASE}${currentPath}`;
+
+      const ws = new WebSocket(url);
+
+      ws.onopen = () => {
+        setConnected(true);
+        retriesRef.current = 0;
+      };
+
+      ws.onmessage = (msg) => {
+        try {
+          const event: SimEvent = JSON.parse(msg.data);
+          setEvents((prev) => [...prev.slice(-200), event]);
+        } catch { /* ignore invalid */ }
+      };
+
+      ws.onclose = () => {
+        setConnected(false);
+        if (closedIntentionally.current) return;
+        // Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
+        const delay = Math.min(1000 * Math.pow(2, retriesRef.current), 30000);
+        retriesRef.current++;
+        reconnectTimeout.current = setTimeout(connect, delay);
+      };
+
+      ws.onerror = () => ws.close();
+
+      wsRef.current = ws;
+    }
+
     connect();
     return () => {
       closedIntentionally.current = true;
       clearTimeout(reconnectTimeout.current);
       wsRef.current?.close();
     };
-  }, [connect, path]);
+  }, [path]);
 
   const send = useCallback((data: unknown) => {
     wsRef.current?.send(JSON.stringify(data));
