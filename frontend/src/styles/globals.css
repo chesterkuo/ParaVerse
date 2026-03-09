@@ -2,18 +2,32 @@
 
 @theme {
   --color-navy: #0F2847;
+  --color-navy-light: #1a3a5c;
   --color-violet: #6C3FC5;
+  --color-violet-light: #8B5CF6;
   --color-oasis: #F59E0B;
   --color-concordia: #00C4B4;
-  --color-bg: #FAFAF9;
+  --color-bg: #F1F5F9;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F8FAFC;
+  --color-border: #E2E8F0;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --font-family-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
+  body {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
   input:focus,
   textarea:focus,
   select:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(108, 63, 197, 0.4);
+    box-shadow: 0 0 0 3px rgba(108, 63, 197, 0.15);
     border-color: #6C3FC5;
   }
   button:focus-visible {

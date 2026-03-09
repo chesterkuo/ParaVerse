@@ -1,50 +1,93 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { Loader2 } from "lucide-react";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
     try {
       await register(email, password, name);
       navigate("/");
     } catch {
-      setError("Registration failed");
+      setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-96 space-y-4">
-        <h1 className="text-2xl font-bold text-navy">Register</h1>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <div>
-          <label htmlFor="reg-name" className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-          <input id="reg-name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}
-            className="w-full px-3 py-2 border rounded" required />
+    <div className="min-h-screen flex">
+      {/* Left branding panel */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-navy via-navy-light to-violet relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-20 w-72 h-72 bg-violet rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-20 w-96 h-96 bg-oasis rounded-full blur-3xl" />
         </div>
-        <div>
-          <label htmlFor="reg-email" className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-          <input id="reg-email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 border rounded" required />
+        <div className="relative z-10 flex flex-col justify-center px-16 text-white">
+          <h1 className="text-4xl font-bold mb-4">ParaVerse</h1>
+          <p className="text-lg text-white/70 leading-relaxed max-w-md">
+            Enterprise multi-agent simulation platform. Model complex scenarios, analyze stakeholder dynamics, and make data-driven decisions.
+          </p>
         </div>
-        <div>
-          <label htmlFor="reg-password" className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-          <input id="reg-password" type="password" placeholder="Password (8+ chars)" value={password} onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 border rounded" required minLength={8} />
+      </div>
+
+      {/* Right form panel */}
+      <div className="flex-1 flex items-center justify-center bg-bg px-6">
+        <div className="w-full max-w-sm">
+          <div className="lg:hidden mb-8">
+            <h1 className="text-2xl font-bold text-navy">ParaVerse</h1>
+            <p className="text-sm text-text-secondary mt-1">Multi-Agent Simulation Platform</p>
+          </div>
+
+          <h2 className="text-xl font-semibold text-text-primary mb-1">Create your account</h2>
+          <p className="text-sm text-text-secondary mb-6">Get started with ParaVerse</p>
+
+          {error && (
+            <div className="mb-4 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label htmlFor="reg-name" className="block text-sm font-medium text-text-primary mb-1.5">Name</label>
+              <input id="reg-name" type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}
+                className="w-full px-3.5 py-2.5 border border-border rounded-lg bg-surface text-sm text-text-primary placeholder:text-text-muted transition-colors" required />
+            </div>
+            <div>
+              <label htmlFor="reg-email" className="block text-sm font-medium text-text-primary mb-1.5">Email</label>
+              <input id="reg-email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-3.5 py-2.5 border border-border rounded-lg bg-surface text-sm text-text-primary placeholder:text-text-muted transition-colors" required />
+            </div>
+            <div>
+              <label htmlFor="reg-password" className="block text-sm font-medium text-text-primary mb-1.5">Password</label>
+              <input id="reg-password" type="password" placeholder="Password (8+ chars)" value={password} onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-3.5 py-2.5 border border-border rounded-lg bg-surface text-sm text-text-primary placeholder:text-text-muted transition-colors" required minLength={8} />
+            </div>
+            <button type="submit" disabled={loading}
+              className="w-full bg-violet text-white py-2.5 rounded-lg font-medium hover:bg-violet-light transition-colors cursor-pointer disabled:opacity-60 flex items-center justify-center gap-2">
+              {loading && <Loader2 size={16} className="animate-spin" />}
+              {loading ? "Creating account..." : "Create account"}
+            </button>
+          </form>
+
+          <p className="text-sm text-center text-text-secondary mt-6">
+            Already have an account?{" "}
+            <Link to="/login" className="text-violet font-medium hover:text-violet-light transition-colors">Sign in</Link>
+          </p>
         </div>
-        <button type="submit" className="w-full bg-navy text-white py-2 rounded hover:bg-navy/90 cursor-pointer">Register</button>
-        <p className="text-sm text-center">
-          Have an account? <Link to="/login" className="text-violet">Login</Link>
-        </p>
-      </form>
+      </div>
     </div>
   );
 }
