@@ -131,7 +131,7 @@ export default function Step5Interaction() {
           </div>
 
           {/* Chat Panel */}
-          <div className="lg:col-span-3 flex flex-col bg-white rounded-lg border border-gray-200 h-[500px]">
+          <div className="lg:col-span-3 flex flex-col bg-white rounded-lg border border-gray-200 h-[calc(100vh-280px)] min-h-[300px]">
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3">
               {messages.length === 0 && (

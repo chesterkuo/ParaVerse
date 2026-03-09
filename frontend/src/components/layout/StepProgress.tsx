@@ -22,10 +22,16 @@ export function StepProgress({ currentStep }: { currentStep: number }) {
               ? "bg-violet text-white"
               : step.num < currentStep
               ? "bg-violet/20 text-violet"
-              : "bg-gray-200 text-gray-400 pointer-events-none"
+              : "bg-gray-200 text-gray-400"
             }`}
         >
-          <span className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center text-xs">
+          <span className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-semibold
+            ${step.num === currentStep
+              ? "bg-white/30 text-white"
+              : step.num < currentStep
+              ? "bg-violet/30 text-violet"
+              : "bg-gray-300 text-gray-500"
+            }`}>
             {step.num}
           </span>
           {step.label}
