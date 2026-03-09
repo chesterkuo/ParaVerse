@@ -137,3 +137,32 @@ export async function getSimulationEvents(
   );
   return result.rows;
 }
+
+export async function insertSimulationEvent(params: {
+  simulationId: string;
+  eventType: string;
+  agentId?: string | null;
+  branchId?: string | null;
+  platform?: string | null;
+  content?: string | null;
+  simTimestamp?: number;
+  metadata?: Record<string, unknown>;
+}): Promise<SimulationEventRow> {
+  const result = await query<SimulationEventRow>(
+    `INSERT INTO simulation_events
+       (simulation_id, event_type, agent_id, branch_id, platform, content, sim_timestamp, metadata)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+     RETURNING *`,
+    [
+      params.simulationId,
+      params.eventType,
+      params.agentId ?? null,
+      params.branchId ?? null,
+      params.platform ?? null,
+      params.content ?? null,
+      params.simTimestamp ?? 0,
+      JSON.stringify(params.metadata ?? {}),
+    ]
+  );
+  return result.rows[0];
+}
