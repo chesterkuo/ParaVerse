@@ -42,7 +42,13 @@ class ConcordiaSimulation:
         """Initialize simulation components."""
         from gemini_model import GeminiLanguageModel
         from agent_factory import create_concordia_agents
-        from game_masters import BaseGameMaster, CrisisPrGameMaster
+        from game_masters import (
+            BaseGameMaster,
+            CrisisPrGameMaster,
+            PolicyLabGameMaster,
+            WarGameGameMaster,
+            TrainLabGameMaster,
+        )
 
         # Create the language model
         self.model = GeminiLanguageModel(
@@ -64,6 +70,9 @@ class ConcordiaSimulation:
         # Setup game master
         SCENARIO_GM_MAP = {
             "crisis_pr": CrisisPrGameMaster,
+            "policy_lab": PolicyLabGameMaster,
+            "war_game": WarGameGameMaster,
+            "train_lab": TrainLabGameMaster,
         }
         gm_class = SCENARIO_GM_MAP.get(self.scenario_type, BaseGameMaster)
         self.game_master = gm_class(self.config)
