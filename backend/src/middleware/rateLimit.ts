@@ -39,11 +39,14 @@ export function rateLimit(opts: RateLimitOptions) {
 
     try {
       const client = getRedis();
-      const current = await client.incr(key);
-
-      if (current === 1) {
-        await client.pexpire(key, opts.windowMs);
-      }
+      const current = await client.eval(
+        `local c = redis.call('INCR', KEYS[1])
+         if c == 1 then redis.call('PEXPIRE', KEYS[1], ARGV[1]) end
+         return c`,
+        1,
+        key,
+        opts.windowMs
+      ) as number;
 
       if (current > opts.max) {
         throw new HTTPException(429, {

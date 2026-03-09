@@ -3,7 +3,7 @@ import { HTTPException } from "hono/http-exception";
 import { authMiddleware, type AuthContext } from "../middleware/auth";
 import { getReportService } from "../services/reportService";
 import { getReportSections } from "../db/queries/reports";
-import { getSimulation } from "../db/queries/simulations";
+import { getSimulationForOwner } from "../db/queries/simulations";
 import type { ApiResponse } from "@shared/types/api";
 
 const report = new Hono();
@@ -15,7 +15,7 @@ report.post("/:simulationId/report", async (c) => {
   const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
 
-  const sim = await getSimulation(simulationId);
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
   if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
 
   const reportService = getReportService();
@@ -33,7 +33,11 @@ report.post("/:simulationId/report", async (c) => {
 
 // Get report sections
 report.get("/:simulationId/report", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
 
   const sections = await getReportSections(simulationId);
 

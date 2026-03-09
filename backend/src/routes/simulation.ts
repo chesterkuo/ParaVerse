@@ -4,11 +4,14 @@ import { HTTPException } from "hono/http-exception";
 import { authMiddleware, type AuthContext } from "../middleware/auth";
 import { getSimulationService } from "../services/simulationService";
 import { getAgentService } from "../services/agentService";
+import { getProject } from "../db/queries/projects";
 import {
   getSimulation,
+  getSimulationForOwner,
   getSimulationEvents,
 } from "../db/queries/simulations";
 import type { ApiResponse } from "@shared/types/api";
+import { logger } from "../utils/logger";
 
 const VALID_SCENARIO_TYPES = [
   "fin_sentiment",
@@ -50,6 +53,9 @@ simulation.post("/", async (c) => {
   const body = await c.req.json();
   const input = createSchema.parse(body);
 
+  const project = await getProject(input.project_id, auth.userId);
+  if (!project) throw new HTTPException(404, { message: "Project not found" });
+
   const simService = getSimulationService();
   const sim = await simService.create(input.project_id, input.config);
 
@@ -58,7 +64,7 @@ simulation.post("/", async (c) => {
   agentService
     .generateAgents(sim.id, input.config.scenario_type, input.config.agent_count)
     .catch((err) => {
-      console.error("Agent generation failed:", err);
+      logger.error({ err, simId: sim.id }, "Agent generation failed");
     });
 
   return c.json(
@@ -73,9 +79,10 @@ simulation.post("/", async (c) => {
 
 // Start simulation
 simulation.post("/:simulationId/start", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
 
-  const sim = await getSimulation(simulationId);
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
   if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
 
   const simService = getSimulationService();
@@ -91,7 +98,11 @@ simulation.post("/:simulationId/start", async (c) => {
 
 // Get simulation status
 simulation.get("/:simulationId/status", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
 
   const simService = getSimulationService();
   const status = await simService.getStatus(simulationId);
@@ -105,13 +116,16 @@ simulation.get("/:simulationId/status", async (c) => {
 
 // Get simulation events
 simulation.get("/:simulationId/events", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
-  const limit = c.req.query("limit")
-    ? parseInt(c.req.query("limit")!)
-    : undefined;
-  const offset = c.req.query("offset")
-    ? parseInt(c.req.query("offset")!)
-    : undefined;
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
+  const limitRaw = c.req.query("limit") ? parseInt(c.req.query("limit")!) : undefined;
+  const offsetRaw = c.req.query("offset") ? parseInt(c.req.query("offset")!) : undefined;
+  const limit = limitRaw && limitRaw > 0 && limitRaw <= 10000 ? limitRaw : undefined;
+  const offset = offsetRaw && offsetRaw >= 0 ? offsetRaw : undefined;
   const eventType = c.req.query("event_type") || undefined;
 
   const events = await getSimulationEvents(simulationId, {
@@ -129,7 +143,12 @@ simulation.get("/:simulationId/events", async (c) => {
 
 // Interview agent
 simulation.post("/:simulationId/interview", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
   const body = await c.req.json();
   const interviewSchema = z.object({
     agent_id: z.string(),
@@ -153,7 +172,12 @@ simulation.post("/:simulationId/interview", async (c) => {
 
 // Fork scenario
 simulation.post("/:simulationId/fork", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
   const body = await c.req.json();
   const forkSchema = z.object({
     branch_label: z.string().min(1),
@@ -177,7 +201,11 @@ simulation.post("/:simulationId/fork", async (c) => {
 
 // Save checkpoint
 simulation.post("/:simulationId/checkpoint", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
 
   const simService = getSimulationService();
   await simService.saveCheckpoint(simulationId);
@@ -191,7 +219,12 @@ simulation.post("/:simulationId/checkpoint", async (c) => {
 
 // Inject manual action
 simulation.post("/:simulationId/manual-action", async (c) => {
+  const auth = c.get("auth") as AuthContext;
   const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
   const body = await c.req.json();
   const actionSchema = z.object({
     action: z.record(z.unknown()),

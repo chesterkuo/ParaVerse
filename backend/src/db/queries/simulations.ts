@@ -79,6 +79,19 @@ export async function getSimulation(id: string): Promise<SimulationRow | null> {
   return result.rows[0] || null;
 }
 
+export async function getSimulationForOwner(
+  id: string,
+  ownerId: string
+): Promise<SimulationRow | null> {
+  const result = await query<SimulationRow>(
+    `SELECT s.* FROM simulations s
+     JOIN projects p ON s.project_id = p.id
+     WHERE s.id = $1 AND p.owner_id = $2`,
+    [id, ownerId]
+  );
+  return result.rows[0] || null;
+}
+
 export async function getSimulationsByProject(projectId: string): Promise<SimulationRow[]> {
   const result = await query<SimulationRow>(
     `SELECT * FROM simulations WHERE project_id = $1 ORDER BY created_at DESC`,
