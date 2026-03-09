@@ -25,5 +25,35 @@ services:
       timeout: 5s
       retries: 5
 
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.bun
+    environment:
+      DATABASE_URL: postgresql://paraverse:${DB_PASSWORD:-paraverse_dev}@postgres:5432/paraverse
+      REDIS_URL: redis://redis:6379
+      LLM_API_KEY: ${LLM_API_KEY}
+      LLM_BASE_URL: ${LLM_BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai/}
+      LLM_MODEL_GENERAL: ${LLM_MODEL_GENERAL:-gemini-2.5-flash}
+      LLM_MODEL_BOOST: ${LLM_MODEL_BOOST:-gemini-2.5-flash}
+      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production-32chars!}
+      PORT: "5001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "5001:5001"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile.react
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
 volumes:
   pgdata:

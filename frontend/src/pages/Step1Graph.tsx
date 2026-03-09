@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { projectsApi } from "@/api/projects";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { FileUpload } from "@/components/ui/FileUpload";
 import { TaskProgress } from "@/components/ui/TaskProgress";
+import { KnowledgeGraph } from "@/components/graph/KnowledgeGraph";
+import { GraphControls } from "@/components/graph/GraphControls";
 
 export default function Step1Graph() {
   const { projectId } = useParams();
@@ -43,6 +45,28 @@ export default function Step1Graph() {
   const handleFileSelect = (file: File) => {
     uploadMutation.mutate(file);
   };
+
+  interface GraphNodeResponse {
+    id: string;
+    name?: string;
+    label?: string;
+    type: string;
+  }
+
+  interface GraphEdgeResponse {
+    source_node_id?: string;
+    source?: string;
+    target_node_id?: string;
+    target?: string;
+    relation_type?: string;
+    label?: string;
+  }
+
+  const { data: graphData } = useQuery({
+    queryKey: ["graph", projectId],
+    queryFn: () => projectsApi.getGraph(projectId!).then((r) => r.data.data as { nodes: GraphNodeResponse[]; edges?: GraphEdgeResponse[]; links?: GraphEdgeResponse[] }),
+    enabled: !!projectId && buildDone,
+  });
 
   const canBuild = uploadDone || uploadedFile;
   const canProceed = buildDone;
@@ -110,6 +134,21 @@ export default function Step1Graph() {
           Next Step
         </button>
       </div>
+
+      {graphData?.nodes && graphData.nodes.length > 0 && (
+        <div className="space-y-4">
+          <h3 className="text-sm font-semibold text-gray-600">Knowledge Graph</h3>
+          <GraphControls />
+          <KnowledgeGraph
+            nodes={graphData.nodes.map((n) => ({ id: n.id, label: n.name || n.label || n.id, type: n.type }))}
+            links={(graphData.edges || graphData.links || []).map((e) => ({
+              source: e.source_node_id || e.source || "",
+              target: e.target_node_id || e.target || "",
+              label: e.relation_type || e.label,
+            }))}
+          />
+        </div>
+      )}
     </div>
   );
 }
