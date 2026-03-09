@@ -27,9 +27,9 @@ const RRF_K = 60;
 function getTableConfig(table: string) {
   switch (table) {
     case "documents":
-      return { contentCol: "content", titleCol: "title", filterCol: "project_id", nameCol: null };
+      return { contentCol: "content", titleCol: "filename", filterCol: "project_id", nameCol: null };
     case "simulation_events":
-      return { contentCol: "content", titleCol: null, filterCol: "project_id", nameCol: null };
+      return { contentCol: "content", titleCol: null, filterCol: "simulation_id", nameCol: null };
     case "ontology_nodes":
       return { contentCol: "description", titleCol: null, filterCol: "project_id", nameCol: "name" };
     default:

@@ -137,7 +137,7 @@ export function AcceptanceMatrixHeatmap({ simulationId }: AcceptanceMatrixProps)
         <span className="text-[10px] text-gray-400 uppercase tracking-wider">Score</span>
         <div className="flex items-center gap-1">
           <span className="w-3 h-3 rounded bg-green-500" />
-          <span className="text-[10px] text-gray-500">>=70</span>
+          <span className="text-[10px] text-gray-500">{"\u226570"}</span>
         </div>
         <div className="flex items-center gap-1">
           <span className="w-3 h-3 rounded bg-yellow-400" />
