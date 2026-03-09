@@ -2,6 +2,8 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { HTTPException } from "hono/http-exception";
 import { authMiddleware, type AuthContext } from "../middleware/auth";
+import { quotaCheck } from "../middleware/quotaEnforcement";
+import { recordUsage } from "../db/queries/usage";
 import { getSimulationService } from "../services/simulationService";
 import { getAgentService } from "../services/agentService";
 import { getProject } from "../db/queries/projects";
@@ -50,7 +52,7 @@ const simulation = new Hono();
 simulation.use("*", authMiddleware);
 
 // Create simulation (with agent generation)
-simulation.post("/", async (c) => {
+simulation.post("/", quotaCheck("simulation"), async (c) => {
   const auth = c.get("auth") as AuthContext;
   const body = await c.req.json();
   const input = createSchema.parse(body);
@@ -60,6 +62,11 @@ simulation.post("/", async (c) => {
 
   const simService = getSimulationService();
   const sim = await simService.create(input.project_id, input.config);
+
+  // Record usage for quota tracking
+  recordUsage(auth.userId, "simulation", sim.id).catch((err) => {
+    logger.error({ err, simId: sim.id }, "Failed to record simulation usage");
+  });
 
   // Generate agents async
   const agentService = getAgentService();
