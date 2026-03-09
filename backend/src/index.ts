@@ -7,7 +7,7 @@ import { auth } from "./routes/auth";
 import { projects } from "./routes/projects";
 import { graph } from "./routes/graph";
 import { simulation } from "./routes/simulation";
-import { report } from "./routes/report";
+import { report, reportExport } from "./routes/report";
 import { tasks } from "./routes/tasks";
 import { interaction, websocket } from "./routes/interaction";
 import { logger } from "./utils/logger";
@@ -26,6 +26,8 @@ api.route("/projects", graph);
 api.route("/simulations", simulation);
 api.route("/simulations", report);
 api.route("/tasks", tasks);
+// Mount PDF export before api routes (no auth middleware - uses query param token)
+app.route("/api/v1/simulations", reportExport);
 app.route("/api/v1", api);
 app.route("/ws", interaction);
 

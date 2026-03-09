@@ -10,8 +10,12 @@ import { jwtVerify } from "jose";
 
 const report = new Hono();
 
-// Export report as PDF (no authMiddleware - uses query param token for window.open)
-report.get("/:simulationId/report/export", async (c) => {
+report.use("*", authMiddleware);
+
+// Separate router for PDF export (no authMiddleware - uses query param token for window.open)
+const reportExport = new Hono();
+
+reportExport.get("/:simulationId/report/export", async (c) => {
   const token = c.req.query("token") || "";
   const secret = new TextEncoder().encode(process.env.JWT_SECRET || "");
   let userId: string;
@@ -72,8 +76,6 @@ report.get("/:simulationId/report/export", async (c) => {
   });
 });
 
-report.use("*", authMiddleware);
-
 // Generate report (async)
 report.post("/:simulationId/report", async (c) => {
   const auth = c.get("auth") as AuthContext;
@@ -112,4 +114,4 @@ report.get("/:simulationId/report", async (c) => {
   } satisfies ApiResponse);
 });
 
-export { report };
+export { report, reportExport };
