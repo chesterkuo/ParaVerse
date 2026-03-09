@@ -29,10 +29,10 @@ export function Sidebar() {
         ))}
       </nav>
       <div className="p-4 border-t border-white/10 space-y-2">
-        <button onClick={toggleSidebar} className="text-xs text-white/50 hover:text-white">
+        <button onClick={toggleSidebar} className="text-xs text-white/50 hover:text-white cursor-pointer">
           Toggle Sidebar
         </button>
-        <button onClick={logout} className="text-xs text-red-400 hover:text-red-300">
+        <button onClick={logout} className="text-xs text-red-400 hover:text-red-300 cursor-pointer">
           Logout
         </button>
       </div>
