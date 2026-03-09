@@ -32,6 +32,6 @@ app.route("/api/v1", api);
 app.route("/ws", interaction);
 
 const port = parseInt(process.env.PORT || "5001");
-logger.info({ port }, "ParaVerse API running");
 
-export default { port, fetch: app.fetch, websocket };
+const server = Bun.serve({ port, fetch: app.fetch, websocket });
+logger.info({ port: server.port }, "ParaVerse API running");

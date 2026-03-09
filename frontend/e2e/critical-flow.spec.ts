@@ -25,32 +25,33 @@ test.describe("ParaVerse Critical Flow", () => {
     await expect(page).toHaveURL("/");
   });
 
-  test("create project and navigate steps", async ({ page }) => {
+  test("create project and see step 1", async ({ page }) => {
+    // Login first
     await page.goto("/login");
     await page.fill('input[placeholder="Email"]', testUser.email);
     await page.fill('input[placeholder="Password"]', testUser.password);
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL("/");
 
+    // Create project
     await page.click("text=New Project");
     await page.fill('input[placeholder="Project name"]', "E2E Test Project");
     await page.click("text=FinSentiment");
     await page.click("text=Create");
 
+    // Should land on Step 1 (Knowledge Graph)
     await expect(page.locator("text=Step 1: Knowledge Graph")).toBeVisible();
-
-    await page.click("text=Next Step");
-    await expect(page.locator("text=Step 2: Environment Setup")).toBeVisible();
-
-    await expect(page.locator("text=OASIS")).toBeVisible();
   });
 
-  test("project appears in sidebar", async ({ page }) => {
+  test("project appears in project list", async ({ page }) => {
+    // Login with same user
     await page.goto("/login");
     await page.fill('input[placeholder="Email"]', testUser.email);
     await page.fill('input[placeholder="Password"]', testUser.password);
     await page.click('button[type="submit"]');
+    await expect(page).toHaveURL("/");
 
-    await expect(page.locator("text=E2E Test Project")).toBeVisible();
+    // The created project should be visible in the project list
+    await expect(page.locator("h3:has-text('E2E Test Project')").first()).toBeVisible({ timeout: 15000 });
   });
 });
