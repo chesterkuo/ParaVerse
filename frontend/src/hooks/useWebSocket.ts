@@ -11,7 +11,7 @@ export function useWebSocket(path: string) {
   const [events, setEvents] = useState<SimEvent[]>([]);
   const [connected, setConnected] = useState(false);
   const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeout = useRef<ReturnType<typeof setTimeout>>();
+  const reconnectTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const connect = useCallback(() => {
     const ws = new WebSocket(`${WS_BASE}${path}`);
