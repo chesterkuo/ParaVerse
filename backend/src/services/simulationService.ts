@@ -7,6 +7,7 @@ import {
   createSimulation,
   updateSimulation,
   getSimulation,
+  insertSimulationEvent,
   type SimulationRow,
 } from "../db/queries/simulations";
 import { getAgentService } from "./agentService";
@@ -181,6 +182,31 @@ export class SimulationService {
 
   private async handleEvent(simId: string, event: IpcEvent): Promise<void> {
     logger.debug({ simId, eventType: event.type }, "Simulation event");
+
+    // Persist all non-status events to database
+    const PERSIST_TYPES = new Set([
+      "agent_action",
+      "grounded_var",
+      "branch_update",
+      "interview_response",
+    ]);
+
+    if (PERSIST_TYPES.has(event.type)) {
+      try {
+        await insertSimulationEvent({
+          simulationId: simId,
+          eventType: event.type,
+          agentId: (event.agent_id as string) ?? null,
+          branchId: (event.branch_id as string) ?? null,
+          platform: (event.platform as string) ?? null,
+          content: (event.content as string) ?? null,
+          simTimestamp: (event.sim_timestamp as number) ?? 0,
+          metadata: (event.metadata as Record<string, unknown>) ?? {},
+        });
+      } catch (err) {
+        logger.error({ err, simId, eventType: event.type }, "Failed to persist event");
+      }
+    }
 
     if (event.type === "grounded_var") {
       const sim = await getSimulation(simId);
