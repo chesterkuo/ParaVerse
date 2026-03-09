@@ -6,6 +6,7 @@ import { getProject } from "../db/queries/projects";
 import { createTask, updateTask } from "../db/queries/tasks";
 import { getDocumentService } from "../services/documentService";
 import { getGraphService } from "../services/graphService";
+import { query } from "../db/client";
 import type { ApiResponse } from "@shared/types/api";
 
 const graph = new Hono();
@@ -72,10 +73,19 @@ graph.post("/:projectId/graph/build", async (c) => {
   if (!project) throw new HTTPException(404, { message: "Project not found" });
 
   const body = await c.req.json().catch(() => ({}));
-  const chunks = (body.chunks as string[]) || [];
+  let chunks = (body.chunks as string[]) || [];
+
+  // If no chunks provided, fetch from stored documents
+  if (chunks.length === 0) {
+    const docs = await query<{ content: string }>(
+      "SELECT content FROM documents WHERE project_id = $1 ORDER BY chunk_index",
+      [projectId]
+    );
+    chunks = docs.rows.map((r) => r.content);
+  }
 
   if (chunks.length === 0) {
-    throw new HTTPException(400, { message: "No chunks provided" });
+    throw new HTTPException(400, { message: "No documents found. Upload a document first." });
   }
 
   const task = await createTask("graph_build", projectId, auth.userId);

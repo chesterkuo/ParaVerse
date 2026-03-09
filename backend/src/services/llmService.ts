@@ -71,7 +71,7 @@ export class LlmService {
   }
 
   async embed(texts: string[]): Promise<number[][]> {
-    const response = await this.client.embeddings.create({ model: this.embeddingModel, input: texts });
+    const response = await this.client.embeddings.create({ model: this.embeddingModel, input: texts, dimensions: 768 });
     return response.data.map((d) => d.embedding);
   }
 
@@ -89,7 +89,7 @@ export function getLlmService(): LlmService {
       baseURL: process.env.LLM_BASE_URL || "https://generativelanguage.googleapis.com/v1beta/openai/",
       generalModel: process.env.LLM_MODEL_GENERAL || "gemini-2.5-flash",
       boostModel: process.env.LLM_MODEL_BOOST || "gemini-2.5-flash",
-      embeddingModel: process.env.EMBEDDING_MODEL || "text-embedding-004",
+      embeddingModel: process.env.EMBEDDING_MODEL || "gemini-embedding-001",
     });
   }
   return instance;
