@@ -34,7 +34,7 @@ export function SimulationStatus({ status, stats, groundedVars }: SimulationStat
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {statEntries.map(([key, value]) => (
               <div key={key} className="bg-gray-50 rounded-md p-2">
-                <div className="text-xs text-gray-400">{key}</div>
+                <div className="text-xs text-gray-400">{key.replace(/_/g, " ")}</div>
                 <div className="text-sm font-semibold text-navy">{String(value)}</div>
               </div>
             ))}
@@ -51,9 +51,9 @@ export function SimulationStatus({ status, stats, groundedVars }: SimulationStat
           <div className="space-y-1.5">
             {varEntries.map(([key, value]) => (
               <div key={key} className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">{key}</span>
+                <span className="text-sm text-gray-600">{key.replace(/_/g, " ")}</span>
                 <div className="flex items-center gap-2">
-                  <div className="w-24 h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="w-24 h-3 bg-gray-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-concordia rounded-full transition-all"
                       style={{ width: `${Math.min(100, Math.max(0, value * 100))}%` }}

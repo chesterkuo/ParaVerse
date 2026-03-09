@@ -40,13 +40,16 @@ export function TaskProgress({ taskId, taskType, onComplete }: TaskProgressProps
           {pct}%
         </span>
       </div>
-      <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+      <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
         <div
           className={`h-full rounded-full transition-all duration-300 ${
             isFailed ? "bg-red-500" : isCompleted ? "bg-green-500" : "bg-violet"
           }`}
           style={{ width: `${pct}%` }}
         />
+      </div>
+      <div className="text-xs text-gray-500">
+        {isFailed ? "Failed" : isCompleted ? "Completed" : "In progress"}
       </div>
       {isFailed && data.error && (
         <p className="text-xs text-red-600 mt-1">{String(data.error)}</p>
