@@ -4,6 +4,9 @@ import { getSimulationService } from "../services/simulationService";
 import { verifyAccessToken } from "../services/authService";
 import { query } from "../db/client";
 import { logger } from "../utils/logger";
+import { getAgentById } from "../db/queries/agents";
+import { getSimulationEvents } from "../db/queries/simulations";
+import { getLlmService } from "../services/llmService";
 
 const { upgradeWebSocket, websocket } = createBunWebSocket();
 
@@ -51,13 +54,26 @@ interaction.get(
         }
       },
 
-      onMessage(evt, ws) {
+      async onMessage(evt, ws) {
         try {
           const cmd = JSON.parse(String(evt.data));
           const simService = getSimulationService();
           const runner = simService.getRunner(simId);
+
           if (runner && cmd.type) {
             runner.sendCommand(cmd);
+          } else if (cmd.type === "interview_agent" && cmd.agent_id && cmd.question) {
+            // Simulation completed — use LLM to generate in-character response
+            handleOfflineInterview(simId, cmd.agent_id, cmd.question, ws, cmd.locale).catch((err) => {
+              logger.error({ err, simId, agentId: cmd.agent_id }, "Offline interview failed");
+              try {
+                (ws as any).send(JSON.stringify({
+                  type: "interview_response",
+                  agent_id: cmd.agent_id,
+                  response: "Sorry, I'm unable to respond right now. Please try again later.",
+                }));
+              } catch { /* disconnected */ }
+            });
           }
         } catch {
           (ws as any).send(JSON.stringify({ type: "error", message: "Invalid command" }));
@@ -151,5 +167,75 @@ interaction.get(
     };
   })
 );
+
+const LOCALE_INSTRUCTIONS: Record<string, string> = {
+  en: "Respond in English.",
+  "zh-CN": "请用简体中文回答。",
+  "zh-TW": "請用繁體中文回答。",
+  ko: "한국어로 답변해 주세요.",
+  ja: "日本語で回答してください。",
+  fr: "Répondez en français.",
+  es: "Responde en español.",
+  vi: "Vui lòng trả lời bằng tiếng Việt.",
+  th: "กรุณาตอบเป็นภาษาไทย",
+  nl: "Antwoord in het Nederlands.",
+};
+
+async function handleOfflineInterview(
+  simId: string,
+  agentId: string,
+  question: string,
+  ws: any,
+  locale?: string
+): Promise<void> {
+  const agent = await getAgentById(agentId);
+  if (!agent) {
+    ws.send(JSON.stringify({
+      type: "interview_response",
+      agent_id: agentId,
+      response: "Agent not found.",
+    }));
+    return;
+  }
+
+  // Load recent simulation events for this agent to give context
+  const events = await getSimulationEvents(simId, {
+    limit: 20,
+    eventType: "agent_action",
+  });
+  const agentEvents = events.filter((e) => e.agent_id === agentId);
+  const recentActions = agentEvents
+    .slice(0, 10)
+    .map((e) => e.content)
+    .filter(Boolean)
+    .join("\n");
+
+  const localeInstruction = locale && LOCALE_INSTRUCTIONS[locale]
+    ? LOCALE_INSTRUCTIONS[locale]
+    : LOCALE_INSTRUCTIONS.en;
+
+  const systemPrompt = `You are ${agent.name}, a simulated agent in a social simulation.
+
+Your persona: ${agent.persona}
+Your demographics: ${JSON.stringify(agent.demographics)}
+
+${recentActions ? `Your recent actions in the simulation:\n${recentActions}\n` : ""}
+
+Stay in character. Answer the interviewer's question based on your persona, beliefs, and experiences in the simulation. Be concise but insightful. Respond in 2-4 sentences.
+
+${localeInstruction}`;
+
+  const llm = getLlmService();
+  const response = await llm.chat([
+    { role: "system", content: systemPrompt },
+    { role: "user", content: question },
+  ], { temperature: 0.8, maxTokens: 300 });
+
+  ws.send(JSON.stringify({
+    type: "interview_response",
+    agent_id: agentId,
+    response,
+  }));
+}
 
 export { interaction, websocket };

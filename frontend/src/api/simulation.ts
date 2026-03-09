@@ -21,5 +21,7 @@ export const simulationApi = {
     api.post(`/simulations/${id}/checkpoints/load`, { filename }),
   manualAction: (id: string, action: Record<string, unknown>) =>
     api.post(`/simulations/${id}/manual-action`, { action }),
+  listAgents: (simulationId: string) =>
+    api.get(`/simulations/${simulationId}/agents`),
   getTaskStatus: (taskId: string) => api.get(`/tasks/${taskId}`),
 };

@@ -177,6 +177,22 @@ simulation.get("/:simulationId/events", async (c) => {
   } satisfies ApiResponse);
 });
 
+// List agents for a simulation
+simulation.get("/:simulationId/agents", async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
+  const agents = await getAgentsBySimulation(simulationId);
+  return c.json({
+    success: true,
+    data: agents,
+    error: null,
+  } satisfies ApiResponse);
+});
+
 // Interview agent
 simulation.post("/:simulationId/interview", async (c) => {
   const auth = c.get("auth") as AuthContext;
