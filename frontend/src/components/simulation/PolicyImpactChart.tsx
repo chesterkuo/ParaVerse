@@ -105,7 +105,7 @@ export function PolicyImpactChart({ events }: { events: PolicyEvent[] }) {
           />
           <Tooltip
             contentStyle={{ fontSize: 12, borderRadius: 8 }}
-            formatter={(value: number, name: string) => [value.toFixed(1), VAR_LABELS[name] ?? name]}
+            formatter={((value: unknown, name: string) => [typeof value === "number" ? value.toFixed(1) : String(value ?? ""), VAR_LABELS[name] ?? name]) as never}
           />
           <Legend
             wrapperStyle={{ fontSize: 12 }}
