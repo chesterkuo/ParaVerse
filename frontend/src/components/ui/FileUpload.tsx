@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { Upload, FileText } from "lucide-react";
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
@@ -71,8 +72,8 @@ export function FileUpload({ onFileSelect, accept = DEFAULT_ACCEPT, disabled = f
         disabled={disabled}
       />
       <div className="space-y-2">
-        <div className="text-3xl text-gray-300">
-          {isDragging ? "\u2B07" : "\u{1F4C4}"}
+        <div className="flex justify-center text-gray-300">
+          {isDragging ? <Upload size={32} /> : <FileText size={32} />}
         </div>
         <p className="text-sm font-medium text-gray-600">
           {isDragging ? "Drop file here" : "Drag & drop a file or click to browse"}
