@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { useSimulationStore } from "@/store/simulationStore";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { humanizeAgentId } from "@/utils/humanize";
 
 interface ChatMessage {
   role: "user" | "agent";
@@ -111,7 +112,7 @@ export default function Step5Interaction() {
                       ${effectiveAgent === id ? "bg-violet/10 text-violet font-medium" : "hover:bg-gray-50 text-gray-700"}
                     `}
                   >
-                    Agent {id.slice(0, 8)}
+                    {humanizeAgentId(id)}
                   </button>
                 ))
               )}
@@ -152,7 +153,7 @@ export default function Step5Interaction() {
                   >
                     {msg.role === "agent" && msg.agentId && (
                       <div className="text-[10px] text-gray-400 mb-0.5">
-                        Agent {msg.agentId.slice(0, 8)}
+                        {humanizeAgentId(msg.agentId)}
                       </div>
                     )}
                     {msg.content}

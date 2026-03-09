@@ -1,4 +1,5 @@
 import { useRef, useEffect } from "react";
+import { humanizeAgentId, humanizeEventType } from "@/utils/humanize";
 
 interface SimEvent {
   event_type: string;
@@ -55,11 +56,11 @@ export function AgentFeed({ events }: { events: SimEvent[] }) {
                   className="inline-block px-1.5 py-0.5 rounded text-[10px] font-semibold text-white"
                   style={{ backgroundColor: getEventColor(event.event_type) }}
                 >
-                  {event.event_type}
+                  {humanizeEventType(event.event_type)}
                 </span>
                 {event.agent_id && (
                   <span className="text-xs text-gray-400">
-                    Agent: {event.agent_id.slice(0, 8)}
+                    {humanizeAgentId(event.agent_id)}
                   </span>
                 )}
               </div>
