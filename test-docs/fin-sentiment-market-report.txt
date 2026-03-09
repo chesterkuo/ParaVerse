@@ -1,0 +1,74 @@
+Global Tech Sector Q4 2025 Sentiment Analysis Report
+Prepared by: Meridian Capital Research | January 2026
+
+EXECUTIVE SUMMARY
+
+The global technology sector experienced a turbulent Q4 2025, driven by regulatory crackdowns in the EU, a surprise rate hike by the Federal Reserve, and a wave of AI-related earnings surprises. Investor sentiment shifted dramatically across subsectors, with semiconductor stocks rallying 18% while social media platforms declined 12%.
+
+KEY MARKET EVENTS
+
+1. EU AI Regulation Act (October 15, 2025)
+The European Parliament passed the comprehensive AI Regulation Act, imposing strict compliance requirements on companies deploying generative AI. Major affected companies include OpenAI, Google DeepMind, Meta AI, and Anthropic. The regulation requires algorithmic transparency, mandatory bias audits, and user consent frameworks. Share prices of AI-focused companies dropped an average of 8.3% in the week following the announcement. However, compliance-tech firms such as OneTrust and TrustArc saw gains of 15-22%.
+
+2. Federal Reserve Rate Decision (November 3, 2025)
+The Federal Reserve unexpectedly raised interest rates by 25 basis points to 5.75%, citing persistent inflation in the services sector. This surprised markets, which had priced in a hold. The Nasdaq Composite fell 3.2% on the day. Growth stocks were disproportionately affected, with high-P/E names like Palantir (-9.1%), Snowflake (-7.8%), and CrowdStrike (-6.4%) seeing the steepest declines. Value-oriented tech firms such as IBM (+2.1%) and Cisco (+1.8%) outperformed.
+
+3. NVIDIA Earnings Beat (November 20, 2025)
+NVIDIA reported Q3 FY2026 revenue of $42.5 billion, beating consensus estimates of $38.2 billion by 11%. Data center revenue surged 95% year-over-year, driven by Blackwell GPU demand. The stock rose 14% after hours. This catalyzed a broader semiconductor rally, with AMD (+8.2%), Broadcom (+6.7%), and TSMC (+5.1%) all gaining in sympathy.
+
+4. TikTok US Ban Ruling (December 8, 2025)
+The US Supreme Court upheld the TikTok ban, giving ByteDance 90 days to divest its US operations. This sent shockwaves through the social media sector. Meta Platforms rose 7.3% as investors anticipated market share gains. Snap Inc. gained 12.4%. Meanwhile, emerging social platforms like Bluesky and Mastodon saw user sign-up surges of 300-400%.
+
+SENTIMENT INDICATORS
+
+Twitter/X Financial Discourse Analysis (Sample: 2.4M posts):
+- Bullish mentions: 38% (down from 52% in Q3)
+- Bearish mentions: 41% (up from 28% in Q3)
+- Neutral: 21%
+- Most discussed tickers: $NVDA, $META, $AAPL, $TSLA, $GOOGL
+- Dominant themes: AI regulation, interest rates, semiconductor supply chain
+
+Reddit r/wallstreetbets Sentiment (Sample: 890K posts):
+- Most bullish: NVIDIA (82% positive), Palantir (61% positive)
+- Most bearish: Tesla (54% negative), Snap (48% negative)
+- Trending narratives: "AI winter fears are overblown", "Rate cuts coming Q1 2026"
+
+Institutional Investor Survey (Goldman Sachs, December 2025):
+- 67% of fund managers are overweight technology
+- 78% expect AI spending to accelerate in 2026
+- Top concern: Regulatory fragmentation across US, EU, and China
+- 45% plan to increase semiconductor allocation
+
+STAKEHOLDER ANALYSIS
+
+Retail Investors:
+- Sentiment has turned cautious after the rate hike surprise
+- Options activity shows increased put buying on growth names
+- Meme stock activity has declined 60% from 2024 levels
+- Crypto-tech correlation remains high (BTC at $98,400)
+
+Institutional Investors:
+- Large-cap tech remains a consensus overweight
+- Rotation from software-as-a-service into semiconductor/infrastructure plays
+- ESG-focused funds reducing exposure to social media companies
+- Increased interest in AI infrastructure (data centers, power, cooling)
+
+Corporate Insiders:
+- CEO selling activity at NVIDIA, Microsoft, and Apple near 3-year highs
+- Insider buying concentrated in mid-cap cybersecurity firms
+- Stock buyback programs accelerated at Alphabet and Meta
+
+Regulators:
+- SEC investigating AI-related disclosure practices at 12 major tech firms
+- FTC reviewing four pending AI-related acquisitions
+- Department of Justice antitrust probe into cloud computing market (AWS, Azure, GCP)
+
+FORWARD OUTLOOK
+
+Q1 2026 is expected to bring clarity on several fronts:
+- Federal Reserve projected to cut rates in March 2026 (futures pricing: 72% probability)
+- EU AI Act enforcement begins April 2026
+- TikTok divestiture deadline in March 2026
+- NVIDIA Blackwell full production ramp expected by Q2 2026
+
+The consensus view among sell-side analysts is cautiously optimistic, with a 12-month S&P 500 tech sector target implying 8-12% upside. Key risks include geopolitical escalation (Taiwan Strait), unexpected inflation resurgence, and AI spending pullback.

@@ -1,0 +1,127 @@
+Carbon Tax Policy Impact Assessment: Hong Kong 2026 Proposal
+Policy Research Institute | February 2026
+
+EXECUTIVE SUMMARY
+
+The Hong Kong Special Administrative Region Government has proposed a progressive carbon tax to be implemented in three phases from 2027 to 2032. This assessment analyzes the potential economic, social, and environmental impacts across key stakeholder groups. The proposed rate starts at HKD 50 per tonne of CO2 equivalent, rising to HKD 200 per tonne by 2032.
+
+POLICY DESIGN
+
+Phase 1 (2027): HKD 50/tonne CO2e — Large emitters only (>25,000 tonnes/year)
+Phase 2 (2029): HKD 120/tonne CO2e — Medium emitters (>10,000 tonnes/year)
+Phase 3 (2032): HKD 200/tonne CO2e — All commercial emitters (>2,000 tonnes/year)
+
+Revenue allocation:
+- 40% to green technology R&D fund
+- 30% to low-income household energy subsidies
+- 20% to public transit infrastructure
+- 10% to carbon capture research
+
+STAKEHOLDER ANALYSIS
+
+1. Power Generation Companies (CLP Holdings, HK Electric)
+Impact: HIGH
+- Current emissions: ~28 million tonnes CO2e annually
+- Estimated Phase 1 cost: HKD 1.4 billion/year
+- CLP Holdings has committed to net-zero by 2050, currently 30% renewable
+- HK Electric investing HKD 25 billion in offshore wind farm at Lamma Island
+- Expected response: Accelerate coal-to-gas transition, pass 60-70% of costs to consumers
+- Electricity price increase estimate: 8-12% by 2029
+
+2. Transport Sector
+Impact: HIGH
+- Road transport accounts for 18% of Hong Kong's emissions
+- Cathay Pacific alone emits ~11 million tonnes CO2e annually
+- Cross-border trucking companies face double taxation risk (mainland China has separate scheme)
+- MTR Corporation: Already 85% electrified, minimal direct impact
+- Franchised bus companies: Transitioning to electric fleet, will need HKD 8B investment
+- Expected response: Accelerate EV adoption, pass costs to passengers
+
+3. Property Developers (Sun Hung Kai, Henderson Land, New World Development)
+Impact: MEDIUM-HIGH
+- Buildings account for 60% of Hong Kong's electricity consumption
+- Older commercial buildings have high energy intensity
+- Green building premium: 12-18% construction cost increase for Platinum rating
+- Landlords of Grade A offices may absorb costs to maintain competitiveness
+- Expected response: Retrofit existing buildings, mandate green standards for new projects
+
+4. Manufacturing and Industrial
+Impact: MEDIUM
+- Hong Kong's manufacturing base is small (1% of GDP)
+- Most affected: Food processing, cement, plastics
+- Risk of carbon leakage to mainland China or Southeast Asia
+- SME exemption threshold (2,000 tonnes) protects most small manufacturers
+- Expected response: Relocate carbon-intensive operations, invest in efficiency
+
+5. Financial Services Sector
+Impact: LOW-MEDIUM (indirect)
+- Banks required to assess climate risk in lending portfolios
+- Insurance companies face increased claims from climate events
+- HKMA mandating climate stress tests for all authorized institutions by 2028
+- Green bond market in Hong Kong reached HKD 120 billion in 2025
+- Expected response: Develop green finance products, divest from high-carbon assets
+
+6. Low-Income Households
+Impact: HIGH (cost of living)
+- Estimated energy cost increase: HKD 800-1,500/year per household
+- Public housing tenants (46% of population) partially shielded by government subsidy
+- Transport cost increase: HKD 200-500/year
+- Food price increase due to supply chain costs: 2-4%
+- Government mitigation: Direct cash transfers, energy vouchers, transit fare subsidies
+
+7. Environmental NGOs and Advocacy Groups
+Impact: POSITIVE
+- Green groups generally support the tax but argue the rate is too low
+- Greenpeace HK advocates for HKD 100/tonne starting rate
+- WWF Hong Kong supports the proposal with stronger enforcement mechanisms
+- Friends of the Earth HK pushing for faster phase-in timeline
+- Expected response: Lobby for higher rates, monitor enforcement, public campaigns
+
+ECONOMIC MODELING
+
+GDP Impact:
+- Phase 1: -0.1% to -0.3% of GDP
+- Phase 2: -0.4% to -0.8% of GDP
+- Phase 3: -0.6% to -1.2% of GDP
+- Net impact (including green investment stimulus): -0.2% to -0.5%
+
+Employment:
+- Job losses in carbon-intensive sectors: 5,000-8,000
+- Green job creation: 12,000-18,000
+- Net employment impact: Positive (+4,000 to +10,000)
+
+Revenue Projections:
+- Phase 1: HKD 3.8 billion/year
+- Phase 2: HKD 8.2 billion/year
+- Phase 3: HKD 12.5 billion/year (assuming 30% emission reduction by then)
+
+Emission Reduction Targets:
+- 2030 target: 26-36% reduction from 2005 levels (Paris Agreement commitment)
+- Carbon tax contribution to target: Estimated 40-55% of required reductions
+- Remaining gap to be closed by: renewable energy mandates, building standards, transport electrification
+
+INTERNATIONAL COMPARISON
+
+- Singapore: SGD 25/tonne (2024), rising to SGD 50-80 by 2030
+- EU ETS: EUR 65-90/tonne (2025)
+- Canada: CAD 80/tonne (2024), rising to CAD 170 by 2030
+- Japan: JPY 289/tonne (very low, under review)
+- Mainland China: CNY 90/tonne in national ETS (power sector only)
+
+Hong Kong's proposed rate is moderate by international standards but high relative to Asian peers.
+
+POLITICAL FEASIBILITY
+
+Support: Environmental groups, youth voters, international business community (ESG alignment)
+Opposition: Industrial lobby, property developers, transport operators, pro-business legislators
+Swing: Financial services (benefit from green finance but face compliance costs)
+Public opinion poll (December 2025): 54% support, 31% oppose, 15% undecided
+
+RECOMMENDATIONS
+
+1. Implement a border carbon adjustment to prevent carbon leakage
+2. Create a dedicated SME transition fund of HKD 2 billion
+3. Align with mainland China's ETS to avoid double taxation in the GBA
+4. Establish an independent carbon pricing commission for rate reviews
+5. Launch a public education campaign on the benefits of carbon pricing
+6. Consider linking to international carbon markets for price stability
