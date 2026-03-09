@@ -11,6 +11,9 @@ RUN bun install --frozen-lockfile
 COPY backend/ .
 COPY shared/ /shared
 
+# Install PyMuPDF for PDF text extraction
+RUN pip install --break-system-packages -r scripts/requirements.txt
+
 # Set up Python venvs for simulation engines (skip if requirements.txt missing)
 RUN if [ -f simulations/oasis/requirements.txt ]; then \
       cd simulations/oasis && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt; \

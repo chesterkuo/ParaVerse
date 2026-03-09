@@ -127,9 +127,8 @@ export abstract class BaseRunner {
     if (!this.process?.stdin) {
       throw new Error("Runner process not started");
     }
-    const writer = this.process.stdin.getWriter();
-    await writer.write(new TextEncoder().encode(serializeCommand(cmd)));
-    writer.releaseLock();
+    this.process.stdin.write(serializeCommand(cmd));
+    this.process.stdin.flush();
   }
 
   async stop(reason?: string): Promise<void> {

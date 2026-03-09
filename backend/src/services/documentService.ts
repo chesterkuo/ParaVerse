@@ -1,7 +1,11 @@
+import { join } from "path";
 import { chunkText } from "../utils/chunkText";
 import { getLlmService } from "./llmService";
 import { getVectorService } from "./vectorService";
 import { logger } from "../utils/logger";
+
+const PDF_SCRIPT = join(import.meta.dir, "../../scripts/pdf_extract.py");
+const PDF_PYTHON = process.env.PDF_PYTHON || "python3";
 
 export class DocumentService {
   private get llm() { return getLlmService(); }
@@ -9,11 +13,40 @@ export class DocumentService {
 
   async extractText(buffer: Buffer, filename: string): Promise<string> {
     if (filename.toLowerCase().endsWith(".pdf")) {
-      const pdfParse = (await import("pdf-parse")).default;
-      const result = await pdfParse(buffer);
-      return result.text;
+      return this.extractPdfText(buffer);
     }
     return buffer.toString("utf-8");
+  }
+
+  private async extractPdfText(buffer: Buffer): Promise<string> {
+    const proc = Bun.spawn([PDF_PYTHON, PDF_SCRIPT], {
+      stdin: "pipe",
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+
+    // Write PDF bytes to stdin
+    proc.stdin.write(buffer);
+    proc.stdin.end();
+
+    const [exitCode, stdout, stderr] = await Promise.all([
+      proc.exited,
+      new Response(proc.stdout).text(),
+      new Response(proc.stderr).text(),
+    ]);
+
+    if (exitCode !== 0) {
+      logger.error({ exitCode, stderr: stderr.slice(0, 500) }, "PDF extraction failed");
+      throw new Error(`PDF extraction failed: ${stderr.slice(0, 200)}`);
+    }
+
+    const result = JSON.parse(stdout) as { text?: string; error?: string; pages?: number };
+    if (result.error) {
+      throw new Error(`PDF extraction error: ${result.error}`);
+    }
+
+    logger.info({ pages: result.pages }, "PDF text extracted via PyMuPDF");
+    return result.text ?? "";
   }
 
   async processDocument(params: {
