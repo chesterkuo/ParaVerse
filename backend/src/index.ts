@@ -9,6 +9,7 @@ import { graph } from "./routes/graph";
 import { simulation } from "./routes/simulation";
 import { report } from "./routes/report";
 import { tasks } from "./routes/tasks";
+import { interaction, websocket } from "./routes/interaction";
 import { logger } from "./utils/logger";
 
 const app = new Hono();
@@ -26,8 +27,9 @@ api.route("/simulations", simulation);
 api.route("/simulations", report);
 api.route("/tasks", tasks);
 app.route("/api/v1", api);
+app.route("/ws", interaction);
 
 const port = parseInt(process.env.PORT || "5001");
 logger.info({ port }, "ParaVerse API running");
 
-export default { port, fetch: app.fetch };
+export default { port, fetch: app.fetch, websocket };
