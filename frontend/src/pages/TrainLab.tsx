@@ -7,6 +7,7 @@ import { useSimulationStore } from "@/store/simulationStore";
 import { SimulationStatus } from "@/components/simulation/SimulationStatus";
 import { AgentFeed } from "@/components/simulation/AgentFeed";
 import { CheckpointManager } from "@/components/simulation/CheckpointManager";
+import { ScoringDashboard } from "@/components/simulation/ScoringDashboard";
 
 export default function TrainLab() {
   const { projectId } = useParams();
@@ -113,6 +114,9 @@ export default function TrainLab() {
               simulationId={simId!}
               disabled={status !== "running"}
             />
+
+            {/* Scoring Dashboard */}
+            <ScoringDashboard groundedVars={groundedVars} scenarioType="train_lab" />
 
             {/* Status */}
             <SimulationStatus status={status} stats={{}} groundedVars={groundedVars} />
