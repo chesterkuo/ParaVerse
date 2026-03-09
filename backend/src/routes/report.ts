@@ -6,6 +6,14 @@ import { getReportSections } from "../db/queries/reports";
 import { getSimulationForOwner } from "../db/queries/simulations";
 import type { ApiResponse } from "@shared/types/api";
 import PDFDocument from "pdfkit";
+import {
+  Document,
+  Paragraph,
+  TextRun,
+  HeadingLevel,
+  Packer,
+  AlignmentType,
+} from "docx";
 import { jwtVerify } from "jose";
 
 const report = new Hono();
@@ -36,8 +44,72 @@ reportExport.get("/:simulationId/report/export", async (c) => {
   }
 
   const scenarioType = (sim.config as Record<string, unknown>)?.scenario_type || "simulation";
+  const format = (c.req.query("format") || "pdf").toLowerCase();
 
-  // Generate PDF
+  if (format === "docx") {
+    // Generate DOCX
+    const docxChildren: Paragraph[] = [];
+
+    // Title page
+    docxChildren.push(
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [
+          new TextRun({ text: "ParaVerse Simulation Report", bold: true, size: 96 }),
+        ],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [
+          new TextRun({ text: `Scenario: ${scenarioType}`, size: 28 }),
+        ],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        children: [
+          new TextRun({
+            text: `Generated: ${new Date().toISOString().split("T")[0]}`,
+            size: 20,
+          }),
+        ],
+      }),
+      new Paragraph({ text: "" }) // spacer
+    );
+
+    // Sections
+    for (const section of sections) {
+      docxChildren.push(
+        new Paragraph({
+          heading: HeadingLevel.HEADING_1,
+          children: [new TextRun({ text: section.title, bold: true })],
+        })
+      );
+      const lines = section.content.split("\n");
+      for (const line of lines) {
+        docxChildren.push(
+          new Paragraph({ children: [new TextRun({ text: line })] })
+        );
+      }
+    }
+
+    const docxDoc = new Document({
+      sections: [{ children: docxChildren }],
+    });
+
+    const docxBuffer = await Packer.toBuffer(docxDoc);
+    const filename = `paraverse-report-${simulationId.slice(0, 8)}.docx`;
+
+    return new Response(docxBuffer, {
+      headers: {
+        "Content-Type":
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "Content-Disposition": `attachment; filename="${filename}"`,
+        "Content-Length": String(docxBuffer.length),
+      },
+    });
+  }
+
+  // Generate PDF (default)
   const chunks: Uint8Array[] = [];
   const doc = new PDFDocument({ margin: 60, size: "A4" });
 
