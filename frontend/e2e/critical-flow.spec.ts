@@ -14,7 +14,7 @@ test.describe("ParaVerse Critical Flow", () => {
     await page.fill('input[placeholder*="Password"]', testUser.password);
     await page.click('button[type="submit"]');
     await expect(page).toHaveURL("/");
-    await expect(page.locator("text=Projects")).toBeVisible();
+    await expect(page.locator("h1:has-text('Projects')")).toBeVisible();
   });
 
   test("login existing user", async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe("ParaVerse Critical Flow", () => {
     await page.click("text=New Project");
     await page.fill('input[placeholder="Project name"]', "E2E Test Project");
     await page.click("text=FinSentiment");
-    await page.click("text=Create");
+    await page.click("button:has-text('Create Project')");
 
     // Should land on Step 1 (Knowledge Graph)
     await expect(page.locator("text=Step 1: Knowledge Graph")).toBeVisible();
