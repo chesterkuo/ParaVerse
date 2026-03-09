@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "Nền tảng Mô phỏng Đa tác nhân",
+    "connected": "Đã kết nối",
+    "disconnected": "Mất kết nối",
+    "cancel": "Hủy",
+    "send": "Gửi",
+    "nextStep": "Bước tiếp theo",
+    "loading": "Đang tải...",
+    "error": "Lỗi",
+    "success": "Thành công",
+    "collapseSidebar": "Thu gọn thanh bên",
+    "toggleSidebar": "Chuyển đổi thanh bên"
+  },
+  "auth": {
+    "welcomeBack": "Chào mừng trở lại",
+    "signInSubtitle": "Đăng nhập vào tài khoản của bạn để tiếp tục",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "signingIn": "Đang đăng nhập...",
+    "signIn": "Đăng nhập",
+    "invalidCredentials": "Thông tin đăng nhập không hợp lệ. Vui lòng thử lại.",
+    "noAccount": "Chưa có tài khoản?",
+    "createAccount": "Tạo tài khoản",
+    "createYourAccount": "Tạo tài khoản của bạn",
+    "getStarted": "Bắt đầu với ParaVerse",
+    "name": "Tên",
+    "passwordHint": "Mật khẩu (8+ ký tự)",
+    "creatingAccount": "Đang tạo tài khoản...",
+    "registrationFailed": "Đăng ký thất bại. Vui lòng thử lại.",
+    "haveAccount": "Đã có tài khoản?",
+    "brandFeature1": "Xây dựng đồ thị tri thức từ dữ liệu của bạn",
+    "brandFeature2": "Cấu hình và chạy mô phỏng đa tác nhân",
+    "brandFeature3": "Phân tích kết quả và xuất báo cáo",
+    "brandDescription": "Nền tảng mô phỏng đa tác nhân doanh nghiệp. Mô hình hóa các kịch bản phức tạp, phân tích động lực các bên liên quan và đưa ra quyết định dựa trên dữ liệu."
+  },
+  "nav": {
+    "dashboard": "Bảng điều khiển",
+    "projects": "Dự án",
+    "signOut": "Đăng xuất"
+  },
+  "home": {
+    "title": "Dự án",
+    "subtitle": "Quản lý các dự án mô phỏng của bạn",
+    "newProject": "Dự án mới",
+    "createNewProject": "Tạo dự án mới",
+    "projectName": "Tên dự án",
+    "scenarioType": "Loại kịch bản",
+    "creating": "Đang tạo...",
+    "createProject": "Tạo dự án",
+    "noProjects": "Chưa có dự án nào",
+    "noProjectsHint": "Tạo dự án mô phỏng đầu tiên của bạn để bắt đầu"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "Phân tích tâm lý thị trường tài chính",
+    "content_lab_desc": "Kiểm duyệt nội dung & phân tích lan truyền",
+    "crisis_pr_desc": "Mô phỏng ứng phó khủng hoảng truyền thông",
+    "policy_lab_desc": "Mô hình hóa tác động chính sách công",
+    "war_game_desc": "Trò chơi chiến lược cạnh tranh",
+    "train_lab_desc": "Huấn luyện & đánh giá tác nhân"
+  },
+  "steps": {
+    "knowledgeGraph": "Đồ thị tri thức",
+    "environment": "Môi trường",
+    "simulation": "Mô phỏng",
+    "report": "Báo cáo",
+    "interaction": "Tương tác"
+  },
+  "step1": {
+    "title": "Bước 1: Đồ thị tri thức",
+    "subtitle": "Tải lên tài liệu gốc và xây dựng đồ thị tri thức.",
+    "uploadDocument": "Tải lên tài liệu",
+    "uploading": "Đang tải lên...",
+    "uploadFailed": "Tải lên thất bại. Vui lòng thử lại.",
+    "uploaded": "Đã tải lên: {{filename}}",
+    "building": "Đang xây dựng...",
+    "buildGraph": "Xây dựng đồ thị",
+    "buildFailed": "Xây dựng thất bại. Vui lòng thử lại.",
+    "knowledgeGraph": "Đồ thị tri thức"
+  },
+  "step2": {
+    "title": "Bước 2: Thiết lập môi trường",
+    "subtitle": "Cấu hình tác nhân và tham số mô phỏng.",
+    "agentCount": "Số lượng tác nhân",
+    "tickCount": "Số lượng bước",
+    "seedContext": "Ngữ cảnh khởi tạo",
+    "seedContextPlaceholder": "Mô tả ngữ cảnh kịch bản ban đầu...",
+    "platform": "Nền tảng",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "Công cụ được chọn dựa trên loại kịch bản",
+    "createFailed": "Không thể tạo mô phỏng. Vui lòng thử lại.",
+    "creating": "Đang tạo...",
+    "createSimulation": "Tạo mô phỏng"
+  },
+  "step3": {
+    "title": "Bước 3: Mô phỏng",
+    "subtitle": "Chạy và giám sát mô phỏng theo thời gian thực.",
+    "noSimulation": "Chưa cấu hình mô phỏng. Vui lòng quay lại Bước 2 để tạo mô phỏng.",
+    "starting": "Đang khởi động...",
+    "startSimulation": "Bắt đầu mô phỏng",
+    "viewReport": "Xem báo cáo",
+    "eventFeed": "Luồng sự kiện",
+    "timeline": "Dòng thời gian",
+    "scenarioBranches": "Nhánh kịch bản"
+  },
+  "step4": {
+    "title": "Bước 4: Báo cáo",
+    "subtitle": "Xem báo cáo phân tích đã tạo.",
+    "noSimulation": "Không tìm thấy mô phỏng. Vui lòng hoàn thành Bước 3 trước.",
+    "generating": "Đang tạo...",
+    "generateReport": "Tạo báo cáo",
+    "generationFailed": "Tạo báo cáo thất bại.",
+    "sentimentOverTime": "Tâm lý theo thời gian"
+  },
+  "step5": {
+    "title": "Bước 5: Tương tác chuyên sâu",
+    "subtitle": "Trò chuyện với tác nhân và khám phá thông tin chi tiết.",
+    "noSimulation": "Không tìm thấy mô phỏng. Vui lòng hoàn thành các bước trước đó.",
+    "agents": "Tác nhân",
+    "loadingAgents": "Đang tải tác nhân...",
+    "enterAgentId": "Nhập ID tác nhân...",
+    "startChatting": "Chọn một tác nhân và bắt đầu trò chuyện",
+    "typeQuestion": "Nhập câu hỏi của bạn...",
+    "selectAgentFirst": "Vui lòng chọn tác nhân trước"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "Mô phỏng huấn luyện tương tác với các hành động thủ công.",
+    "noSimulation": "Chưa cấu hình mô phỏng. Tạo dự án TrainLab và thiết lập mô phỏng trước.",
+    "manualAction": "Hành động thủ công",
+    "actionPlaceholder": "Mô tả hành động cần đưa vào...",
+    "injecting": "Đang đưa vào...",
+    "injectAction": "Đưa vào hành động",
+    "injectFailed": "Không thể đưa vào hành động",
+    "eventFeed": "Luồng sự kiện"
+  },
+  "simulation": {
+    "status": "Trạng thái mô phỏng",
+    "pending": "Đang chờ",
+    "configuring": "Đang cấu hình",
+    "running": "Đang chạy",
+    "completed": "Hoàn thành",
+    "failed": "Thất bại",
+    "statistics": "Thống kê",
+    "groundedVars": "Biến cơ sở",
+    "waitingForEvents": "Đang chờ sự kiện..."
+  },
+  "export": {
+    "pdf": "Xuất PDF",
+    "docx": "Xuất DOCX"
+  },
+  "fileUpload": {
+    "dropHere": "Thả tệp vào đây",
+    "dragAndDrop": "Kéo & thả tệp hoặc nhấp để duyệt",
+    "supports": "Hỗ trợ {{accept}}"
+  },
+  "events": {
+    "agent_action": "Hành động",
+    "grounded_var": "Cập nhật biến",
+    "branch_update": "Cập nhật nhánh",
+    "simulation_complete": "Hoàn thành",
+    "error": "Lỗi",
+    "interview_response": "Phản hồi",
+    "status": "Trạng thái"
+  },
+  "task": {
+    "label": "Tác vụ",
+    "failed": "Thất bại",
+    "completed": "Hoàn thành",
+    "inProgress": "Đang thực hiện"
+  }
+}

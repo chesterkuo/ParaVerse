@@ -1,12 +1,5 @@
+import { useTranslation } from "react-i18next";
 import { Activity, BarChart3 } from "lucide-react";
-
-const STATUS_STYLES: Record<string, { bg: string; text: string; label: string; dot: string }> = {
-  pending:      { bg: "bg-gray-100", text: "text-gray-600", label: "Pending", dot: "bg-gray-400" },
-  configuring:  { bg: "bg-blue-50", text: "text-blue-700", label: "Configuring", dot: "bg-blue-500" },
-  running:      { bg: "bg-amber-50", text: "text-amber-700", label: "Running", dot: "bg-amber-500 animate-pulse" },
-  completed:    { bg: "bg-emerald-50", text: "text-emerald-700", label: "Completed", dot: "bg-emerald-500" },
-  failed:       { bg: "bg-red-50", text: "text-red-700", label: "Failed", dot: "bg-red-500" },
-};
 
 interface SimulationStatusProps {
   status: string;
@@ -15,30 +8,38 @@ interface SimulationStatusProps {
 }
 
 export function SimulationStatus({ status, stats, groundedVars }: SimulationStatusProps) {
+  const { t } = useTranslation();
+
+  const STATUS_STYLES: Record<string, { bg: string; text: string; labelKey: string; dot: string }> = {
+    pending:      { bg: "bg-gray-100", text: "text-gray-600", labelKey: "simulation.pending", dot: "bg-gray-400" },
+    configuring:  { bg: "bg-blue-50", text: "text-blue-700", labelKey: "simulation.configuring", dot: "bg-blue-500" },
+    running:      { bg: "bg-amber-50", text: "text-amber-700", labelKey: "simulation.running", dot: "bg-amber-500 animate-pulse" },
+    completed:    { bg: "bg-emerald-50", text: "text-emerald-700", labelKey: "simulation.completed", dot: "bg-emerald-500" },
+    failed:       { bg: "bg-red-50", text: "text-red-700", labelKey: "simulation.failed", dot: "bg-red-500" },
+  };
+
   const style = STATUS_STYLES[status] ?? STATUS_STYLES.pending;
   const statEntries = Object.entries(stats);
   const varEntries = Object.entries(groundedVars);
 
   return (
     <div className="rounded-xl border border-border bg-surface p-5 space-y-5">
-      {/* Status Badge */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Activity size={16} className="text-text-muted" />
-          <span className="text-sm font-medium text-text-secondary">Simulation Status</span>
+          <span className="text-sm font-medium text-text-secondary">{t("simulation.status")}</span>
         </div>
         <span className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold ${style.bg} ${style.text}`}>
           <span className={`w-1.5 h-1.5 rounded-full ${style.dot}`} />
-          {style.label}
+          {t(style.labelKey)}
         </span>
       </div>
 
-      {/* Stats Grid */}
       {statEntries.length > 0 && (
         <div>
           <div className="flex items-center gap-1.5 mb-3">
             <BarChart3 size={14} className="text-text-muted" />
-            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider">Statistics</h4>
+            <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider">{t("simulation.statistics")}</h4>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {statEntries.map(([key, value]) => (
@@ -51,11 +52,10 @@ export function SimulationStatus({ status, stats, groundedVars }: SimulationStat
         </div>
       )}
 
-      {/* Grounded Variables */}
       {varEntries.length > 0 && (
         <div>
           <h4 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
-            Grounded Variables
+            {t("simulation.groundedVars")}
           </h4>
           <div className="space-y-2.5">
             {varEntries.map(([key, value]) => (

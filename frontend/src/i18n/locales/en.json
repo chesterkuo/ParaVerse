@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "Multi-Agent Simulation Platform",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "cancel": "Cancel",
+    "send": "Send",
+    "nextStep": "Next Step",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "collapseSidebar": "Collapse sidebar",
+    "toggleSidebar": "Toggle sidebar"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "signInSubtitle": "Sign in to your account to continue",
+    "email": "Email",
+    "password": "Password",
+    "signingIn": "Signing in...",
+    "signIn": "Sign in",
+    "invalidCredentials": "Invalid credentials. Please try again.",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create account",
+    "createYourAccount": "Create your account",
+    "getStarted": "Get started with ParaVerse",
+    "name": "Name",
+    "passwordHint": "Password (8+ chars)",
+    "creatingAccount": "Creating account...",
+    "registrationFailed": "Registration failed. Please try again.",
+    "haveAccount": "Already have an account?",
+    "brandFeature1": "Build knowledge graphs from your data",
+    "brandFeature2": "Configure and run multi-agent simulations",
+    "brandFeature3": "Analyze results and export reports",
+    "brandDescription": "Enterprise multi-agent simulation platform. Model complex scenarios, analyze stakeholder dynamics, and make data-driven decisions."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "signOut": "Sign out"
+  },
+  "home": {
+    "title": "Projects",
+    "subtitle": "Manage your simulation projects",
+    "newProject": "New Project",
+    "createNewProject": "Create New Project",
+    "projectName": "Project Name",
+    "scenarioType": "Scenario Type",
+    "creating": "Creating...",
+    "createProject": "Create Project",
+    "noProjects": "No projects yet",
+    "noProjectsHint": "Create your first simulation project to get started"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "Financial market sentiment analysis",
+    "content_lab_desc": "Content moderation & viral analysis",
+    "crisis_pr_desc": "Crisis PR response simulation",
+    "policy_lab_desc": "Public policy impact modeling",
+    "war_game_desc": "Competitive strategy war gaming",
+    "train_lab_desc": "Agent training & evaluation"
+  },
+  "steps": {
+    "knowledgeGraph": "Knowledge Graph",
+    "environment": "Environment",
+    "simulation": "Simulation",
+    "report": "Report",
+    "interaction": "Interaction"
+  },
+  "step1": {
+    "title": "Step 1: Knowledge Graph",
+    "subtitle": "Upload seed documents and build the knowledge graph.",
+    "uploadDocument": "Upload Document",
+    "uploading": "Uploading...",
+    "uploadFailed": "Upload failed. Please try again.",
+    "uploaded": "Uploaded: {{filename}}",
+    "building": "Building...",
+    "buildGraph": "Build Graph",
+    "buildFailed": "Build failed. Please try again.",
+    "knowledgeGraph": "Knowledge Graph"
+  },
+  "step2": {
+    "title": "Step 2: Environment Setup",
+    "subtitle": "Configure agents and simulation parameters.",
+    "agentCount": "Agent Count",
+    "tickCount": "Tick Count",
+    "seedContext": "Seed Context",
+    "seedContextPlaceholder": "Describe the initial scenario context...",
+    "platform": "Platform",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "Engine selected based on scenario type",
+    "createFailed": "Failed to create simulation. Please try again.",
+    "creating": "Creating...",
+    "createSimulation": "Create Simulation"
+  },
+  "step3": {
+    "title": "Step 3: Simulation",
+    "subtitle": "Run and monitor the simulation in real-time.",
+    "noSimulation": "No simulation configured. Please go back to Step 2 to create a simulation.",
+    "starting": "Starting...",
+    "startSimulation": "Start Simulation",
+    "viewReport": "View Report",
+    "eventFeed": "Event Feed",
+    "timeline": "Timeline",
+    "scenarioBranches": "Scenario Branches"
+  },
+  "step4": {
+    "title": "Step 4: Report",
+    "subtitle": "View the generated analysis report.",
+    "noSimulation": "No simulation found. Please complete Step 3 first.",
+    "generating": "Generating...",
+    "generateReport": "Generate Report",
+    "generationFailed": "Report generation failed.",
+    "sentimentOverTime": "Sentiment Over Time"
+  },
+  "step5": {
+    "title": "Step 5: Deep Interaction",
+    "subtitle": "Chat with agents and explore insights.",
+    "noSimulation": "No simulation found. Please complete previous steps first.",
+    "agents": "Agents",
+    "loadingAgents": "Loading agents...",
+    "enterAgentId": "Enter agent ID...",
+    "startChatting": "Select an agent and start chatting",
+    "typeQuestion": "Type your question...",
+    "selectAgentFirst": "Select an agent first"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "Interactive training simulation with manual actions.",
+    "noSimulation": "No simulation configured. Create a TrainLab project and set up a simulation first.",
+    "manualAction": "Manual Action",
+    "actionPlaceholder": "Describe the action to inject...",
+    "injecting": "Injecting...",
+    "injectAction": "Inject Action",
+    "injectFailed": "Failed to inject action",
+    "eventFeed": "Event Feed"
+  },
+  "simulation": {
+    "status": "Simulation Status",
+    "pending": "Pending",
+    "configuring": "Configuring",
+    "running": "Running",
+    "completed": "Completed",
+    "failed": "Failed",
+    "statistics": "Statistics",
+    "groundedVars": "Grounded Variables",
+    "waitingForEvents": "Waiting for events..."
+  },
+  "export": {
+    "pdf": "Export PDF",
+    "docx": "Export DOCX"
+  },
+  "fileUpload": {
+    "dropHere": "Drop file here",
+    "dragAndDrop": "Drag & drop a file or click to browse",
+    "supports": "Supports {{accept}}"
+  },
+  "events": {
+    "agent_action": "Action",
+    "grounded_var": "Variable Update",
+    "branch_update": "Branch Update",
+    "simulation_complete": "Complete",
+    "error": "Error",
+    "interview_response": "Response",
+    "status": "Status"
+  },
+  "task": {
+    "label": "Task",
+    "failed": "Failed",
+    "completed": "Completed",
+    "inProgress": "In progress"
+  }
+}

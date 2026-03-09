@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Upload, FileText } from "lucide-react";
 
 interface FileUploadProps {
@@ -10,6 +11,7 @@ interface FileUploadProps {
 const DEFAULT_ACCEPT = ".pdf,.txt,.md";
 
 export function FileUpload({ onFileSelect, accept = DEFAULT_ACCEPT, disabled = false }: FileUploadProps) {
+  const { t } = useTranslation();
   const [isDragging, setIsDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,7 +48,6 @@ export function FileUpload({ onFileSelect, accept = DEFAULT_ACCEPT, disabled = f
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       handleFile(e.target.files?.[0]);
-      // Reset so the same file can be selected again
       e.target.value = "";
     },
     [handleFile],
@@ -76,9 +77,9 @@ export function FileUpload({ onFileSelect, accept = DEFAULT_ACCEPT, disabled = f
           {isDragging ? <Upload size={32} /> : <FileText size={32} />}
         </div>
         <p className="text-sm font-medium text-gray-600">
-          {isDragging ? "Drop file here" : "Drag & drop a file or click to browse"}
+          {isDragging ? t("fileUpload.dropHere") : t("fileUpload.dragAndDrop")}
         </p>
-        <p className="text-xs text-gray-400">Supports {accept}</p>
+        <p className="text-xs text-gray-400">{t("fileUpload.supports", { accept })}</p>
       </div>
     </div>
   );

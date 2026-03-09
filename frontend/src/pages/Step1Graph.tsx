@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { projectsApi } from "@/api/projects";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { FileUpload } from "@/components/ui/FileUpload";
@@ -25,6 +26,7 @@ interface GraphEdgeResponse {
 }
 
 export default function Step1Graph() {
+  const { t } = useTranslation();
   const { projectId } = useParams();
   const navigate = useNavigate();
 
@@ -38,7 +40,6 @@ export default function Step1Graph() {
     mutationFn: (file: File) => projectsApi.uploadDocument(projectId!, file),
     onSuccess: (res) => {
       setUploadedFile(res.data.data?.filename ?? "document");
-      // If task_id is returned, track it; otherwise mark done immediately
       if (res.data.data?.task_id) {
         setUploadTaskId(res.data.data.task_id);
       } else {
@@ -74,21 +75,21 @@ export default function Step1Graph() {
   return (
     <div className="space-y-6">
       <StepProgress currentStep={1} />
-      <h2 className="text-xl font-bold text-navy">Step 1: Knowledge Graph</h2>
-      <p className="text-gray-500">Upload seed documents and build the knowledge graph.</p>
+      <h2 className="text-xl font-bold text-navy">{t("step1.title")}</h2>
+      <p className="text-gray-500">{t("step1.subtitle")}</p>
 
       {/* File Upload */}
       <div className="space-y-3">
-        <h3 className="text-sm font-semibold text-gray-600">Upload Document</h3>
+        <h3 className="text-sm font-semibold text-gray-600">{t("step1.uploadDocument")}</h3>
         <FileUpload onFileSelect={handleFileSelect} disabled={uploadMutation.isPending} />
         {uploadMutation.isPending && (
-          <p className="text-sm text-violet">Uploading...</p>
+          <p className="text-sm text-violet">{t("step1.uploading")}</p>
         )}
         {uploadMutation.isError && (
-          <p className="text-sm text-red-600">Upload failed. Please try again.</p>
+          <p className="text-sm text-red-600">{t("step1.uploadFailed")}</p>
         )}
         {uploadedFile && (
-          <p className="text-sm text-green-600">Uploaded: {uploadedFile}</p>
+          <p className="text-sm text-green-600">{t("step1.uploaded", { filename: uploadedFile })}</p>
         )}
       </div>
 
@@ -108,10 +109,10 @@ export default function Step1Graph() {
           disabled={!canBuild || buildMutation.isPending}
           className="bg-violet text-white px-6 py-2 rounded hover:bg-violet/90 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {buildMutation.isPending ? "Building..." : "Build Graph"}
+          {buildMutation.isPending ? t("step1.building") : t("step1.buildGraph")}
         </button>
         {buildMutation.isError && (
-          <p className="text-sm text-red-600">Build failed. Please try again.</p>
+          <p className="text-sm text-red-600">{t("step1.buildFailed")}</p>
         )}
       </div>
 
@@ -131,13 +132,13 @@ export default function Step1Graph() {
           disabled={!canProceed}
           className="bg-navy text-white px-6 py-2 rounded hover:bg-navy/90 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Next Step
+          {t("common.nextStep")}
         </button>
       </div>
 
       {graphData?.nodes && graphData.nodes.length > 0 && (
         <div className="space-y-4">
-          <h3 className="text-sm font-semibold text-gray-600">Knowledge Graph</h3>
+          <h3 className="text-sm font-semibold text-gray-600">{t("step1.knowledgeGraph")}</h3>
           <GraphControls />
           <KnowledgeGraph
             nodes={graphData.nodes.map((n) => ({ id: n.id, label: n.name || n.label || n.id, type: n.type }))}

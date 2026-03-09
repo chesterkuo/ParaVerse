@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { simulationApi } from "@/api/simulation";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useSimulationStore } from "@/store/simulationStore";
@@ -10,6 +11,7 @@ import { CheckpointManager } from "@/components/simulation/CheckpointManager";
 import { ScoringDashboard } from "@/components/simulation/ScoringDashboard";
 
 export default function TrainLab() {
+  const { t } = useTranslation();
   const { projectId } = useParams();
   void projectId;
   const { simId, status, events, groundedVars, setStatus, addEvent, setGroundedVars } =
@@ -21,11 +23,9 @@ export default function TrainLab() {
     simId ? `/ws/simulations/${simId}` : "",
   );
 
-  // Process incoming WebSocket events (track last processed index)
   const lastProcessedIdx = useRef(0);
   useEffect(() => {
     if (wsEvents.length <= lastProcessedIdx.current) return;
-
     for (let i = lastProcessedIdx.current; i < wsEvents.length; i++) {
       const ev = wsEvents[i];
       if (ev.type === "agent_action" || ev.type === "interview_response") {
@@ -69,32 +69,31 @@ export default function TrainLab() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-navy">TrainLab</h2>
-          <p className="text-gray-500">Interactive training simulation with manual actions.</p>
+          <h2 className="text-xl font-bold text-navy">{t("trainLab.title")}</h2>
+          <p className="text-gray-500">{t("trainLab.subtitle")}</p>
         </div>
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${connected ? "bg-green-500" : "bg-red-500"}`} />
-          <span className="text-xs text-gray-400">{connected ? "Connected" : "Disconnected"}</span>
+          <span className="text-xs text-gray-400">{connected ? t("common.connected") : t("common.disconnected")}</span>
         </div>
       </div>
 
       {!simId && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
-          No simulation configured. Create a TrainLab project and set up a simulation first.
+          {t("trainLab.noSimulation")}
         </div>
       )}
 
       {simId && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Manual Action Panel */}
           <div className="lg:col-span-1 space-y-4">
-            <h3 className="text-sm font-semibold text-gray-600">Manual Action</h3>
+            <h3 className="text-sm font-semibold text-gray-600">{t("trainLab.manualAction")}</h3>
             <div className="bg-white rounded-lg border border-gray-200 p-4 space-y-3">
               <textarea
                 rows={4}
                 value={actionText}
                 onChange={(e) => setActionText(e.target.value)}
-                placeholder="Describe the action to inject..."
+                placeholder={t("trainLab.actionPlaceholder")}
                 className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-concordia resize-none text-sm"
               />
               <button
@@ -102,29 +101,20 @@ export default function TrainLab() {
                 disabled={!actionText.trim() || manualActionMutation.isPending}
                 className="w-full bg-concordia text-white py-2 rounded hover:bg-concordia/90 disabled:opacity-50 text-sm font-medium"
               >
-                {manualActionMutation.isPending ? "Injecting..." : "Inject Action"}
+                {manualActionMutation.isPending ? t("trainLab.injecting") : t("trainLab.injectAction")}
               </button>
               {manualActionMutation.isError && (
-                <p className="text-xs text-red-600">Failed to inject action</p>
+                <p className="text-xs text-red-600">{t("trainLab.injectFailed")}</p>
               )}
             </div>
 
-            {/* Checkpoints */}
-            <CheckpointManager
-              simulationId={simId!}
-              disabled={status !== "running"}
-            />
-
-            {/* Scoring Dashboard */}
+            <CheckpointManager simulationId={simId!} disabled={status !== "running"} />
             <ScoringDashboard groundedVars={groundedVars} scenarioType="train_lab" />
-
-            {/* Status */}
             <SimulationStatus status={status} stats={{}} groundedVars={groundedVars} />
           </div>
 
-          {/* Event Feed */}
           <div className="lg:col-span-2 space-y-4">
-            <h3 className="text-sm font-semibold text-gray-600">Event Feed</h3>
+            <h3 className="text-sm font-semibold text-gray-600">{t("trainLab.eventFeed")}</h3>
             <AgentFeed events={events} />
           </div>
         </div>

@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "แพลตฟอร์มจำลองมัลติเอเจนต์",
+    "connected": "เชื่อมต่อแล้ว",
+    "disconnected": "ขาดการเชื่อมต่อ",
+    "cancel": "ยกเลิก",
+    "send": "ส่ง",
+    "nextStep": "ขั้นตอนถัดไป",
+    "loading": "กำลังโหลด...",
+    "error": "ข้อผิดพลาด",
+    "success": "สำเร็จ",
+    "collapseSidebar": "ย่อแถบด้านข้าง",
+    "toggleSidebar": "สลับแถบด้านข้าง"
+  },
+  "auth": {
+    "welcomeBack": "ยินดีต้อนรับกลับมา",
+    "signInSubtitle": "ลงชื่อเข้าใช้บัญชีของคุณเพื่อดำเนินการต่อ",
+    "email": "อีเมล",
+    "password": "รหัสผ่าน",
+    "signingIn": "กำลังลงชื่อเข้าใช้...",
+    "signIn": "ลงชื่อเข้าใช้",
+    "invalidCredentials": "ข้อมูลรับรองไม่ถูกต้อง กรุณาลองอีกครั้ง",
+    "noAccount": "ยังไม่มีบัญชี?",
+    "createAccount": "สร้างบัญชี",
+    "createYourAccount": "สร้างบัญชีของคุณ",
+    "getStarted": "เริ่มต้นใช้งาน ParaVerse",
+    "name": "ชื่อ",
+    "passwordHint": "รหัสผ่าน (8 ตัวอักษรขึ้นไป)",
+    "creatingAccount": "กำลังสร้างบัญชี...",
+    "registrationFailed": "การลงทะเบียนล้มเหลว กรุณาลองอีกครั้ง",
+    "haveAccount": "มีบัญชีอยู่แล้ว?",
+    "brandFeature1": "สร้างกราฟความรู้จากข้อมูลของคุณ",
+    "brandFeature2": "กำหนดค่าและรันการจำลองมัลติเอเจนต์",
+    "brandFeature3": "วิเคราะห์ผลลัพธ์และส่งออกรายงาน",
+    "brandDescription": "แพลตฟอร์มจำลองมัลติเอเจนต์สำหรับองค์กร สร้างแบบจำลองสถานการณ์ที่ซับซ้อน วิเคราะห์พลวัตของผู้มีส่วนได้ส่วนเสีย และตัดสินใจบนพื้นฐานข้อมูล"
+  },
+  "nav": {
+    "dashboard": "แดชบอร์ด",
+    "projects": "โปรเจกต์",
+    "signOut": "ออกจากระบบ"
+  },
+  "home": {
+    "title": "โปรเจกต์",
+    "subtitle": "จัดการโปรเจกต์จำลองของคุณ",
+    "newProject": "โปรเจกต์ใหม่",
+    "createNewProject": "สร้างโปรเจกต์ใหม่",
+    "projectName": "ชื่อโปรเจกต์",
+    "scenarioType": "ประเภทสถานการณ์",
+    "creating": "กำลังสร้าง...",
+    "createProject": "สร้างโปรเจกต์",
+    "noProjects": "ยังไม่มีโปรเจกต์",
+    "noProjectsHint": "สร้างโปรเจกต์จำลองแรกของคุณเพื่อเริ่มต้น"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "การวิเคราะห์ความเชื่อมั่นในตลาดการเงิน",
+    "content_lab_desc": "การกลั่นกรองเนื้อหาและการวิเคราะห์ไวรัล",
+    "crisis_pr_desc": "การจำลองการตอบสนองวิกฤตประชาสัมพันธ์",
+    "policy_lab_desc": "การสร้างแบบจำลองผลกระทบนโยบายสาธารณะ",
+    "war_game_desc": "เกมสงครามกลยุทธ์การแข่งขัน",
+    "train_lab_desc": "การฝึกอบรมและประเมินเอเจนต์"
+  },
+  "steps": {
+    "knowledgeGraph": "กราฟความรู้",
+    "environment": "สภาพแวดล้อม",
+    "simulation": "การจำลอง",
+    "report": "รายงาน",
+    "interaction": "การโต้ตอบ"
+  },
+  "step1": {
+    "title": "ขั้นตอนที่ 1: กราฟความรู้",
+    "subtitle": "อัปโหลดเอกสารต้นฉบับและสร้างกราฟความรู้",
+    "uploadDocument": "อัปโหลดเอกสาร",
+    "uploading": "กำลังอัปโหลด...",
+    "uploadFailed": "อัปโหลดล้มเหลว กรุณาลองอีกครั้ง",
+    "uploaded": "อัปโหลดแล้ว: {{filename}}",
+    "building": "กำลังสร้าง...",
+    "buildGraph": "สร้างกราฟ",
+    "buildFailed": "การสร้างล้มเหลว กรุณาลองอีกครั้ง",
+    "knowledgeGraph": "กราฟความรู้"
+  },
+  "step2": {
+    "title": "ขั้นตอนที่ 2: ตั้งค่าสภาพแวดล้อม",
+    "subtitle": "กำหนดค่าเอเจนต์และพารามิเตอร์การจำลอง",
+    "agentCount": "จำนวนเอเจนต์",
+    "tickCount": "จำนวนรอบ",
+    "seedContext": "บริบทเริ่มต้น",
+    "seedContextPlaceholder": "อธิบายบริบทสถานการณ์เริ่มต้น...",
+    "platform": "แพลตฟอร์ม",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "เลือกเอนจินตามประเภทสถานการณ์",
+    "createFailed": "ไม่สามารถสร้างการจำลองได้ กรุณาลองอีกครั้ง",
+    "creating": "กำลังสร้าง...",
+    "createSimulation": "สร้างการจำลอง"
+  },
+  "step3": {
+    "title": "ขั้นตอนที่ 3: การจำลอง",
+    "subtitle": "รันและติดตามการจำลองแบบเรียลไทม์",
+    "noSimulation": "ยังไม่ได้กำหนดค่าการจำลอง กรุณากลับไปที่ขั้นตอนที่ 2 เพื่อสร้างการจำลอง",
+    "starting": "กำลังเริ่ม...",
+    "startSimulation": "เริ่มการจำลอง",
+    "viewReport": "ดูรายงาน",
+    "eventFeed": "ฟีดเหตุการณ์",
+    "timeline": "ไทม์ไลน์",
+    "scenarioBranches": "สาขาสถานการณ์"
+  },
+  "step4": {
+    "title": "ขั้นตอนที่ 4: รายงาน",
+    "subtitle": "ดูรายงานวิเคราะห์ที่สร้างขึ้น",
+    "noSimulation": "ไม่พบการจำลอง กรุณาทำขั้นตอนที่ 3 ให้เสร็จก่อน",
+    "generating": "กำลังสร้าง...",
+    "generateReport": "สร้างรายงาน",
+    "generationFailed": "การสร้างรายงานล้มเหลว",
+    "sentimentOverTime": "ความเชื่อมั่นตามช่วงเวลา"
+  },
+  "step5": {
+    "title": "ขั้นตอนที่ 5: การโต้ตอบเชิงลึก",
+    "subtitle": "สนทนากับเอเจนต์และสำรวจข้อมูลเชิงลึก",
+    "noSimulation": "ไม่พบการจำลอง กรุณาทำขั้นตอนก่อนหน้าให้เสร็จก่อน",
+    "agents": "เอเจนต์",
+    "loadingAgents": "กำลังโหลดเอเจนต์...",
+    "enterAgentId": "ป้อนรหัสเอเจนต์...",
+    "startChatting": "เลือกเอเจนต์แล้วเริ่มสนทนา",
+    "typeQuestion": "พิมพ์คำถามของคุณ...",
+    "selectAgentFirst": "กรุณาเลือกเอเจนต์ก่อน"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "การจำลองฝึกอบรมเชิงโต้ตอบพร้อมการดำเนินการด้วยตนเอง",
+    "noSimulation": "ยังไม่ได้กำหนดค่าการจำลอง สร้างโปรเจกต์ TrainLab และตั้งค่าการจำลองก่อน",
+    "manualAction": "การดำเนินการด้วยตนเอง",
+    "actionPlaceholder": "อธิบายการดำเนินการที่จะแทรก...",
+    "injecting": "กำลังแทรก...",
+    "injectAction": "แทรกการดำเนินการ",
+    "injectFailed": "ไม่สามารถแทรกการดำเนินการได้",
+    "eventFeed": "ฟีดเหตุการณ์"
+  },
+  "simulation": {
+    "status": "สถานะการจำลอง",
+    "pending": "รอดำเนินการ",
+    "configuring": "กำลังกำหนดค่า",
+    "running": "กำลังทำงาน",
+    "completed": "เสร็จสมบูรณ์",
+    "failed": "ล้มเหลว",
+    "statistics": "สถิติ",
+    "groundedVars": "ตัวแปรฐาน",
+    "waitingForEvents": "กำลังรอเหตุการณ์..."
+  },
+  "export": {
+    "pdf": "ส่งออก PDF",
+    "docx": "ส่งออก DOCX"
+  },
+  "fileUpload": {
+    "dropHere": "วางไฟล์ที่นี่",
+    "dragAndDrop": "ลากและวางไฟล์หรือคลิกเพื่อเรียกดู",
+    "supports": "รองรับ {{accept}}"
+  },
+  "events": {
+    "agent_action": "การดำเนินการ",
+    "grounded_var": "อัปเดตตัวแปร",
+    "branch_update": "อัปเดตสาขา",
+    "simulation_complete": "เสร็จสมบูรณ์",
+    "error": "ข้อผิดพลาด",
+    "interview_response": "การตอบกลับ",
+    "status": "สถานะ"
+  },
+  "task": {
+    "label": "งาน",
+    "failed": "ล้มเหลว",
+    "completed": "เสร็จสมบูรณ์",
+    "inProgress": "กำลังดำเนินการ"
+  }
+}

@@ -1,5 +1,6 @@
 import { useRef, useEffect } from "react";
-import { humanizeAgentId, humanizeEventType } from "@/utils/humanize";
+import { useTranslation } from "react-i18next";
+import { humanizeAgentId } from "@/utils/humanize";
 
 interface SimEvent {
   event_type: string;
@@ -24,6 +25,7 @@ function getEventColor(eventType: string): string {
 }
 
 export function AgentFeed({ events }: { events: SimEvent[] }) {
+  const { t } = useTranslation();
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export function AgentFeed({ events }: { events: SimEvent[] }) {
         <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-violet/10 flex items-center justify-center">
           <div className="w-3 h-3 rounded-full bg-violet/40 animate-pulse" />
         </div>
-        <p className="text-sm text-text-muted">Waiting for events...</p>
+        <p className="text-sm text-text-muted">{t("simulation.waitingForEvents")}</p>
       </div>
     );
   }
@@ -59,7 +61,7 @@ export function AgentFeed({ events }: { events: SimEvent[] }) {
                   className="inline-block px-2 py-0.5 rounded-md text-[11px] font-semibold text-white"
                   style={{ backgroundColor: getEventColor(event.event_type) }}
                 >
-                  {humanizeEventType(event.event_type)}
+                  {t(`events.${event.event_type}`, { defaultValue: event.event_type.replace(/_/g, " ") })}
                 </span>
                 {event.agent_id && (
                   <span className="text-xs text-text-muted font-medium">

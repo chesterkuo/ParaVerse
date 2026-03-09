@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { simulationApi } from "@/api/simulation";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useSimulationStore } from "@/store/simulationStore";
@@ -11,6 +12,7 @@ import { EventTimeline } from "@/components/simulation/EventTimeline";
 import { ScenarioBranch } from "@/components/simulation/ScenarioBranch";
 
 export default function Step3Simulation() {
+  const { t } = useTranslation();
   const { projectId } = useParams();
   const navigate = useNavigate();
   const { simId, engine, status, events, groundedVars, setStatus, addEvent, setGroundedVars, setSimulation } =
@@ -28,7 +30,7 @@ export default function Step3Simulation() {
   useEffect(() => {
     if (!simList || simList.length === 0 || simId || hydratedRef.current) return;
     hydratedRef.current = true;
-    const latest = simList[0]; // already sorted by created_at DESC
+    const latest = simList[0];
     setSimulation(latest.id, latest.engine as "oasis" | "concordia");
     setStatus(latest.status);
     if (latest.grounded_vars && Object.keys(latest.grounded_vars).length > 0) {
@@ -48,7 +50,7 @@ export default function Step3Simulation() {
   const eventsHydratedRef = useRef(false);
   useEffect(() => {
     if (!apiEvents || apiEvents.length === 0 || eventsHydratedRef.current) return;
-    if (events.length > 0) return; // already have events from websocket
+    if (events.length > 0) return;
     eventsHydratedRef.current = true;
     for (const ev of apiEvents) {
       addEvent({
@@ -65,7 +67,7 @@ export default function Step3Simulation() {
     simId ? `/ws/simulations/${simId}` : "",
   );
 
-  // Process incoming WebSocket events (track last processed index)
+  // Process incoming WebSocket events
   const lastProcessedIdx = useRef(0);
   useEffect(() => {
     if (wsEvents.length <= lastProcessedIdx.current) return;
@@ -114,7 +116,6 @@ export default function Step3Simulation() {
   const isCompleted = status === "completed";
   const canStart = simId && (status === "pending" || status === "configuring");
 
-  // Mock branches for Concordia demo
   const branches = isConcordia
     ? [
         { label: "Baseline", description: "Default scenario parameters", reputation: 0.72, emotionTrend: [0.3, 0.5, 0.2, -0.1, 0.4] },
@@ -128,24 +129,23 @@ export default function Step3Simulation() {
       <StepProgress currentStep={3} />
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-bold text-navy">Step 3: Simulation</h2>
-          <p className="text-gray-500">Run and monitor the simulation in real-time.</p>
+          <h2 className="text-xl font-bold text-navy">{t("step3.title")}</h2>
+          <p className="text-gray-500">{t("step3.subtitle")}</p>
         </div>
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full ${connected ? "bg-green-500" : "bg-red-500"}`} />
-          <span className="text-xs text-gray-400">{connected ? "Connected" : "Disconnected"}</span>
+          <span className="text-xs text-gray-400">{connected ? t("common.connected") : t("common.disconnected")}</span>
         </div>
       </div>
 
       {!simId && !simList?.length && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
-          No simulation configured. Please go back to Step 2 to create a simulation.
+          {t("step3.noSimulation")}
         </div>
       )}
 
       {(simId || simList?.length) && (
         <>
-          {/* Controls */}
           <div className="flex items-center gap-3">
             {canStart && (
               <button
@@ -153,7 +153,7 @@ export default function Step3Simulation() {
                 disabled={startMutation.isPending}
                 className="bg-violet text-white px-6 py-2 rounded hover:bg-violet/90 disabled:opacity-50 cursor-pointer"
               >
-                {startMutation.isPending ? "Starting..." : "Start Simulation"}
+                {startMutation.isPending ? t("step3.starting") : t("step3.startSimulation")}
               </button>
             )}
             {isCompleted && (
@@ -161,30 +161,27 @@ export default function Step3Simulation() {
                 onClick={() => navigate(`/projects/${projectId}/step/4`)}
                 className="bg-navy text-white px-6 py-2 rounded hover:bg-navy/90 cursor-pointer"
               >
-                View Report
+                {t("step3.viewReport")}
               </button>
             )}
           </div>
 
-          {/* Status */}
           <SimulationStatus status={status} stats={{}} groundedVars={groundedVars} />
 
-          {/* Main content grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-600">Event Feed</h3>
+              <h3 className="text-sm font-semibold text-gray-600">{t("step3.eventFeed")}</h3>
               <AgentFeed events={events} />
             </div>
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-600">Timeline</h3>
+              <h3 className="text-sm font-semibold text-gray-600">{t("step3.timeline")}</h3>
               <EventTimeline events={events} />
             </div>
           </div>
 
-          {/* Concordia branches */}
           {isConcordia && (
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-600">Scenario Branches</h3>
+              <h3 className="text-sm font-semibold text-gray-600">{t("step3.scenarioBranches")}</h3>
               <ScenarioBranch branches={branches} />
             </div>
           )}

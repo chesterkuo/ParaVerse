@@ -1,21 +1,23 @@
 import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Check } from "lucide-react";
 
-const STEPS = [
-  { num: 1, label: "Knowledge Graph" },
-  { num: 2, label: "Environment" },
-  { num: 3, label: "Simulation" },
-  { num: 4, label: "Report" },
-  { num: 5, label: "Interaction" },
+const STEP_KEYS = [
+  { num: 1, key: "steps.knowledgeGraph" },
+  { num: 2, key: "steps.environment" },
+  { num: 3, key: "steps.simulation" },
+  { num: 4, key: "steps.report" },
+  { num: 5, key: "steps.interaction" },
 ];
 
 export function StepProgress({ currentStep }: { currentStep: number }) {
   const { projectId } = useParams();
+  const { t } = useTranslation();
 
   return (
     <div className="mb-8">
       <div className="flex items-center">
-        {STEPS.map((step, idx) => {
+        {STEP_KEYS.map((step, idx) => {
           const isActive = step.num === currentStep;
           const isCompleted = step.num < currentStep;
           return (
@@ -37,11 +39,11 @@ export function StepProgress({ currentStep }: { currentStep: number }) {
                 <span className={`text-sm font-medium hidden sm:inline transition-colors
                   ${isActive ? "text-text-primary" : isCompleted ? "text-violet" : "text-text-muted group-hover:text-text-secondary"}`}
                 >
-                  {step.label}
+                  {t(step.key)}
                 </span>
               </Link>
               {/* Connector line */}
-              {idx < STEPS.length - 1 && (
+              {idx < STEP_KEYS.length - 1 && (
                 <div className={`flex-1 h-px mx-3 ${step.num < currentStep ? "bg-violet/30" : "bg-border"}`} />
               )}
             </div>

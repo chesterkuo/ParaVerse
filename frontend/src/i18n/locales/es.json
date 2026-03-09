@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "Plataforma de Simulación Multi-Agente",
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "cancel": "Cancelar",
+    "send": "Enviar",
+    "nextStep": "Siguiente Paso",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "collapseSidebar": "Contraer barra lateral",
+    "toggleSidebar": "Alternar barra lateral"
+  },
+  "auth": {
+    "welcomeBack": "Bienvenido de nuevo",
+    "signInSubtitle": "Inicia sesión en tu cuenta para continuar",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "signingIn": "Iniciando sesión...",
+    "signIn": "Iniciar sesión",
+    "invalidCredentials": "Credenciales inválidas. Por favor, inténtalo de nuevo.",
+    "noAccount": "¿No tienes una cuenta?",
+    "createAccount": "Crear cuenta",
+    "createYourAccount": "Crea tu cuenta",
+    "getStarted": "Comienza con ParaVerse",
+    "name": "Nombre",
+    "passwordHint": "Contraseña (8+ caracteres)",
+    "creatingAccount": "Creando cuenta...",
+    "registrationFailed": "Error en el registro. Por favor, inténtalo de nuevo.",
+    "haveAccount": "¿Ya tienes una cuenta?",
+    "brandFeature1": "Construye grafos de conocimiento a partir de tus datos",
+    "brandFeature2": "Configura y ejecuta simulaciones multi-agente",
+    "brandFeature3": "Analiza resultados y exporta informes",
+    "brandDescription": "Plataforma empresarial de simulación multi-agente. Modela escenarios complejos, analiza dinámicas de partes interesadas y toma decisiones basadas en datos."
+  },
+  "nav": {
+    "dashboard": "Panel de control",
+    "projects": "Proyectos",
+    "signOut": "Cerrar sesión"
+  },
+  "home": {
+    "title": "Proyectos",
+    "subtitle": "Gestiona tus proyectos de simulación",
+    "newProject": "Nuevo Proyecto",
+    "createNewProject": "Crear Nuevo Proyecto",
+    "projectName": "Nombre del Proyecto",
+    "scenarioType": "Tipo de Escenario",
+    "creating": "Creando...",
+    "createProject": "Crear Proyecto",
+    "noProjects": "Aún no hay proyectos",
+    "noProjectsHint": "Crea tu primer proyecto de simulación para comenzar"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "Análisis de sentimiento del mercado financiero",
+    "content_lab_desc": "Moderación de contenido y análisis viral",
+    "crisis_pr_desc": "Simulación de respuesta a crisis de relaciones públicas",
+    "policy_lab_desc": "Modelado del impacto de políticas públicas",
+    "war_game_desc": "Juegos de guerra de estrategia competitiva",
+    "train_lab_desc": "Entrenamiento y evaluación de agentes"
+  },
+  "steps": {
+    "knowledgeGraph": "Grafo de Conocimiento",
+    "environment": "Entorno",
+    "simulation": "Simulación",
+    "report": "Informe",
+    "interaction": "Interacción"
+  },
+  "step1": {
+    "title": "Paso 1: Grafo de Conocimiento",
+    "subtitle": "Sube documentos semilla y construye el grafo de conocimiento.",
+    "uploadDocument": "Subir Documento",
+    "uploading": "Subiendo...",
+    "uploadFailed": "Error al subir. Por favor, inténtalo de nuevo.",
+    "uploaded": "Subido: {{filename}}",
+    "building": "Construyendo...",
+    "buildGraph": "Construir Grafo",
+    "buildFailed": "Error al construir. Por favor, inténtalo de nuevo.",
+    "knowledgeGraph": "Grafo de Conocimiento"
+  },
+  "step2": {
+    "title": "Paso 2: Configuración del Entorno",
+    "subtitle": "Configura agentes y parámetros de simulación.",
+    "agentCount": "Cantidad de Agentes",
+    "tickCount": "Cantidad de Ticks",
+    "seedContext": "Contexto Semilla",
+    "seedContextPlaceholder": "Describe el contexto inicial del escenario...",
+    "platform": "Plataforma",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "Motor seleccionado según el tipo de escenario",
+    "createFailed": "Error al crear la simulación. Por favor, inténtalo de nuevo.",
+    "creating": "Creando...",
+    "createSimulation": "Crear Simulación"
+  },
+  "step3": {
+    "title": "Paso 3: Simulación",
+    "subtitle": "Ejecuta y monitorea la simulación en tiempo real.",
+    "noSimulation": "No hay simulación configurada. Por favor, regresa al Paso 2 para crear una simulación.",
+    "starting": "Iniciando...",
+    "startSimulation": "Iniciar Simulación",
+    "viewReport": "Ver Informe",
+    "eventFeed": "Feed de Eventos",
+    "timeline": "Línea de Tiempo",
+    "scenarioBranches": "Ramas de Escenario"
+  },
+  "step4": {
+    "title": "Paso 4: Informe",
+    "subtitle": "Visualiza el informe de análisis generado.",
+    "noSimulation": "No se encontró simulación. Por favor, completa el Paso 3 primero.",
+    "generating": "Generando...",
+    "generateReport": "Generar Informe",
+    "generationFailed": "Error al generar el informe.",
+    "sentimentOverTime": "Sentimiento a lo Largo del Tiempo"
+  },
+  "step5": {
+    "title": "Paso 5: Interacción Profunda",
+    "subtitle": "Chatea con agentes y explora perspectivas.",
+    "noSimulation": "No se encontró simulación. Por favor, completa los pasos anteriores primero.",
+    "agents": "Agentes",
+    "loadingAgents": "Cargando agentes...",
+    "enterAgentId": "Ingresa el ID del agente...",
+    "startChatting": "Selecciona un agente y comienza a chatear",
+    "typeQuestion": "Escribe tu pregunta...",
+    "selectAgentFirst": "Selecciona un agente primero"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "Simulación de entrenamiento interactivo con acciones manuales.",
+    "noSimulation": "No hay simulación configurada. Crea un proyecto TrainLab y configura una simulación primero.",
+    "manualAction": "Acción Manual",
+    "actionPlaceholder": "Describe la acción a inyectar...",
+    "injecting": "Inyectando...",
+    "injectAction": "Inyectar Acción",
+    "injectFailed": "Error al inyectar la acción",
+    "eventFeed": "Feed de Eventos"
+  },
+  "simulation": {
+    "status": "Estado de la Simulación",
+    "pending": "Pendiente",
+    "configuring": "Configurando",
+    "running": "En ejecución",
+    "completed": "Completada",
+    "failed": "Fallida",
+    "statistics": "Estadísticas",
+    "groundedVars": "Variables Fundamentadas",
+    "waitingForEvents": "Esperando eventos..."
+  },
+  "export": {
+    "pdf": "Exportar PDF",
+    "docx": "Exportar DOCX"
+  },
+  "fileUpload": {
+    "dropHere": "Suelta el archivo aquí",
+    "dragAndDrop": "Arrastra y suelta un archivo o haz clic para explorar",
+    "supports": "Admite {{accept}}"
+  },
+  "events": {
+    "agent_action": "Acción",
+    "grounded_var": "Actualización de Variable",
+    "branch_update": "Actualización de Rama",
+    "simulation_complete": "Completada",
+    "error": "Error",
+    "interview_response": "Respuesta",
+    "status": "Estado"
+  },
+  "task": {
+    "label": "Tarea",
+    "failed": "Fallida",
+    "completed": "Completada",
+    "inProgress": "En progreso"
+  }
+}

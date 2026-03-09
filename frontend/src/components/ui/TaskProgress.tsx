@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { useTaskStatus } from "@/hooks/useSimulation";
 
 interface TaskProgressProps {
@@ -8,6 +9,7 @@ interface TaskProgressProps {
 }
 
 export function TaskProgress({ taskId, taskType, onComplete }: TaskProgressProps) {
+  const { t } = useTranslation();
   const { data } = useTaskStatus(taskId);
   const calledRef = useRef(false);
 
@@ -18,7 +20,6 @@ export function TaskProgress({ taskId, taskType, onComplete }: TaskProgressProps
     }
   }, [data?.status, onComplete]);
 
-  // Reset when taskId changes
   useEffect(() => {
     calledRef.current = false;
   }, [taskId]);
@@ -34,7 +35,7 @@ export function TaskProgress({ taskId, taskType, onComplete }: TaskProgressProps
     <div className="rounded-lg border border-gray-200 bg-white p-4 space-y-2">
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-gray-600">
-          {taskType ?? "Task"}
+          {taskType ?? t("task.label")}
         </span>
         <span className={`text-xs font-semibold ${isFailed ? "text-red-600" : isCompleted ? "text-green-600" : "text-violet"}`}>
           {pct}%
@@ -49,7 +50,7 @@ export function TaskProgress({ taskId, taskType, onComplete }: TaskProgressProps
         />
       </div>
       <div className="text-xs text-gray-500">
-        {isFailed ? "Failed" : isCompleted ? "Completed" : "In progress"}
+        {isFailed ? t("task.failed") : isCompleted ? t("task.completed") : t("task.inProgress")}
       </div>
       {isFailed && data.error && (
         <p className="text-xs text-red-600 mt-1">{String(data.error)}</p>

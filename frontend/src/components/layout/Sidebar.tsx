@@ -1,11 +1,14 @@
 import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { projectsApi } from "@/api/projects";
 import { useAuth } from "@/hooks/useAuth";
 import { useUiStore } from "@/store/uiStore";
 import { LayoutDashboard, FolderKanban, LogOut, ChevronLeft } from "lucide-react";
+import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 export function Sidebar() {
+  const { t } = useTranslation();
   const { logout } = useAuth();
   const setSidebarOpen = useUiStore((s) => s.setSidebarOpen);
   const { projectId } = useParams();
@@ -22,12 +25,12 @@ export function Sidebar() {
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet to-violet-light flex items-center justify-center">
             <span className="text-white text-sm font-bold">P</span>
           </div>
-          <span className="text-base font-semibold text-white">ParaVerse</span>
+          <span className="text-base font-semibold text-white">{t("common.appName")}</span>
         </Link>
         <button
           onClick={() => setSidebarOpen(false)}
           className="p-1 rounded hover:bg-white/10 text-white/40 hover:text-white transition-colors cursor-pointer lg:hidden"
-          aria-label="Collapse sidebar"
+          aria-label={t("common.collapseSidebar")}
         >
           <ChevronLeft size={18} />
         </button>
@@ -42,14 +45,14 @@ export function Sidebar() {
             className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <LayoutDashboard size={18} />
-            Dashboard
+            {t("nav.dashboard")}
           </Link>
         </div>
 
         {/* Projects */}
         <div>
           <div className="px-3 mb-2 text-[11px] font-semibold uppercase tracking-wider text-white/30">
-            Projects
+            {t("nav.projects")}
           </div>
           <div className="space-y-0.5">
             {data?.map((project: { id: string; name: string }) => {
@@ -74,13 +77,14 @@ export function Sidebar() {
       </nav>
 
       {/* User footer */}
-      <div className="px-3 py-3 border-t border-white/10">
+      <div className="px-3 py-3 border-t border-white/10 space-y-2">
+        <LanguageSwitcher />
         <button
           onClick={logout}
           className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm text-white/50 hover:text-red-400 hover:bg-white/5 transition-colors cursor-pointer"
         >
           <LogOut size={16} />
-          Sign out
+          {t("nav.signOut")}
         </button>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { useSimulationStore } from "@/store/simulationStore";
 import { useReport, useGenerateReport } from "@/hooks/useReport";
@@ -14,6 +15,7 @@ import { projectsApi } from "@/api/projects";
 import type { ScenarioType } from "@shared/types/project";
 
 export default function Step4Report() {
+  const { t } = useTranslation();
   const { projectId } = useParams();
   const navigate = useNavigate();
   const simId = useSimulationStore((s) => s.simId);
@@ -52,7 +54,6 @@ export default function Step4Report() {
     refetch();
   };
 
-  // Mock emotion chart data (stable across renders)
   const emotionData = useMemo(
     () =>
       Array.from({ length: 20 }, (_, i) => ({
@@ -69,33 +70,31 @@ export default function Step4Report() {
   return (
     <div className="space-y-6">
       <StepProgress currentStep={4} />
-      <h2 className="text-xl font-bold text-navy">Step 4: Report</h2>
-      <p className="text-gray-500">View the generated analysis report.</p>
+      <h2 className="text-xl font-bold text-navy">{t("step4.title")}</h2>
+      <p className="text-gray-500">{t("step4.subtitle")}</p>
 
       {!simId && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
-          No simulation found. Please complete Step 3 first.
+          {t("step4.noSimulation")}
         </div>
       )}
 
       {simId && (
         <>
-          {/* Generate button */}
           {!reportReady && !reportTaskId && (
             <button
               onClick={handleGenerate}
               disabled={generateMutation.isPending}
               className="bg-violet text-white px-6 py-2 rounded hover:bg-violet/90 disabled:opacity-50"
             >
-              {generateMutation.isPending ? "Generating..." : "Generate Report"}
+              {generateMutation.isPending ? t("step4.generating") : t("step4.generateReport")}
             </button>
           )}
 
           {generateMutation.isError && (
-            <p className="text-sm text-red-600">Report generation failed.</p>
+            <p className="text-sm text-red-600">{t("step4.generationFailed")}</p>
           )}
 
-          {/* Task Progress */}
           {reportTaskId && (
             <TaskProgress
               taskId={reportTaskId}
@@ -104,40 +103,28 @@ export default function Step4Report() {
             />
           )}
 
-          {/* Policy Impact Timeline (PolicyLab only) */}
           {isPolicyLab && <PolicyImpactChart events={simEvents} />}
+          {isPolicyLab && simId && <AcceptanceMatrixHeatmap simulationId={simId} />}
 
-          {/* Acceptance Matrix (PolicyLab only) */}
-          {isPolicyLab && simId && (
-            <AcceptanceMatrixHeatmap simulationId={simId} />
-          )}
-
-          {/* Report Content */}
           {reportReady && (
             <div className="space-y-6">
-              {/* Emotion Chart */}
               <div className="space-y-2">
-                <h3 className="text-sm font-semibold text-gray-600">Sentiment Over Time</h3>
+                <h3 className="text-sm font-semibold text-gray-600">{t("step4.sentimentOverTime")}</h3>
                 <EmotionChart data={emotionData} />
               </div>
-
-              {/* Report Sections */}
               {sections.length > 0 && <ReportViewer sections={sections} />}
-
-              {/* Export */}
               <div className="flex items-center gap-3">
                 <ExportButton simId={simId} />
               </div>
             </div>
           )}
 
-          {/* Next Step */}
           <div className="pt-4 border-t border-gray-200">
             <button
               onClick={() => navigate(`/projects/${projectId}/step/5`)}
               className="bg-navy text-white px-6 py-2 rounded hover:bg-navy/90"
             >
-              Next Step
+              {t("common.nextStep")}
             </button>
           </div>
         </>

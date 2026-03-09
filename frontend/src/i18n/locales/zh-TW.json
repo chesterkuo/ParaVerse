@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "多智能體模擬平台",
+    "connected": "已連線",
+    "disconnected": "已斷線",
+    "cancel": "取消",
+    "send": "傳送",
+    "nextStep": "下一步",
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "collapseSidebar": "收合側邊欄",
+    "toggleSidebar": "切換側邊欄"
+  },
+  "auth": {
+    "welcomeBack": "歡迎回來",
+    "signInSubtitle": "登入您的帳號以繼續",
+    "email": "電子郵件",
+    "password": "密碼",
+    "signingIn": "登入中...",
+    "signIn": "登入",
+    "invalidCredentials": "憑證無效，請重試。",
+    "noAccount": "還沒有帳號？",
+    "createAccount": "建立帳號",
+    "createYourAccount": "建立您的帳號",
+    "getStarted": "開始使用 ParaVerse",
+    "name": "姓名",
+    "passwordHint": "密碼（8 個字元以上）",
+    "creatingAccount": "建立帳號中...",
+    "registrationFailed": "註冊失敗，請重試。",
+    "haveAccount": "已有帳號？",
+    "brandFeature1": "從您的資料建構知識圖譜",
+    "brandFeature2": "設定並執行多智能體模擬",
+    "brandFeature3": "分析結果並匯出報告",
+    "brandDescription": "企業級多智能體模擬平台。建模複雜情境、分析利害關係人動態，並做出數據驅動的決策。"
+  },
+  "nav": {
+    "dashboard": "儀表板",
+    "projects": "專案",
+    "signOut": "登出"
+  },
+  "home": {
+    "title": "專案",
+    "subtitle": "管理您的模擬專案",
+    "newProject": "新增專案",
+    "createNewProject": "建立新專案",
+    "projectName": "專案名稱",
+    "scenarioType": "情境類型",
+    "creating": "建立中...",
+    "createProject": "建立專案",
+    "noProjects": "尚無專案",
+    "noProjectsHint": "建立您的第一個模擬專案以開始使用"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "金融市場情緒分析",
+    "content_lab_desc": "內容審核與病毒式傳播分析",
+    "crisis_pr_desc": "危機公關應對模擬",
+    "policy_lab_desc": "公共政策影響建模",
+    "war_game_desc": "競爭策略兵棋推演",
+    "train_lab_desc": "智能體訓練與評估"
+  },
+  "steps": {
+    "knowledgeGraph": "知識圖譜",
+    "environment": "環境設定",
+    "simulation": "模擬",
+    "report": "報告",
+    "interaction": "互動"
+  },
+  "step1": {
+    "title": "步驟 1：知識圖譜",
+    "subtitle": "上傳種子文件並建構知識圖譜。",
+    "uploadDocument": "上傳文件",
+    "uploading": "上傳中...",
+    "uploadFailed": "上傳失敗，請重試。",
+    "uploaded": "已上傳：{{filename}}",
+    "building": "建構中...",
+    "buildGraph": "建構圖譜",
+    "buildFailed": "建構失敗，請重試。",
+    "knowledgeGraph": "知識圖譜"
+  },
+  "step2": {
+    "title": "步驟 2：環境設定",
+    "subtitle": "設定智能體與模擬參數。",
+    "agentCount": "智能體數量",
+    "tickCount": "時間步數",
+    "seedContext": "種子情境",
+    "seedContextPlaceholder": "描述初始情境背景...",
+    "platform": "平台",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "引擎依據情境類型自動選擇",
+    "createFailed": "建立模擬失敗，請重試。",
+    "creating": "建立中...",
+    "createSimulation": "建立模擬"
+  },
+  "step3": {
+    "title": "步驟 3：模擬",
+    "subtitle": "即時執行並監控模擬。",
+    "noSimulation": "尚未設定模擬。請返回步驟 2 建立模擬。",
+    "starting": "啟動中...",
+    "startSimulation": "啟動模擬",
+    "viewReport": "檢視報告",
+    "eventFeed": "事件動態",
+    "timeline": "時間軸",
+    "scenarioBranches": "情境分支"
+  },
+  "step4": {
+    "title": "步驟 4：報告",
+    "subtitle": "檢視產生的分析報告。",
+    "noSimulation": "未找到模擬。請先完成步驟 3。",
+    "generating": "產生中...",
+    "generateReport": "產生報告",
+    "generationFailed": "報告產生失敗。",
+    "sentimentOverTime": "情緒隨時間變化"
+  },
+  "step5": {
+    "title": "步驟 5：深度互動",
+    "subtitle": "與智能體對話並探索洞察。",
+    "noSimulation": "未找到模擬。請先完成前面的步驟。",
+    "agents": "智能體",
+    "loadingAgents": "載入智能體中...",
+    "enterAgentId": "輸入智能體 ID...",
+    "startChatting": "選擇一個智能體開始對話",
+    "typeQuestion": "輸入您的問題...",
+    "selectAgentFirst": "請先選擇一個智能體"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "具手動操作的互動式訓練模擬。",
+    "noSimulation": "尚未設定模擬。請先建立 TrainLab 專案並設定模擬。",
+    "manualAction": "手動操作",
+    "actionPlaceholder": "描述要注入的操作...",
+    "injecting": "注入中...",
+    "injectAction": "注入操作",
+    "injectFailed": "操作注入失敗",
+    "eventFeed": "事件動態"
+  },
+  "simulation": {
+    "status": "模擬狀態",
+    "pending": "待處理",
+    "configuring": "設定中",
+    "running": "執行中",
+    "completed": "已完成",
+    "failed": "失敗",
+    "statistics": "統計資料",
+    "groundedVars": "基礎變數",
+    "waitingForEvents": "等待事件中..."
+  },
+  "export": {
+    "pdf": "匯出 PDF",
+    "docx": "匯出 DOCX"
+  },
+  "fileUpload": {
+    "dropHere": "將檔案拖放至此",
+    "dragAndDrop": "拖放檔案或點擊瀏覽",
+    "supports": "支援 {{accept}}"
+  },
+  "events": {
+    "agent_action": "操作",
+    "grounded_var": "變數更新",
+    "branch_update": "分支更新",
+    "simulation_complete": "完成",
+    "error": "錯誤",
+    "interview_response": "回覆",
+    "status": "狀態"
+  },
+  "task": {
+    "label": "任務",
+    "failed": "失敗",
+    "completed": "已完成",
+    "inProgress": "進行中"
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "マルチエージェントシミュレーションプラットフォーム",
+    "connected": "接続済み",
+    "disconnected": "切断",
+    "cancel": "キャンセル",
+    "send": "送信",
+    "nextStep": "次のステップ",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "collapseSidebar": "サイドバーを折りたたむ",
+    "toggleSidebar": "サイドバーの切替"
+  },
+  "auth": {
+    "welcomeBack": "おかえりなさい",
+    "signInSubtitle": "アカウントにサインインして続行",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "signingIn": "サインイン中...",
+    "signIn": "サインイン",
+    "invalidCredentials": "認証情報が無効です。もう一度お試しください。",
+    "noAccount": "アカウントをお持ちではありませんか？",
+    "createAccount": "アカウント作成",
+    "createYourAccount": "アカウントを作成",
+    "getStarted": "ParaVerseを始めましょう",
+    "name": "名前",
+    "passwordHint": "パスワード（8文字以上）",
+    "creatingAccount": "アカウント作成中...",
+    "registrationFailed": "登録に失敗しました。もう一度お試しください。",
+    "haveAccount": "すでにアカウントをお持ちですか？",
+    "brandFeature1": "データからナレッジグラフを構築",
+    "brandFeature2": "マルチエージェントシミュレーションの設定と実行",
+    "brandFeature3": "結果の分析とレポートのエクスポート",
+    "brandDescription": "エンタープライズ向けマルチエージェントシミュレーションプラットフォーム。複雑なシナリオのモデリング、ステークホルダーのダイナミクス分析、データ駆動型の意思決定を実現します。"
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "projects": "プロジェクト",
+    "signOut": "サインアウト"
+  },
+  "home": {
+    "title": "プロジェクト",
+    "subtitle": "シミュレーションプロジェクトの管理",
+    "newProject": "新規プロジェクト",
+    "createNewProject": "新規プロジェクト作成",
+    "projectName": "プロジェクト名",
+    "scenarioType": "シナリオタイプ",
+    "creating": "作成中...",
+    "createProject": "プロジェクト作成",
+    "noProjects": "プロジェクトがありません",
+    "noProjectsHint": "最初のシミュレーションプロジェクトを作成して始めましょう"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "金融市場センチメント分析",
+    "content_lab_desc": "コンテンツモデレーションとバイラル分析",
+    "crisis_pr_desc": "危機広報対応シミュレーション",
+    "policy_lab_desc": "公共政策影響モデリング",
+    "war_game_desc": "競争戦略ウォーゲーミング",
+    "train_lab_desc": "エージェントトレーニングと評価"
+  },
+  "steps": {
+    "knowledgeGraph": "ナレッジグラフ",
+    "environment": "環境設定",
+    "simulation": "シミュレーション",
+    "report": "レポート",
+    "interaction": "インタラクション"
+  },
+  "step1": {
+    "title": "ステップ1：ナレッジグラフ",
+    "subtitle": "シードドキュメントをアップロードしてナレッジグラフを構築します。",
+    "uploadDocument": "ドキュメントをアップロード",
+    "uploading": "アップロード中...",
+    "uploadFailed": "アップロードに失敗しました。もう一度お試しください。",
+    "uploaded": "アップロード済み：{{filename}}",
+    "building": "構築中...",
+    "buildGraph": "グラフを構築",
+    "buildFailed": "構築に失敗しました。もう一度お試しください。",
+    "knowledgeGraph": "ナレッジグラフ"
+  },
+  "step2": {
+    "title": "ステップ2：環境設定",
+    "subtitle": "エージェントとシミュレーションパラメータを設定します。",
+    "agentCount": "エージェント数",
+    "tickCount": "ティック数",
+    "seedContext": "シードコンテキスト",
+    "seedContextPlaceholder": "初期シナリオのコンテキストを記述してください...",
+    "platform": "プラットフォーム",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "シナリオタイプに基づいてエンジンが選択されます",
+    "createFailed": "シミュレーションの作成に失敗しました。もう一度お試しください。",
+    "creating": "作成中...",
+    "createSimulation": "シミュレーション作成"
+  },
+  "step3": {
+    "title": "ステップ3：シミュレーション",
+    "subtitle": "シミュレーションをリアルタイムで実行・監視します。",
+    "noSimulation": "シミュレーションが設定されていません。ステップ2に戻ってシミュレーションを作成してください。",
+    "starting": "開始中...",
+    "startSimulation": "シミュレーション開始",
+    "viewReport": "レポートを表示",
+    "eventFeed": "イベントフィード",
+    "timeline": "タイムライン",
+    "scenarioBranches": "シナリオ分岐"
+  },
+  "step4": {
+    "title": "ステップ4：レポート",
+    "subtitle": "生成された分析レポートを表示します。",
+    "noSimulation": "シミュレーションが見つかりません。先にステップ3を完了してください。",
+    "generating": "生成中...",
+    "generateReport": "レポート生成",
+    "generationFailed": "レポートの生成に失敗しました。",
+    "sentimentOverTime": "センチメントの時系列推移"
+  },
+  "step5": {
+    "title": "ステップ5：深層インタラクション",
+    "subtitle": "エージェントとチャットしてインサイトを探索します。",
+    "noSimulation": "シミュレーションが見つかりません。先に前のステップを完了してください。",
+    "agents": "エージェント",
+    "loadingAgents": "エージェント読み込み中...",
+    "enterAgentId": "エージェントIDを入力...",
+    "startChatting": "エージェントを選択してチャットを開始",
+    "typeQuestion": "質問を入力...",
+    "selectAgentFirst": "まずエージェントを選択してください"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "手動アクションによるインタラクティブトレーニングシミュレーション。",
+    "noSimulation": "シミュレーションが設定されていません。TrainLabプロジェクトを作成し、先にシミュレーションをセットアップしてください。",
+    "manualAction": "手動アクション",
+    "actionPlaceholder": "注入するアクションを記述してください...",
+    "injecting": "注入中...",
+    "injectAction": "アクションを注入",
+    "injectFailed": "アクションの注入に失敗しました",
+    "eventFeed": "イベントフィード"
+  },
+  "simulation": {
+    "status": "シミュレーション状態",
+    "pending": "待機中",
+    "configuring": "設定中",
+    "running": "実行中",
+    "completed": "完了",
+    "failed": "失敗",
+    "statistics": "統計",
+    "groundedVars": "グラウンデッド変数",
+    "waitingForEvents": "イベントを待機中..."
+  },
+  "export": {
+    "pdf": "PDFエクスポート",
+    "docx": "DOCXエクスポート"
+  },
+  "fileUpload": {
+    "dropHere": "ここにファイルをドロップ",
+    "dragAndDrop": "ファイルをドラッグ＆ドロップまたはクリックして選択",
+    "supports": "{{accept}}に対応"
+  },
+  "events": {
+    "agent_action": "アクション",
+    "grounded_var": "変数更新",
+    "branch_update": "分岐更新",
+    "simulation_complete": "完了",
+    "error": "エラー",
+    "interview_response": "レスポンス",
+    "status": "ステータス"
+  },
+  "task": {
+    "label": "タスク",
+    "failed": "失敗",
+    "completed": "完了",
+    "inProgress": "進行中"
+  }
+}

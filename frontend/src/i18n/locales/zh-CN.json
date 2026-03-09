@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "多智能体仿真平台",
+    "connected": "已连接",
+    "disconnected": "已断开",
+    "cancel": "取消",
+    "send": "发送",
+    "nextStep": "下一步",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "collapseSidebar": "收起侧边栏",
+    "toggleSidebar": "切换侧边栏"
+  },
+  "auth": {
+    "welcomeBack": "欢迎回来",
+    "signInSubtitle": "登录您的账户以继续",
+    "email": "邮箱",
+    "password": "密码",
+    "signingIn": "登录中...",
+    "signIn": "登录",
+    "invalidCredentials": "凭据无效，请重试。",
+    "noAccount": "还没有账户？",
+    "createAccount": "创建账户",
+    "createYourAccount": "创建您的账户",
+    "getStarted": "开始使用 ParaVerse",
+    "name": "姓名",
+    "passwordHint": "密码（8位以上）",
+    "creatingAccount": "创建账户中...",
+    "registrationFailed": "注册失败，请重试。",
+    "haveAccount": "已有账户？",
+    "brandFeature1": "从您的数据构建知识图谱",
+    "brandFeature2": "配置并运行多智能体仿真",
+    "brandFeature3": "分析结果并导出报告",
+    "brandDescription": "企业级多智能体仿真平台。建模复杂场景，分析利益相关者动态，做出数据驱动的决策。"
+  },
+  "nav": {
+    "dashboard": "仪表盘",
+    "projects": "项目",
+    "signOut": "退出登录"
+  },
+  "home": {
+    "title": "项目",
+    "subtitle": "管理您的仿真项目",
+    "newProject": "新建项目",
+    "createNewProject": "创建新项目",
+    "projectName": "项目名称",
+    "scenarioType": "场景类型",
+    "creating": "创建中...",
+    "createProject": "创建项目",
+    "noProjects": "暂无项目",
+    "noProjectsHint": "创建您的第一个仿真项目以开始使用"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "金融市场情绪分析",
+    "content_lab_desc": "内容审核与传播分析",
+    "crisis_pr_desc": "危机公关响应仿真",
+    "policy_lab_desc": "公共政策影响建模",
+    "war_game_desc": "竞争策略兵棋推演",
+    "train_lab_desc": "智能体训练与评估"
+  },
+  "steps": {
+    "knowledgeGraph": "知识图谱",
+    "environment": "环境配置",
+    "simulation": "仿真运行",
+    "report": "报告",
+    "interaction": "交互"
+  },
+  "step1": {
+    "title": "第一步：知识图谱",
+    "subtitle": "上传种子文档并构建知识图谱。",
+    "uploadDocument": "上传文档",
+    "uploading": "上传中...",
+    "uploadFailed": "上传失败，请重试。",
+    "uploaded": "已上传：{{filename}}",
+    "building": "构建中...",
+    "buildGraph": "构建图谱",
+    "buildFailed": "构建失败，请重试。",
+    "knowledgeGraph": "知识图谱"
+  },
+  "step2": {
+    "title": "第二步：环境配置",
+    "subtitle": "配置智能体和仿真参数。",
+    "agentCount": "智能体数量",
+    "tickCount": "时间步数",
+    "seedContext": "种子上下文",
+    "seedContextPlaceholder": "描述初始场景上下文...",
+    "platform": "平台",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "引擎根据场景类型自动选择",
+    "createFailed": "创建仿真失败，请重试。",
+    "creating": "创建中...",
+    "createSimulation": "创建仿真"
+  },
+  "step3": {
+    "title": "第三步：仿真运行",
+    "subtitle": "实时运行和监控仿真。",
+    "noSimulation": "未配置仿真。请返回第二步创建仿真。",
+    "starting": "启动中...",
+    "startSimulation": "启动仿真",
+    "viewReport": "查看报告",
+    "eventFeed": "事件流",
+    "timeline": "时间线",
+    "scenarioBranches": "场景分支"
+  },
+  "step4": {
+    "title": "第四步：报告",
+    "subtitle": "查看生成的分析报告。",
+    "noSimulation": "未找到仿真。请先完成第三步。",
+    "generating": "生成中...",
+    "generateReport": "生成报告",
+    "generationFailed": "报告生成失败。",
+    "sentimentOverTime": "情绪随时间变化"
+  },
+  "step5": {
+    "title": "第五步：深度交互",
+    "subtitle": "与智能体对话并探索洞察。",
+    "noSimulation": "未找到仿真。请先完成前面的步骤。",
+    "agents": "智能体",
+    "loadingAgents": "加载智能体中...",
+    "enterAgentId": "输入智能体 ID...",
+    "startChatting": "选择一个智能体开始对话",
+    "typeQuestion": "输入您的问题...",
+    "selectAgentFirst": "请先选择一个智能体"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "支持手动操作的交互式训练仿真。",
+    "noSimulation": "未配置仿真。请先创建 TrainLab 项目并设置仿真。",
+    "manualAction": "手动操作",
+    "actionPlaceholder": "描述要注入的操作...",
+    "injecting": "注入中...",
+    "injectAction": "注入操作",
+    "injectFailed": "操作注入失败",
+    "eventFeed": "事件流"
+  },
+  "simulation": {
+    "status": "仿真状态",
+    "pending": "待处理",
+    "configuring": "配置中",
+    "running": "运行中",
+    "completed": "已完成",
+    "failed": "已失败",
+    "statistics": "统计数据",
+    "groundedVars": "接地变量",
+    "waitingForEvents": "等待事件中..."
+  },
+  "export": {
+    "pdf": "导出 PDF",
+    "docx": "导出 DOCX"
+  },
+  "fileUpload": {
+    "dropHere": "将文件拖放到此处",
+    "dragAndDrop": "拖放文件或点击浏览",
+    "supports": "支持 {{accept}}"
+  },
+  "events": {
+    "agent_action": "操作",
+    "grounded_var": "变量更新",
+    "branch_update": "分支更新",
+    "simulation_complete": "已完成",
+    "error": "错误",
+    "interview_response": "响应",
+    "status": "状态"
+  },
+  "task": {
+    "label": "任务",
+    "failed": "失败",
+    "completed": "已完成",
+    "inProgress": "进行中"
+  }
+}

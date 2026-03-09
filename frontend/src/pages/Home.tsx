@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { projectsApi } from "@/api/projects";
 import { EngineTag } from "@/components/ui/EngineTag";
 import { getEngineForScenario, SCENARIO_LABELS } from "@/utils/engineLabel";
@@ -10,16 +11,8 @@ import { Plus, FolderKanban, ArrowRight, X } from "lucide-react";
 
 const SCENARIOS: ScenarioType[] = ["fin_sentiment", "content_lab", "crisis_pr", "policy_lab", "war_game", "train_lab"];
 
-const SCENARIO_DESCRIPTIONS: Record<string, string> = {
-  fin_sentiment: "Financial market sentiment analysis",
-  content_lab: "Content moderation & viral analysis",
-  crisis_pr: "Crisis PR response simulation",
-  policy_lab: "Public policy impact modeling",
-  war_game: "Competitive strategy war gaming",
-  train_lab: "Agent training & evaluation",
-};
-
 export default function Home() {
+  const { t } = useTranslation();
   const [showCreate, setShowCreate] = useState(false);
   const [name, setName] = useState("");
   const [scenario, setScenario] = useState<ScenarioType>("fin_sentiment");
@@ -44,15 +37,15 @@ export default function Home() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-text-primary">Projects</h1>
-          <p className="text-sm text-text-secondary mt-1">Manage your simulation projects</p>
+          <h1 className="text-2xl font-semibold text-text-primary">{t("home.title")}</h1>
+          <p className="text-sm text-text-secondary mt-1">{t("home.subtitle")}</p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
           className="flex items-center gap-2 bg-violet text-white pl-4 pr-5 py-2.5 rounded-lg font-medium text-sm hover:bg-violet-light transition-colors cursor-pointer shadow-sm"
         >
           <Plus size={18} />
-          New Project
+          {t("home.newProject")}
         </button>
       </div>
 
@@ -60,22 +53,22 @@ export default function Home() {
       {showCreate && (
         <div className="bg-surface rounded-xl border border-border shadow-sm p-6 space-y-5">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-text-primary">Create New Project</h2>
+            <h2 className="text-lg font-semibold text-text-primary">{t("home.createNewProject")}</h2>
             <button onClick={() => setShowCreate(false)} className="p-1 rounded-md hover:bg-gray-100 text-text-muted cursor-pointer transition-colors">
               <X size={18} />
             </button>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-1.5">Project Name</label>
+            <label className="block text-sm font-medium text-text-primary mb-1.5">{t("home.projectName")}</label>
             <input
-              type="text" placeholder="Project name" value={name} onChange={(e) => setName(e.target.value)}
+              type="text" placeholder={t("home.projectName")} value={name} onChange={(e) => setName(e.target.value)}
               className="w-full px-3.5 py-2.5 border border-border rounded-lg bg-surface text-sm text-text-primary placeholder:text-text-muted"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-text-primary mb-2">Scenario Type</label>
+            <label className="block text-sm font-medium text-text-primary mb-2">{t("home.scenarioType")}</label>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
               {SCENARIOS.map((s) => (
                 <button key={s} onClick={() => setScenario(s)}
@@ -88,7 +81,7 @@ export default function Home() {
                   <div className="flex items-center gap-2 mb-1.5">
                     <span className="font-medium text-sm text-text-primary">{SCENARIO_LABELS[s]}</span>
                   </div>
-                  <p className="text-xs text-text-secondary leading-relaxed">{SCENARIO_DESCRIPTIONS[s] ?? ""}</p>
+                  <p className="text-xs text-text-secondary leading-relaxed">{t(`scenarios.${s}_desc`)}</p>
                   <div className="mt-2">
                     <EngineTag type={getEngineForScenario(s)} />
                   </div>
@@ -103,11 +96,11 @@ export default function Home() {
               disabled={!name.trim() || createMutation.isPending}
               className="flex items-center gap-2 bg-violet text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-violet-light transition-colors cursor-pointer disabled:opacity-50"
             >
-              {createMutation.isPending ? "Creating..." : "Create Project"}
+              {createMutation.isPending ? t("home.creating") : t("home.createProject")}
             </button>
             <button onClick={() => setShowCreate(false)}
               className="px-5 py-2.5 rounded-lg border border-border text-sm font-medium text-text-secondary hover:bg-surface-hover transition-colors cursor-pointer">
-              Cancel
+              {t("common.cancel")}
             </button>
           </div>
         </div>
@@ -132,12 +125,12 @@ export default function Home() {
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-violet/10 flex items-center justify-center">
             <FolderKanban size={28} className="text-violet" />
           </div>
-          <h3 className="text-lg font-semibold text-text-primary mb-2">No projects yet</h3>
-          <p className="text-sm text-text-secondary mb-6">Create your first simulation project to get started</p>
+          <h3 className="text-lg font-semibold text-text-primary mb-2">{t("home.noProjects")}</h3>
+          <p className="text-sm text-text-secondary mb-6">{t("home.noProjectsHint")}</p>
           <button onClick={() => setShowCreate(true)}
             className="inline-flex items-center gap-2 bg-violet text-white px-5 py-2.5 rounded-lg font-medium text-sm hover:bg-violet-light transition-colors cursor-pointer">
             <Plus size={16} />
-            Create Project
+            {t("home.createProject")}
           </button>
         </div>
       )}

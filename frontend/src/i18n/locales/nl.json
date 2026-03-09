@@ -1,0 +1,180 @@
+{
+  "common": {
+    "appName": "ParaVerse",
+    "tagline": "Multi-Agent Simulatieplatform",
+    "connected": "Verbonden",
+    "disconnected": "Niet verbonden",
+    "cancel": "Annuleren",
+    "send": "Verzenden",
+    "nextStep": "Volgende stap",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Gelukt",
+    "collapseSidebar": "Zijbalk inklappen",
+    "toggleSidebar": "Zijbalk wisselen"
+  },
+  "auth": {
+    "welcomeBack": "Welkom terug",
+    "signInSubtitle": "Meld u aan bij uw account om verder te gaan",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "signingIn": "Aanmelden...",
+    "signIn": "Aanmelden",
+    "invalidCredentials": "Ongeldige inloggegevens. Probeer het opnieuw.",
+    "noAccount": "Heeft u nog geen account?",
+    "createAccount": "Account aanmaken",
+    "createYourAccount": "Maak uw account aan",
+    "getStarted": "Aan de slag met ParaVerse",
+    "name": "Naam",
+    "passwordHint": "Wachtwoord (8+ tekens)",
+    "creatingAccount": "Account aanmaken...",
+    "registrationFailed": "Registratie mislukt. Probeer het opnieuw.",
+    "haveAccount": "Heeft u al een account?",
+    "brandFeature1": "Bouw kennisgrafieken op basis van uw gegevens",
+    "brandFeature2": "Configureer en voer multi-agent simulaties uit",
+    "brandFeature3": "Analyseer resultaten en exporteer rapporten",
+    "brandDescription": "Enterprise multi-agent simulatieplatform. Modelleer complexe scenario's, analyseer dynamiek tussen belanghebbenden en neem datagedreven beslissingen."
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "projects": "Projecten",
+    "signOut": "Uitloggen"
+  },
+  "home": {
+    "title": "Projecten",
+    "subtitle": "Beheer uw simulatieprojecten",
+    "newProject": "Nieuw project",
+    "createNewProject": "Nieuw project aanmaken",
+    "projectName": "Projectnaam",
+    "scenarioType": "Scenariotype",
+    "creating": "Aanmaken...",
+    "createProject": "Project aanmaken",
+    "noProjects": "Nog geen projecten",
+    "noProjectsHint": "Maak uw eerste simulatieproject aan om te beginnen"
+  },
+  "scenarios": {
+    "fin_sentiment": "FinSentiment",
+    "content_lab": "ContentLab",
+    "crisis_pr": "CrisisSimulator",
+    "policy_lab": "PolicyLab",
+    "war_game": "WarGame",
+    "train_lab": "TrainLab",
+    "fin_sentiment_desc": "Sentimentanalyse van financiële markten",
+    "content_lab_desc": "Contentmoderatie & virale analyse",
+    "crisis_pr_desc": "Crisis-PR-responssimulatie",
+    "policy_lab_desc": "Modellering van beleidsimpact",
+    "war_game_desc": "Concurrentiestrategie wargaming",
+    "train_lab_desc": "Agenttraining & evaluatie"
+  },
+  "steps": {
+    "knowledgeGraph": "Kennisgrafiek",
+    "environment": "Omgeving",
+    "simulation": "Simulatie",
+    "report": "Rapport",
+    "interaction": "Interactie"
+  },
+  "step1": {
+    "title": "Stap 1: Kennisgrafiek",
+    "subtitle": "Upload brondocumenten en bouw de kennisgrafiek.",
+    "uploadDocument": "Document uploaden",
+    "uploading": "Uploaden...",
+    "uploadFailed": "Upload mislukt. Probeer het opnieuw.",
+    "uploaded": "Geüpload: {{filename}}",
+    "building": "Bouwen...",
+    "buildGraph": "Grafiek bouwen",
+    "buildFailed": "Bouwen mislukt. Probeer het opnieuw.",
+    "knowledgeGraph": "Kennisgrafiek"
+  },
+  "step2": {
+    "title": "Stap 2: Omgeving instellen",
+    "subtitle": "Configureer agenten en simulatieparameters.",
+    "agentCount": "Aantal agenten",
+    "tickCount": "Aantal ticks",
+    "seedContext": "Begincontext",
+    "seedContextPlaceholder": "Beschrijf de initiële scenariocontext...",
+    "platform": "Platform",
+    "twitter": "Twitter",
+    "reddit": "Reddit",
+    "engineInfo": "Engine geselecteerd op basis van scenariotype",
+    "createFailed": "Simulatie aanmaken mislukt. Probeer het opnieuw.",
+    "creating": "Aanmaken...",
+    "createSimulation": "Simulatie aanmaken"
+  },
+  "step3": {
+    "title": "Stap 3: Simulatie",
+    "subtitle": "Voer de simulatie uit en volg deze in realtime.",
+    "noSimulation": "Geen simulatie geconfigureerd. Ga terug naar stap 2 om een simulatie aan te maken.",
+    "starting": "Starten...",
+    "startSimulation": "Simulatie starten",
+    "viewReport": "Rapport bekijken",
+    "eventFeed": "Gebeurtenissenfeed",
+    "timeline": "Tijdlijn",
+    "scenarioBranches": "Scenariovertakkingen"
+  },
+  "step4": {
+    "title": "Stap 4: Rapport",
+    "subtitle": "Bekijk het gegenereerde analyserapport.",
+    "noSimulation": "Geen simulatie gevonden. Voltooi eerst stap 3.",
+    "generating": "Genereren...",
+    "generateReport": "Rapport genereren",
+    "generationFailed": "Rapportgeneratie mislukt.",
+    "sentimentOverTime": "Sentiment in de tijd"
+  },
+  "step5": {
+    "title": "Stap 5: Diepgaande interactie",
+    "subtitle": "Chat met agenten en ontdek inzichten.",
+    "noSimulation": "Geen simulatie gevonden. Voltooi eerst de vorige stappen.",
+    "agents": "Agenten",
+    "loadingAgents": "Agenten laden...",
+    "enterAgentId": "Voer agent-ID in...",
+    "startChatting": "Selecteer een agent en begin met chatten",
+    "typeQuestion": "Typ uw vraag...",
+    "selectAgentFirst": "Selecteer eerst een agent"
+  },
+  "trainLab": {
+    "title": "TrainLab",
+    "subtitle": "Interactieve trainingssimulatie met handmatige acties.",
+    "noSimulation": "Geen simulatie geconfigureerd. Maak eerst een TrainLab-project aan en stel een simulatie in.",
+    "manualAction": "Handmatige actie",
+    "actionPlaceholder": "Beschrijf de actie om te injecteren...",
+    "injecting": "Injecteren...",
+    "injectAction": "Actie injecteren",
+    "injectFailed": "Actie injecteren mislukt",
+    "eventFeed": "Gebeurtenissenfeed"
+  },
+  "simulation": {
+    "status": "Simulatiestatus",
+    "pending": "In afwachting",
+    "configuring": "Configureren",
+    "running": "Actief",
+    "completed": "Voltooid",
+    "failed": "Mislukt",
+    "statistics": "Statistieken",
+    "groundedVars": "Grondvariabelen",
+    "waitingForEvents": "Wachten op gebeurtenissen..."
+  },
+  "export": {
+    "pdf": "PDF exporteren",
+    "docx": "DOCX exporteren"
+  },
+  "fileUpload": {
+    "dropHere": "Bestand hier neerzetten",
+    "dragAndDrop": "Sleep een bestand of klik om te bladeren",
+    "supports": "Ondersteunt {{accept}}"
+  },
+  "events": {
+    "agent_action": "Actie",
+    "grounded_var": "Variabele-update",
+    "branch_update": "Vertakkingsupdate",
+    "simulation_complete": "Voltooid",
+    "error": "Fout",
+    "interview_response": "Antwoord",
+    "status": "Status"
+  },
+  "task": {
+    "label": "Taak",
+    "failed": "Mislukt",
+    "completed": "Voltooid",
+    "inProgress": "Bezig"
+  }
+}
