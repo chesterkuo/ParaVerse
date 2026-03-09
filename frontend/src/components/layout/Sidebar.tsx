@@ -1,12 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { projectsApi } from "@/api/projects";
 import { useAuth } from "@/hooks/useAuth";
 import { useUiStore } from "@/store/uiStore";
+import { LayoutDashboard, FolderKanban, LogOut, ChevronLeft } from "lucide-react";
 
 export function Sidebar() {
   const { logout } = useAuth();
-  const toggleSidebar = useUiStore((s) => s.toggleSidebar);
+  const setSidebarOpen = useUiStore((s) => s.setSidebarOpen);
+  const { projectId } = useParams();
   const { data } = useQuery({
     queryKey: ["projects"],
     queryFn: () => projectsApi.list().then((r) => r.data.data),
@@ -14,26 +16,71 @@ export function Sidebar() {
 
   return (
     <div className="w-64 bg-navy text-white flex flex-col h-full">
-      <div className="p-4 border-b border-white/10">
-        <Link to="/" className="text-xl font-bold text-violet">ParaVerse</Link>
-      </div>
-      <nav className="flex-1 overflow-auto p-4 space-y-2">
-        {data?.map((project: { id: string; name: string }) => (
-          <Link
-            key={project.id}
-            to={`/projects/${project.id}/step/1`}
-            className="block px-3 py-2 rounded hover:bg-white/10 text-sm truncate"
-          >
-            {project.name}
-          </Link>
-        ))}
-      </nav>
-      <div className="p-4 border-t border-white/10 space-y-2">
-        <button onClick={toggleSidebar} className="text-xs text-white/50 hover:text-white cursor-pointer">
-          Toggle Sidebar
+      {/* Logo + collapse */}
+      <div className="h-16 px-5 flex items-center justify-between border-b border-white/10">
+        <Link to="/" className="flex items-center gap-2 cursor-pointer">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet to-violet-light flex items-center justify-center">
+            <span className="text-white text-sm font-bold">P</span>
+          </div>
+          <span className="text-base font-semibold text-white">ParaVerse</span>
+        </Link>
+        <button
+          onClick={() => setSidebarOpen(false)}
+          className="p-1 rounded hover:bg-white/10 text-white/40 hover:text-white transition-colors cursor-pointer lg:hidden"
+          aria-label="Collapse sidebar"
+        >
+          <ChevronLeft size={18} />
         </button>
-        <button onClick={logout} className="text-xs text-red-400 hover:text-red-300 cursor-pointer">
-          Logout
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 overflow-auto py-4 px-3 space-y-6">
+        {/* Main nav */}
+        <div>
+          <Link
+            to="/"
+            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+          >
+            <LayoutDashboard size={18} />
+            Dashboard
+          </Link>
+        </div>
+
+        {/* Projects */}
+        <div>
+          <div className="px-3 mb-2 text-[11px] font-semibold uppercase tracking-wider text-white/30">
+            Projects
+          </div>
+          <div className="space-y-0.5">
+            {data?.map((project: { id: string; name: string }) => {
+              const isActive = project.id === projectId;
+              return (
+                <Link
+                  key={project.id}
+                  to={`/projects/${project.id}/step/1`}
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors cursor-pointer truncate
+                    ${isActive
+                      ? "bg-violet/20 text-violet-light font-medium"
+                      : "text-white/60 hover:text-white hover:bg-white/10"
+                    }`}
+                >
+                  <FolderKanban size={16} className="shrink-0" />
+                  <span className="truncate">{project.name}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </nav>
+
+      {/* User footer */}
+      <div className="px-3 py-3 border-t border-white/10">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-sm text-white/50 hover:text-red-400 hover:bg-white/5 transition-colors cursor-pointer"
+        >
+          <LogOut size={16} />
+          Sign out
         </button>
       </div>
     </div>
