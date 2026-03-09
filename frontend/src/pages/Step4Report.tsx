@@ -9,6 +9,7 @@ import { ReportViewer } from "@/components/report/ReportViewer";
 import { EmotionChart } from "@/components/report/EmotionChart";
 import { ExportButton } from "@/components/report/ExportButton";
 import { AcceptanceMatrixHeatmap } from "@/components/simulation/AcceptanceMatrix";
+import { PolicyImpactChart } from "@/components/simulation/PolicyImpactChart";
 import { projectsApi } from "@/api/projects";
 import type { ScenarioType } from "@shared/types/project";
 
@@ -16,6 +17,7 @@ export default function Step4Report() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const simId = useSimulationStore((s) => s.simId);
+  const simEvents = useSimulationStore((s) => s.events);
 
   const [reportTaskId, setReportTaskId] = useState<string | null>(null);
   const [reportReady, setReportReady] = useState(false);
@@ -101,6 +103,9 @@ export default function Step4Report() {
               onComplete={handleReportComplete}
             />
           )}
+
+          {/* Policy Impact Timeline (PolicyLab only) */}
+          {isPolicyLab && <PolicyImpactChart events={simEvents} />}
 
           {/* Acceptance Matrix (PolicyLab only) */}
           {isPolicyLab && simId && (
