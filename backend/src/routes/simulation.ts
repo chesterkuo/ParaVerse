@@ -11,6 +11,7 @@ import {
   getSimulationEvents,
 } from "../db/queries/simulations";
 import { getAgentsBySimulation } from "../db/queries/agents";
+import { computeAcceptanceMatrix } from "../services/matrixService";
 import type { ApiResponse } from "@shared/types/api";
 import { logger } from "../utils/logger";
 
@@ -252,6 +253,23 @@ simulation.post("/:simulationId/manual-action", async (c) => {
   return c.json({
     success: true,
     data: { injected: true },
+    error: null,
+  } satisfies ApiResponse);
+});
+
+// Get acceptance matrix
+simulation.get("/:simulationId/acceptance-matrix", async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
+  const matrix = await computeAcceptanceMatrix(simulationId);
+
+  return c.json({
+    success: true,
+    data: matrix,
     error: null,
   } satisfies ApiResponse);
 });
