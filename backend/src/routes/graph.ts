@@ -6,6 +6,7 @@ import { getProject } from "../db/queries/projects";
 import { createTask, updateTask } from "../db/queries/tasks";
 import { getDocumentService } from "../services/documentService";
 import { getGraphService } from "../services/graphService";
+import { hybridSearch } from "../services/hybridSearchService";
 import { query } from "../db/client";
 import type { ApiResponse } from "@shared/types/api";
 
@@ -162,6 +163,53 @@ graph.post("/:projectId/graph/search", async (c) => {
   return c.json({
     success: true,
     data: results,
+    error: null,
+  } satisfies ApiResponse);
+});
+
+// Hybrid search across project data
+graph.post("/:projectId/search", async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  const projectId = c.req.param("projectId");
+
+  const project = await getProject(projectId, auth.userId);
+  if (!project) throw new HTTPException(404, { message: "Project not found" });
+
+  const body = await c.req.json();
+  const searchSchema = z.object({
+    query: z.string().min(1, "query must be a non-empty string"),
+    mode: z.enum(["hybrid", "vector", "text"]).optional(),
+    limit: z.number().int().positive().optional(),
+    table: z.enum(["documents", "simulation_events", "ontology_nodes"]).optional(),
+  });
+
+  let input: z.infer<typeof searchSchema>;
+  try {
+    input = searchSchema.parse(body);
+  } catch (err: any) {
+    if (err?.issues || err?.errors) {
+      const issues = err.issues ?? err.errors;
+      const msg = issues?.[0]?.message ?? "Invalid input";
+      throw new HTTPException(400, { message: msg });
+    }
+    throw err;
+  }
+
+  const limit = Math.min(input.limit ?? 10, 50);
+  const table = input.table ?? "documents";
+  const mode = input.mode ?? "hybrid";
+
+  const results = await hybridSearch({
+    query: input.query,
+    projectId,
+    table,
+    limit,
+    mode,
+  });
+
+  return c.json({
+    success: true,
+    data: { results, total: results.length, mode },
     error: null,
   } satisfies ApiResponse);
 });
