@@ -16,7 +16,7 @@ export default function Home() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const { data: projects } = useQuery({
+  const { data: projects, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: () => projectsApi.list().then((r) => r.data.data),
   });
@@ -45,23 +45,35 @@ export default function Home() {
           <div className="grid grid-cols-3 gap-3">
             {SCENARIOS.map((s) => (
               <button key={s} onClick={() => setScenario(s)}
-                className={`p-3 rounded border-2 text-left ${scenario === s ? "border-violet" : "border-gray-200"}`}>
+                className={`p-3 rounded border-2 text-left cursor-pointer hover:border-violet/50 transition-colors ${scenario === s ? "border-violet" : "border-gray-200"}`}>
                 <div className="font-medium text-sm">{SCENARIO_LABELS[s]}</div>
                 <EngineTag type={getEngineForScenario(s)} />
               </button>
             ))}
           </div>
           <div className="flex gap-2">
-            <button onClick={() => createMutation.mutate()} className="bg-navy text-white px-4 py-2 rounded">Create</button>
-            <button onClick={() => setShowCreate(false)} className="px-4 py-2 rounded border">Cancel</button>
+            <button onClick={() => createMutation.mutate()} className="bg-navy text-white px-4 py-2 rounded cursor-pointer hover:bg-navy/90">Create</button>
+            <button onClick={() => setShowCreate(false)} className="px-4 py-2 rounded border cursor-pointer hover:bg-gray-50">Cancel</button>
           </div>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-white p-4 rounded-lg shadow animate-pulse">
+              <div className="h-5 w-32 bg-gray-200 rounded mb-3" />
+              <div className="h-4 w-24 bg-gray-100 rounded mb-2" />
+              <div className="h-3 w-20 bg-gray-100 rounded" />
+            </div>
+          ))}
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {projects?.map((p: { id: string; name: string; scenario_type: string; created_at: string }) => (
           <button key={p.id} onClick={() => navigate(`/projects/${p.id}/step/1`)}
-            className="bg-white p-4 rounded-lg shadow hover:shadow-md text-left transition-shadow">
+            className="bg-white p-4 rounded-lg shadow hover:shadow-md text-left transition-shadow cursor-pointer">
             <h3 className="font-semibold text-navy">{p.name}</h3>
             <div className="flex items-center gap-2 mt-2">
               <EngineTag type={getEngineForScenario(p.scenario_type as ScenarioType)} />
