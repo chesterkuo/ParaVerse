@@ -8,6 +8,7 @@ import { FileUpload } from "@/components/ui/FileUpload";
 import { TaskProgress } from "@/components/ui/TaskProgress";
 import { KnowledgeGraph } from "@/components/graph/KnowledgeGraph";
 import { GraphControls } from "@/components/graph/GraphControls";
+import { Info, ChevronDown, ChevronUp, Lightbulb } from "lucide-react";
 
 interface GraphNodeResponse {
   id: string;
@@ -35,6 +36,14 @@ export default function Step1Graph() {
   const [buildTaskId, setBuildTaskId] = useState<string | null>(null);
   const [uploadDone, setUploadDone] = useState(false);
   const [buildDone, setBuildDone] = useState(false);
+  const [showGuide, setShowGuide] = useState(true);
+
+  const { data: project } = useQuery({
+    queryKey: ["project", projectId],
+    queryFn: () => projectsApi.get(projectId!).then((r) => r.data.data),
+    enabled: !!projectId,
+  });
+  const scenarioType = project?.scenario_type ?? "fin_sentiment";
 
   const uploadMutation = useMutation({
     mutationFn: (file: File) => projectsApi.uploadDocument(projectId!, file),
@@ -77,6 +86,43 @@ export default function Step1Graph() {
       <StepProgress currentStep={1} />
       <h2 className="text-xl font-bold text-navy">{t("step1.title")}</h2>
       <p className="text-gray-500">{t("step1.subtitle")}</p>
+
+      {/* Guidance Panel */}
+      <div className="bg-blue-50 border border-blue-200 rounded-xl overflow-hidden">
+        <button
+          onClick={() => setShowGuide(!showGuide)}
+          className="w-full flex items-center justify-between px-5 py-3 cursor-pointer hover:bg-blue-100/50 transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <Lightbulb size={16} className="text-blue-600" />
+            <span className="text-sm font-medium text-blue-800">{t("step1.guidanceTitle")}</span>
+          </div>
+          {showGuide ? <ChevronUp size={16} className="text-blue-500" /> : <ChevronDown size={16} className="text-blue-500" />}
+        </button>
+        {showGuide && (
+          <div className="px-5 pb-4 space-y-3">
+            <p className="text-sm text-blue-700">{t("step1.guidanceGeneral")}</p>
+
+            {/* Scenario-specific guidance */}
+            <div className="bg-white/60 rounded-lg p-4 space-y-2">
+              <div className="flex items-center gap-1.5">
+                <Info size={14} className="text-violet" />
+                <span className="text-xs font-semibold text-violet uppercase tracking-wider">
+                  {t(`scenarios.${scenarioType}`)}
+                </span>
+              </div>
+              <p className="text-sm text-blue-800">
+                {t(`scenarios.${scenarioType}_doc_guide`)}
+              </p>
+              <p className="text-xs text-blue-600 italic">
+                {t(`scenarios.${scenarioType}_doc_examples`)}
+              </p>
+            </div>
+
+            <p className="text-xs text-blue-500">{t("step1.guidanceFormats")}</p>
+          </div>
+        )}
+      </div>
 
       {/* File Upload */}
       <div className="space-y-3">

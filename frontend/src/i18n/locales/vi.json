@@ -64,7 +64,37 @@
     "crisis_pr_desc": "Mô phỏng ứng phó khủng hoảng truyền thông",
     "policy_lab_desc": "Mô hình hóa tác động chính sách công",
     "war_game_desc": "Trò chơi chiến lược cạnh tranh",
-    "train_lab_desc": "Huấn luyện & đánh giá tác nhân"
+    "train_lab_desc": "Huấn luyện & đánh giá tác nhân",
+
+    "fin_sentiment_doc_guide": "Tải lên báo cáo nghiên cứu thị trường, bài viết tin tức tài chính, báo cáo phân tích, biên bản họp kết quả kinh doanh hoặc phân tích xu hướng ngành. Hệ thống sẽ trích xuất các công ty, ngành, chỉ số tài chính và mối quan hệ thị trường.",
+    "fin_sentiment_doc_examples": "Ví dụ: báo cáo kết quả kinh doanh quý, bài phân tích ngành, báo cáo thị trường tiền điện tử, tuyên bố chính sách ngân hàng trung ương",
+    "fin_sentiment_seed_guide": "Mô tả kịch bản thị trường: sự kiện hoặc xu hướng nào đang xảy ra, ngành/công ty nào bị ảnh hưởng, loại nhà đầu tư nào nên phản ứng. Bao gồm dữ liệu cụ thể nếu có.",
+    "fin_sentiment_seed_example": "Ví dụ: \"Việc phê duyệt Bitcoin ETF đã kích hoạt đợt tăng giá 40%. Các nhà phân tích tài chính truyền thống chia rẽ — một số cho rằng tiền điện tử đang được hợp pháp hóa, số khác cảnh báo về bong bóng. Mô phỏng phản ứng của nhà đầu tư cá nhân, nhà giao dịch tổ chức, người đam mê tiền điện tử và quỹ hưu trí ngại rủi ro.\"",
+
+    "content_lab_doc_guide": "Tải lên chính sách nội dung, hướng dẫn cộng đồng, bài đăng mạng xã hội, ví dụ nội dung lan truyền hoặc báo cáo kiểm duyệt nền tảng. Hệ thống sẽ ánh xạ loại nội dung, hành vi người dùng và quy tắc kiểm duyệt.",
+    "content_lab_doc_examples": "Ví dụ: hướng dẫn cộng đồng nền tảng, nghiên cứu điển hình kiểm duyệt nội dung, bộ dữ liệu bài đăng lan truyền, báo cáo thông tin sai lệch",
+    "content_lab_seed_guide": "Mô tả kịch bản nội dung: loại nội dung nào đang lan truyền, trên nền tảng nào, có những thách thức kiểm duyệt nào. Xác định các nhóm người dùng (người sáng tạo, người kiểm duyệt, người dùng thông thường).",
+    "content_lab_seed_example": "Ví dụ: \"Một video deepfake của người nổi tiếng quảng cáo sản phẩm lừa đảo đang lan truyền trên nền tảng. Mô phỏng cách các nhà sáng tạo nội dung, người kiểm chứng thông tin, người dùng thông thường và hệ thống kiểm duyệt tự động phản ứng trong 48 giờ.\"",
+
+    "crisis_pr_doc_guide": "Tải lên kế hoạch truyền thông khủng hoảng, nghiên cứu điển hình PR, tin tức truyền thông, phân tích các bên liên quan hoặc báo cáo uy tín thương hiệu. Hệ thống sẽ trích xuất các bên liên quan, kênh truyền thông và chiến lược ứng phó khủng hoảng.",
+    "crisis_pr_doc_examples": "Ví dụ: nghiên cứu điển hình khủng hoảng doanh nghiệp, mẫu phản hồi truyền thông, tài liệu lập bản đồ các bên liên quan, báo cáo giám sát mạng xã hội",
+    "crisis_pr_seed_guide": "Mô tả khủng hoảng: chuyện gì đã xảy ra, ai bị ảnh hưởng, phản ứng công chúng ra sao. Xác định các bên liên quan (truyền thông, khách hàng, nhân viên, cơ quan quản lý) và lập trường ban đầu của họ.",
+    "crisis_pr_seed_example": "Ví dụ: \"Một vụ rò rỉ dữ liệu lớn đã lộ 2 triệu hồ sơ khách hàng. Công ty đã trì hoãn công bố 3 tuần. Mô phỏng phản ứng truyền thông, tâm lý khách hàng, phản ứng của cơ quan quản lý và hiệu quả của các chiến lược PR khác nhau.\"",
+
+    "policy_lab_doc_guide": "Tải lên tài liệu chính sách, báo cáo nghiên cứu, văn bản lập trường của các bên liên quan, đánh giá tác động kinh tế hoặc đề xuất lập pháp. Hệ thống sẽ ánh xạ các bên liên quan, lựa chọn chính sách, dữ liệu kinh tế và quan điểm chính trị.",
+    "policy_lab_doc_examples": "Ví dụ: sách trắng của chính phủ, báo cáo viện nghiên cứu, văn bản lập trường ngành, đánh giá tác động kinh tế, khảo sát dư luận",
+    "policy_lab_seed_guide": "Mô tả kịch bản chính sách: chính sách nào đang được đề xuất, các bên liên quan chính là ai, lập trường của họ là gì. Bao gồm số liệu cụ thể (chi phí, dân số bị ảnh hưởng) và lợi ích cạnh tranh.",
+    "policy_lab_seed_example": "Ví dụ: \"Hồng Kông đang đánh giá chính sách thay thế lao động bằng AI ảnh hưởng đến 60.000-160.000 việc làm vào năm 2030. Các bên liên quan: nhóm vận động doanh nghiệp (phản đối quy định), công đoàn (yêu cầu mạng lưới an sinh), ngành giáo dục (muốn quỹ đào tạo lại), ngành công nghệ (ưu tiên tự điều chỉnh). Mô phỏng động lực liên minh và thay đổi dư luận qua bốn lựa chọn chính sách: thuế AI, trợ cấp đào tạo lại, phúc lợi di động và thông báo chuyển đổi.\"",
+
+    "war_game_doc_guide": "Tải lên báo cáo tình báo cạnh tranh, phân tích thị trường, hồ sơ công ty, tài liệu chiến lược hoặc chuẩn ngành. Hệ thống sẽ ánh xạ đối thủ, vị thế thị trường, tài sản chiến lược và động lực cạnh tranh.",
+    "war_game_doc_examples": "Ví dụ: báo cáo phân tích đối thủ, dữ liệu thị phần, phân tích SWOT, báo cáo xu hướng ngành, nghiên cứu điển hình M&A",
+    "war_game_seed_guide": "Mô tả kịch bản cạnh tranh: công ty/đối thủ nào tham gia, họ cạnh tranh ở thị trường nào, những động thái chiến lược nào đang được cân nhắc. Xác định điểm mạnh, điểm yếu và chiến lược có thể của từng bên.",
+    "war_game_seed_example": "Ví dụ: \"Ba công ty gọi xe cạnh tranh ở Đông Nam Á. Công ty A chiếm thị phần lớn nhưng chi tiêu nhiều. Công ty B có công nghệ mạnh nhưng mới vào thị trường. Công ty C có đối tác địa phương nhưng nền tảng yếu. Mô phỏng các động thái chiến lược của họ trong 12 tháng khi khung pháp lý mới được ban hành.\"",
+
+    "train_lab_doc_guide": "Tải lên kịch bản huấn luyện, bảng đánh giá, hướng dẫn hành vi hoặc tài liệu tham khảo. Hệ thống sẽ xây dựng cơ sở tri thức để tác nhân học hỏi trong quá trình huấn luyện tương tác.",
+    "train_lab_doc_examples": "Ví dụ: sổ tay huấn luyện, kịch bản tình huống, tiêu chí đánh giá, hướng dẫn hành vi",
+    "train_lab_seed_guide": "Mô tả kịch bản huấn luyện: kỹ năng hoặc hành vi nào bạn muốn huấn luyện/đánh giá, tác nhân hoạt động trong môi trường nào và thành công trông như thế nào.",
+    "train_lab_seed_example": "Ví dụ: \"Huấn luyện tác nhân dịch vụ khách hàng xử lý khách hàng tức giận yêu cầu hoàn tiền do giao hàng chậm. Tác nhân cần xoa dịu tình hình, đưa ra giải pháp và tuân thủ hướng dẫn thương hiệu. Đánh giá sự đồng cảm, thời gian giải quyết và mức độ hài lòng của khách hàng.\""
   },
   "steps": {
     "knowledgeGraph": "Đồ thị tri thức",
@@ -83,22 +113,31 @@
     "building": "Đang xây dựng...",
     "buildGraph": "Xây dựng đồ thị",
     "buildFailed": "Xây dựng thất bại. Vui lòng thử lại.",
-    "knowledgeGraph": "Đồ thị tri thức"
+    "knowledgeGraph": "Đồ thị tri thức",
+    "guidanceTitle": "Nên tải lên những tài liệu nào?",
+    "guidanceGeneral": "Tải lên các tài liệu cung cấp bối cảnh cho mô phỏng của bạn. Hệ thống sẽ trích xuất thực thể, mối quan hệ và sự kiện quan trọng để xây dựng đồ thị tri thức hướng dẫn hành vi tác nhân.",
+    "guidanceFormats": "Định dạng hỗ trợ: PDF, TXT, Markdown. Hỗ trợ tải lên nhiều tệp."
   },
   "step2": {
     "title": "Bước 2: Thiết lập môi trường",
     "subtitle": "Cấu hình tác nhân và tham số mô phỏng.",
     "agentCount": "Số lượng tác nhân",
+    "agentCountTip": "Số lượng tác nhân AI tham gia. Nhiều tác nhân hơn = động lực phong phú hơn nhưng thời gian chạy lâu hơn. Khuyến nghị: 5-15 cho kiểm tra nhanh, 20-50 cho phân tích chi tiết.",
     "tickCount": "Số lượng bước",
+    "tickCountTip": "Số vòng mô phỏng. Mỗi bước đại diện cho một chu kỳ tương tác. Khuyến nghị: 10-20 cho kiểm tra nhanh, 30-100 cho phân tích sâu.",
     "seedContext": "Ngữ cảnh khởi tạo",
+    "seedContextTip": "Ngữ cảnh khởi tạo thiết lập bối cảnh cho mô phỏng. Nó cho tác nhân biết họ là ai, đang ở trong tình huống nào và cần thảo luận hoặc phản ứng với điều gì.",
     "seedContextPlaceholder": "Mô tả ngữ cảnh kịch bản ban đầu...",
     "platform": "Nền tảng",
+    "platformTip": "Chọn nền tảng mạng xã hội để mô phỏng. Twitter: bài đăng ngắn, hashtag, retweet. Reddit: thảo luận theo luồng, subreddit, upvote.",
     "twitter": "Twitter",
     "reddit": "Reddit",
     "engineInfo": "Công cụ được chọn dựa trên loại kịch bản",
     "createFailed": "Không thể tạo mô phỏng. Vui lòng thử lại.",
     "creating": "Đang tạo...",
-    "createSimulation": "Tạo mô phỏng"
+    "createSimulation": "Tạo mô phỏng",
+    "guidanceTitle": "Cách viết ngữ cảnh khởi tạo tốt",
+    "guidanceGeneral": "Ngữ cảnh khởi tạo tốt bao gồm: bối cảnh kịch bản, các bên liên quan hoặc nhóm chính, các vấn đề hoặc sự kiện cụ thể cần phản ứng, và những gì bạn muốn quan sát."
   },
   "step3": {
     "title": "Bước 3: Mô phỏng",

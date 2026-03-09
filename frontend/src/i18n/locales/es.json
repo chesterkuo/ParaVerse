@@ -64,7 +64,37 @@
     "crisis_pr_desc": "Simulación de respuesta a crisis de relaciones públicas",
     "policy_lab_desc": "Modelado del impacto de políticas públicas",
     "war_game_desc": "Juegos de guerra de estrategia competitiva",
-    "train_lab_desc": "Entrenamiento y evaluación de agentes"
+    "train_lab_desc": "Entrenamiento y evaluación de agentes",
+
+    "fin_sentiment_doc_guide": "Sube informes de investigación de mercado, artículos de noticias financieras, informes de analistas, transcripciones de resultados financieros o análisis de tendencias sectoriales. El sistema extrae empresas, sectores, métricas financieras y relaciones de mercado.",
+    "fin_sentiment_doc_examples": "Ejemplos: informes de resultados trimestrales, análisis sectoriales, informes del mercado de criptomonedas, declaraciones de política de bancos centrales",
+    "fin_sentiment_seed_guide": "Describe el escenario de mercado: qué evento o tendencia está ocurriendo, qué sectores/empresas están afectados, qué perfiles de inversores deben reaccionar. Incluye datos específicos si están disponibles.",
+    "fin_sentiment_seed_example": "Ejemplo: \"La aprobación del ETF de Bitcoin ha desencadenado un rally del 40%. Los analistas de finanzas tradicionales están divididos — algunos ven una legitimación de las criptomonedas, otros advierten de una burbuja. Simula las reacciones de inversores minoristas, traders institucionales, entusiastas de las criptomonedas y fondos de pensiones aversos al riesgo.\"",
+
+    "content_lab_doc_guide": "Sube políticas de contenido, directrices comunitarias, publicaciones en redes sociales, ejemplos de contenido viral o informes de moderación de plataformas. El sistema mapea tipos de contenido, comportamientos de usuarios y reglas de moderación.",
+    "content_lab_doc_examples": "Ejemplos: directrices comunitarias de plataformas, estudios de caso de moderación de contenido, conjuntos de datos de publicaciones virales, informes de desinformación",
+    "content_lab_seed_guide": "Describe el escenario de contenido: qué tipo de contenido se está propagando, en qué plataforma, qué desafíos de moderación existen. Define los perfiles de usuario (creadores, moderadores, usuarios casuales).",
+    "content_lab_seed_example": "Ejemplo: \"Un video deepfake de una celebridad promoviendo un producto fraudulento se está volviendo viral en la plataforma. Simula cómo los creadores de contenido, verificadores de hechos, usuarios casuales y sistemas de moderación automatizados responden durante 48 horas.\"",
+
+    "crisis_pr_doc_guide": "Sube planes de comunicación de crisis, estudios de caso de relaciones públicas, cobertura mediática, análisis de partes interesadas o informes de reputación de marca. El sistema extrae partes interesadas, canales de comunicación y estrategias de respuesta a crisis.",
+    "crisis_pr_doc_examples": "Ejemplos: estudios de caso de crisis corporativas, plantillas de respuesta a medios, documentos de mapeo de partes interesadas, informes de monitoreo de redes sociales",
+    "crisis_pr_seed_guide": "Describe la crisis: qué sucedió, quién se ve afectado, cuál es la reacción pública. Define las partes interesadas (medios, clientes, empleados, reguladores) y sus posiciones iniciales.",
+    "crisis_pr_seed_example": "Ejemplo: \"Una violación de datos importante expuso 2 millones de registros de clientes. La empresa retrasó la divulgación 3 semanas. Simula las reacciones de los medios, el sentimiento de los clientes, la respuesta regulatoria y la efectividad de diferentes estrategias de relaciones públicas.\"",
+
+    "policy_lab_doc_guide": "Sube documentos de política, informes de investigación, documentos de posición de partes interesadas, evaluaciones de impacto económico o propuestas legislativas. El sistema mapea partes interesadas, opciones de política, datos económicos y posiciones políticas.",
+    "policy_lab_doc_examples": "Ejemplos: libros blancos gubernamentales, informes de think tanks, documentos de posición de la industria, evaluaciones de impacto económico, encuestas de opinión pública",
+    "policy_lab_seed_guide": "Describe el escenario de política: qué política se propone, quiénes son las partes interesadas clave, cuáles son sus posiciones. Incluye cifras específicas (costos, poblaciones afectadas) e intereses en competencia.",
+    "policy_lab_seed_example": "Ejemplo: \"Hong Kong está evaluando políticas de desplazamiento laboral por IA que afectan entre 60.000 y 160.000 empleos para 2030. Partes interesadas: lobby empresarial (se opone a la regulación), sindicatos (exigen redes de seguridad), sector educativo (quieren financiación para recapacitación), industria tecnológica (prefiere la autorregulación). Simula la dinámica de coaliciones y los cambios en la opinión pública en cuatro opciones de política: impuesto a la IA, subsidios de recapacitación, beneficios portátiles y avisos de transición.\"",
+
+    "war_game_doc_guide": "Sube informes de inteligencia competitiva, análisis de mercado, perfiles de empresas, documentos estratégicos o benchmarks de la industria. El sistema mapea competidores, posiciones de mercado, activos estratégicos y dinámicas competitivas.",
+    "war_game_doc_examples": "Ejemplos: informes de análisis de competidores, datos de cuota de mercado, análisis SWOT, informes de tendencias de la industria, estudios de caso de fusiones y adquisiciones",
+    "war_game_seed_guide": "Describe el escenario competitivo: qué empresas/jugadores están involucrados, en qué mercado compiten, qué movimientos estratégicos se están considerando. Define las fortalezas, debilidades y estrategias probables de cada jugador.",
+    "war_game_seed_example": "Ejemplo: \"Tres empresas de transporte por aplicación compiten en el sudeste asiático. La empresa A tiene dominio de mercado pero alta tasa de gasto. La empresa B tiene tecnología sólida pero es nueva en el mercado. La empresa C tiene asociaciones locales pero una plataforma débil. Simula sus movimientos estratégicos durante 12 meses mientras se introduce un nuevo marco regulatorio.\"",
+
+    "train_lab_doc_guide": "Sube escenarios de entrenamiento, rúbricas de evaluación, directrices de comportamiento o materiales de referencia. El sistema construye una base de conocimientos para que los agentes aprendan durante el entrenamiento interactivo.",
+    "train_lab_doc_examples": "Ejemplos: manuales de capacitación, guiones de escenarios, criterios de evaluación, directrices de comportamiento",
+    "train_lab_seed_guide": "Describe el escenario de entrenamiento: qué habilidad o comportamiento quieres entrenar/evaluar, en qué entorno operan los agentes y cómo se define el éxito.",
+    "train_lab_seed_example": "Ejemplo: \"Entrena agentes de servicio al cliente para manejar clientes enojados que solicitan reembolsos por un envío de producto retrasado. Los agentes deben desescalar la situación, ofrecer soluciones y mantener las directrices de la marca. Evalúa la empatía, el tiempo de resolución y la satisfacción del cliente.\""
   },
   "steps": {
     "knowledgeGraph": "Grafo de Conocimiento",
@@ -83,22 +113,31 @@
     "building": "Construyendo...",
     "buildGraph": "Construir Grafo",
     "buildFailed": "Error al construir. Por favor, inténtalo de nuevo.",
-    "knowledgeGraph": "Grafo de Conocimiento"
+    "knowledgeGraph": "Grafo de Conocimiento",
+    "guidanceTitle": "¿Qué documentos subir?",
+    "guidanceGeneral": "Sube documentos que proporcionen contexto de fondo para tu simulación. El sistema extrae entidades, relaciones y hechos clave para construir un grafo de conocimiento que guía el comportamiento de los agentes.",
+    "guidanceFormats": "Formatos admitidos: PDF, TXT, Markdown. Se admiten múltiples subidas."
   },
   "step2": {
     "title": "Paso 2: Configuración del Entorno",
     "subtitle": "Configura agentes y parámetros de simulación.",
     "agentCount": "Cantidad de Agentes",
+    "agentCountTip": "Número de agentes IA participantes. Más agentes = dinámicas más ricas pero mayor tiempo de ejecución. Recomendado: 5-15 para pruebas rápidas, 20-50 para análisis detallado.",
     "tickCount": "Cantidad de Ticks",
+    "tickCountTip": "Número de rondas de simulación. Cada tick representa un ciclo de interacción. Recomendado: 10-20 para pruebas rápidas, 30-100 para análisis profundo.",
     "seedContext": "Contexto Semilla",
+    "seedContextTip": "El contexto semilla establece el escenario de la simulación. Indica a los agentes quiénes son, en qué situación se encuentran y sobre qué discutir o reaccionar.",
     "seedContextPlaceholder": "Describe el contexto inicial del escenario...",
     "platform": "Plataforma",
+    "platformTip": "Elige la plataforma de redes sociales a simular. Twitter: publicaciones cortas, hashtags, retweets. Reddit: discusiones en hilos, subreddits, votos positivos.",
     "twitter": "Twitter",
     "reddit": "Reddit",
     "engineInfo": "Motor seleccionado según el tipo de escenario",
     "createFailed": "Error al crear la simulación. Por favor, inténtalo de nuevo.",
     "creating": "Creando...",
-    "createSimulation": "Crear Simulación"
+    "createSimulation": "Crear Simulación",
+    "guidanceTitle": "Cómo escribir un buen contexto semilla",
+    "guidanceGeneral": "Un buen contexto semilla incluye: el marco del escenario, las principales partes interesadas o grupos, los problemas o eventos específicos a los que reaccionar, y lo que deseas observar."
   },
   "step3": {
     "title": "Paso 3: Simulación",

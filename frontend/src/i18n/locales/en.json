@@ -64,7 +64,37 @@
     "crisis_pr_desc": "Crisis PR response simulation",
     "policy_lab_desc": "Public policy impact modeling",
     "war_game_desc": "Competitive strategy war gaming",
-    "train_lab_desc": "Agent training & evaluation"
+    "train_lab_desc": "Agent training & evaluation",
+
+    "fin_sentiment_doc_guide": "Upload market research reports, financial news articles, analyst reports, earnings transcripts, or industry trend analysis. The system extracts companies, sectors, financial metrics, and market relationships.",
+    "fin_sentiment_doc_examples": "Examples: quarterly earnings reports, sector analysis papers, crypto market reports, central bank policy statements",
+    "fin_sentiment_seed_guide": "Describe the market scenario: what event or trend is happening, which sectors/companies are affected, what investor profiles should react. Include specific data points if available.",
+    "fin_sentiment_seed_example": "Example: \"Bitcoin ETF approval has triggered a 40% rally. Traditional finance analysts are divided — some see crypto legitimizing, others warn of a bubble. Simulate reactions from retail investors, institutional traders, crypto enthusiasts, and risk-averse pension funds.\"",
+
+    "content_lab_doc_guide": "Upload content policies, community guidelines, social media posts, viral content examples, or platform moderation reports. The system maps content types, user behaviors, and moderation rules.",
+    "content_lab_doc_examples": "Examples: platform community guidelines, content moderation case studies, viral post datasets, misinformation reports",
+    "content_lab_seed_guide": "Describe the content scenario: what type of content is spreading, on which platform, what moderation challenges exist. Define user personas (creators, moderators, casual users).",
+    "content_lab_seed_example": "Example: \"A deepfake video of a celebrity endorsing a scam product is going viral on the platform. Simulate how content creators, fact-checkers, casual users, and automated moderation systems respond over 48 hours.\"",
+
+    "crisis_pr_doc_guide": "Upload crisis communication plans, PR case studies, media coverage, stakeholder analysis, or brand reputation reports. The system extracts stakeholders, communication channels, and crisis response strategies.",
+    "crisis_pr_doc_examples": "Examples: corporate crisis case studies, media response templates, stakeholder mapping documents, social media monitoring reports",
+    "crisis_pr_seed_guide": "Describe the crisis: what happened, who is affected, what is the public reaction. Define stakeholders (media, customers, employees, regulators) and their initial positions.",
+    "crisis_pr_seed_example": "Example: \"A major data breach exposed 2 million customer records. The company delayed disclosure by 3 weeks. Simulate media reactions, customer sentiment, regulatory response, and the effectiveness of different PR strategies.\"",
+
+    "policy_lab_doc_guide": "Upload policy papers, research reports, stakeholder position papers, economic impact assessments, or legislative proposals. The system maps stakeholders, policy options, economic data, and political positions.",
+    "policy_lab_doc_examples": "Examples: government white papers, think tank reports, industry position papers, economic impact assessments, public opinion surveys",
+    "policy_lab_seed_guide": "Describe the policy scenario: what policy is being proposed, who are the key stakeholders, what are their positions. Include specific numbers (costs, affected populations) and competing interests.",
+    "policy_lab_seed_example": "Example: \"Hong Kong is evaluating AI workforce displacement policies affecting 60,000-160,000 jobs by 2030. Stakeholders: business lobby (oppose regulation), labor unions (demand safety nets), education sector (want reskilling funding), tech industry (prefer self-regulation). Simulate coalition dynamics and public opinion shifts across four policy options: AI tax, reskilling subsidies, portable benefits, and transition notices.\"",
+
+    "war_game_doc_guide": "Upload competitive intelligence reports, market analysis, company profiles, strategy documents, or industry benchmarks. The system maps competitors, market positions, strategic assets, and competitive dynamics.",
+    "war_game_doc_examples": "Examples: competitor analysis reports, market share data, SWOT analyses, industry trend reports, M&A case studies",
+    "war_game_seed_guide": "Describe the competitive scenario: which companies/players are involved, what market they compete in, what strategic moves are being considered. Define each player's strengths, weaknesses, and likely strategies.",
+    "war_game_seed_example": "Example: \"Three ride-hailing companies compete in Southeast Asia. Company A has market dominance but high burn rate. Company B has strong tech but is new to the market. Company C has local partnerships but weak platform. Simulate their strategic moves over 12 months as a new regulatory framework is introduced.\"",
+
+    "train_lab_doc_guide": "Upload training scenarios, evaluation rubrics, behavioral guidelines, or reference materials. The system builds a knowledge base for agents to learn from during interactive training.",
+    "train_lab_doc_examples": "Examples: training manuals, scenario scripts, evaluation criteria, behavioral guidelines",
+    "train_lab_seed_guide": "Describe the training scenario: what skill or behavior you want to train/evaluate, what environment the agents operate in, and what success looks like.",
+    "train_lab_seed_example": "Example: \"Train customer service agents to handle angry customers requesting refunds for a delayed product shipment. Agents should de-escalate, offer solutions, and maintain brand guidelines. Evaluate empathy, resolution time, and customer satisfaction.\""
   },
   "steps": {
     "knowledgeGraph": "Knowledge Graph",
@@ -83,22 +113,31 @@
     "building": "Building...",
     "buildGraph": "Build Graph",
     "buildFailed": "Build failed. Please try again.",
-    "knowledgeGraph": "Knowledge Graph"
+    "knowledgeGraph": "Knowledge Graph",
+    "guidanceTitle": "What documents to upload?",
+    "guidanceGeneral": "Upload documents that provide background context for your simulation. The system extracts entities, relationships, and key facts to build a knowledge graph that informs agent behavior.",
+    "guidanceFormats": "Supported formats: PDF, TXT, Markdown. Multiple uploads supported."
   },
   "step2": {
     "title": "Step 2: Environment Setup",
     "subtitle": "Configure agents and simulation parameters.",
     "agentCount": "Agent Count",
+    "agentCountTip": "Number of AI agents to participate. More agents = richer dynamics but longer runtime. Recommended: 5-15 for quick tests, 20-50 for detailed analysis.",
     "tickCount": "Tick Count",
+    "tickCountTip": "Number of simulation rounds. Each tick represents one interaction cycle. Recommended: 10-20 for quick tests, 30-100 for deeper analysis.",
     "seedContext": "Seed Context",
+    "seedContextTip": "The seed context sets the stage for the simulation. It tells agents who they are, what situation they're in, and what to discuss or react to.",
     "seedContextPlaceholder": "Describe the initial scenario context...",
     "platform": "Platform",
+    "platformTip": "Choose the social media platform to simulate. Twitter: short-form posts, hashtags, retweets. Reddit: threaded discussions, subreddits, upvotes.",
     "twitter": "Twitter",
     "reddit": "Reddit",
     "engineInfo": "Engine selected based on scenario type",
     "createFailed": "Failed to create simulation. Please try again.",
     "creating": "Creating...",
-    "createSimulation": "Create Simulation"
+    "createSimulation": "Create Simulation",
+    "guidanceTitle": "How to write a good seed context",
+    "guidanceGeneral": "A good seed context includes: the scenario setting, key stakeholders or groups, specific issues or events to react to, and what you want to observe."
   },
   "step3": {
     "title": "Step 3: Simulation",

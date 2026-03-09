@@ -64,7 +64,37 @@
     "crisis_pr_desc": "Crisis-PR-responssimulatie",
     "policy_lab_desc": "Modellering van beleidsimpact",
     "war_game_desc": "Concurrentiestrategie wargaming",
-    "train_lab_desc": "Agenttraining & evaluatie"
+    "train_lab_desc": "Agenttraining & evaluatie",
+
+    "fin_sentiment_doc_guide": "Upload marktonderzoeksrapporten, financieel nieuwsartikelen, analistenrapporten, transcripties van kwartaalcijfers of analyses van sectortrends. Het systeem extraheert bedrijven, sectoren, financiële indicatoren en marktrelaties.",
+    "fin_sentiment_doc_examples": "Voorbeelden: kwartaalresultaten, sectoranalyses, crypto-marktrapporten, beleidsverklaringen van centrale banken",
+    "fin_sentiment_seed_guide": "Beschrijf het marktscenario: welk evenement of welke trend zich voordoet, welke sectoren/bedrijven worden beïnvloed, welke beleggersprofielen moeten reageren. Voeg specifieke datapunten toe indien beschikbaar.",
+    "fin_sentiment_seed_example": "Voorbeeld: \"De goedkeuring van de Bitcoin ETF heeft een rally van 40% veroorzaakt. Traditionele financiële analisten zijn verdeeld — sommigen zien legitimering van crypto, anderen waarschuwen voor een bubbel. Simuleer de reacties van particuliere beleggers, institutionele handelaren, crypto-enthousiastelingen en risicomijdende pensioenfondsen.\"",
+
+    "content_lab_doc_guide": "Upload contentbeleid, communityrichtlijnen, socialmediaposts, voorbeelden van virale content of platformmoderatierapporten. Het systeem brengt contenttypen, gebruikersgedrag en moderatieregels in kaart.",
+    "content_lab_doc_examples": "Voorbeelden: platformcommunityrichtlijnen, casestudy's over contentmoderatie, datasets van virale berichten, desinformatierapporten",
+    "content_lab_seed_guide": "Beschrijf het contentscenario: welk type content zich verspreidt, op welk platform, welke moderatie-uitdagingen er zijn. Definieer gebruikerspersona's (creators, moderatoren, gewone gebruikers).",
+    "content_lab_seed_example": "Voorbeeld: \"Een deepfake-video van een beroemdheid die een oplichterij-product aanprijst, gaat viraal op het platform. Simuleer hoe contentcreators, factcheckers, gewone gebruikers en geautomatiseerde moderatiesystemen reageren gedurende 48 uur.\"",
+
+    "crisis_pr_doc_guide": "Upload crisiscommunicatieplannen, PR-casestudy's, mediaverslaggeving, stakeholderanalyses of merkwaardeerapporten. Het systeem extraheert stakeholders, communicatiekanalen en crisisresponsstrategieën.",
+    "crisis_pr_doc_examples": "Voorbeelden: casestudy's van bedrijfscrises, mediaresponssjablonen, stakeholdermapping-documenten, socialmediamonitoringrapporten",
+    "crisis_pr_seed_guide": "Beschrijf de crisis: wat er is gebeurd, wie er getroffen is, wat de publieke reactie is. Definieer stakeholders (media, klanten, medewerkers, toezichthouders) en hun initiële standpunten.",
+    "crisis_pr_seed_example": "Voorbeeld: \"Een groot datalek heeft 2 miljoen klantgegevens blootgelegd. Het bedrijf heeft de bekendmaking 3 weken uitgesteld. Simuleer mediareacties, klantsentiment, reactie van toezichthouders en de effectiviteit van verschillende PR-strategieën.\"",
+
+    "policy_lab_doc_guide": "Upload beleidsdocumenten, onderzoeksrapporten, standpuntdocumenten van stakeholders, economische impactbeoordelingen of wetsvoorstellen. Het systeem brengt stakeholders, beleidsopties, economische gegevens en politieke standpunten in kaart.",
+    "policy_lab_doc_examples": "Voorbeelden: overheidswitboeken, denktankrapporten, sectorstandpuntdocumenten, economische impactbeoordelingen, opiniepeilingen",
+    "policy_lab_seed_guide": "Beschrijf het beleidsscenario: welk beleid wordt voorgesteld, wie de belangrijkste stakeholders zijn, wat hun standpunten zijn. Voeg specifieke cijfers toe (kosten, getroffen bevolking) en concurrerende belangen.",
+    "policy_lab_seed_example": "Voorbeeld: \"Hongkong evalueert AI-arbeidsvervangingsbeleid dat 60.000-160.000 banen treft tegen 2030. Stakeholders: bedrijfslobby (tegen regulering), vakbonden (eisen vangnetten), onderwijssector (willen omscholingsfondsen), techindustrie (voorkeur voor zelfregulering). Simuleer coalitiedynamiek en verschuivingen in de publieke opinie over vier beleidsopties: AI-belasting, omscholingssubsidies, overdraagbare uitkeringen en overgangsberichten.\"",
+
+    "war_game_doc_guide": "Upload concurrentie-inlichtingenrapporten, marktanalyses, bedrijfsprofielen, strategiedocumenten of sectorbenchmarks. Het systeem brengt concurrenten, marktposities, strategische activa en concurrentiedynamiek in kaart.",
+    "war_game_doc_examples": "Voorbeelden: concurrentieanalyserapporten, marktaandeelgegevens, SWOT-analyses, sectortrendrapporten, M&A-casestudy's",
+    "war_game_seed_guide": "Beschrijf het concurrentiescenario: welke bedrijven/spelers betrokken zijn, in welke markt ze concurreren, welke strategische zetten worden overwogen. Definieer de sterke en zwakke punten en waarschijnlijke strategieën van elke speler.",
+    "war_game_seed_example": "Voorbeeld: \"Drie ride-hailingbedrijven concurreren in Zuidoost-Azië. Bedrijf A heeft marktdominantie maar een hoge verbrandingssnelheid. Bedrijf B heeft sterke technologie maar is nieuw op de markt. Bedrijf C heeft lokale partnerschappen maar een zwak platform. Simuleer hun strategische zetten over 12 maanden terwijl een nieuw regelgevend kader wordt geïntroduceerd.\"",
+
+    "train_lab_doc_guide": "Upload trainingsscenario's, beoordelingsrubrieken, gedragsrichtlijnen of referentiemateriaal. Het systeem bouwt een kennisbasis waaruit agenten kunnen leren tijdens interactieve training.",
+    "train_lab_doc_examples": "Voorbeelden: trainingshandleidingen, scenarioscripts, beoordelingscriteria, gedragsrichtlijnen",
+    "train_lab_seed_guide": "Beschrijf het trainingsscenario: welke vaardigheid of welk gedrag u wilt trainen/evalueren, in welke omgeving de agenten werken, en hoe succes eruitziet.",
+    "train_lab_seed_example": "Voorbeeld: \"Train klantenserviceagenten om boze klanten te behandelen die een terugbetaling vragen voor een vertraagde productlevering. Agenten moeten de-escaleren, oplossingen bieden en merkrichtlijnen volgen. Evalueer empathie, oplostijd en klanttevredenheid.\""
   },
   "steps": {
     "knowledgeGraph": "Kennisgrafiek",
@@ -83,22 +113,31 @@
     "building": "Bouwen...",
     "buildGraph": "Grafiek bouwen",
     "buildFailed": "Bouwen mislukt. Probeer het opnieuw.",
-    "knowledgeGraph": "Kennisgrafiek"
+    "knowledgeGraph": "Kennisgrafiek",
+    "guidanceTitle": "Welke documenten uploaden?",
+    "guidanceGeneral": "Upload documenten die achtergrondcontext bieden voor uw simulatie. Het systeem extraheert entiteiten, relaties en belangrijke feiten om een kennisgrafiek te bouwen die het gedrag van agenten stuurt.",
+    "guidanceFormats": "Ondersteunde formaten: PDF, TXT, Markdown. Meerdere uploads ondersteund."
   },
   "step2": {
     "title": "Stap 2: Omgeving instellen",
     "subtitle": "Configureer agenten en simulatieparameters.",
     "agentCount": "Aantal agenten",
+    "agentCountTip": "Aantal deelnemende AI-agenten. Meer agenten = rijkere dynamiek maar langere uitvoertijd. Aanbevolen: 5-15 voor snelle tests, 20-50 voor gedetailleerde analyse.",
     "tickCount": "Aantal ticks",
+    "tickCountTip": "Aantal simulatierondes. Elke tick vertegenwoordigt één interactiecyclus. Aanbevolen: 10-20 voor snelle tests, 30-100 voor diepere analyse.",
     "seedContext": "Begincontext",
+    "seedContextTip": "De begincontext zet het toneel voor de simulatie. Het vertelt agenten wie ze zijn, in welke situatie ze zich bevinden en waarover ze moeten discussiëren of reageren.",
     "seedContextPlaceholder": "Beschrijf de initiële scenariocontext...",
     "platform": "Platform",
+    "platformTip": "Kies het socialmediaplatform om te simuleren. Twitter: korte berichten, hashtags, retweets. Reddit: discussiethreads, subreddits, upvotes.",
     "twitter": "Twitter",
     "reddit": "Reddit",
     "engineInfo": "Engine geselecteerd op basis van scenariotype",
     "createFailed": "Simulatie aanmaken mislukt. Probeer het opnieuw.",
     "creating": "Aanmaken...",
-    "createSimulation": "Simulatie aanmaken"
+    "createSimulation": "Simulatie aanmaken",
+    "guidanceTitle": "Hoe schrijf je een goede begincontext",
+    "guidanceGeneral": "Een goede begincontext bevat: de scenariosetting, belangrijke stakeholders of groepen, specifieke kwesties of gebeurtenissen om op te reageren, en wat u wilt observeren."
   },
   "step3": {
     "title": "Stap 3: Simulatie",

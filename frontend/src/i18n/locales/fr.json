@@ -64,7 +64,37 @@
     "crisis_pr_desc": "Simulation de réponse de crise RP",
     "policy_lab_desc": "Modélisation de l'impact des politiques publiques",
     "war_game_desc": "Jeu de guerre stratégique concurrentiel",
-    "train_lab_desc": "Entraînement et évaluation des agents"
+    "train_lab_desc": "Entraînement et évaluation des agents",
+
+    "fin_sentiment_doc_guide": "Téléversez des rapports d'études de marché, articles financiers, rapports d'analystes, transcriptions de résultats financiers ou analyses de tendances sectorielles. Le système extrait les entreprises, secteurs, indicateurs financiers et relations de marché.",
+    "fin_sentiment_doc_examples": "Exemples : rapports de résultats trimestriels, analyses sectorielles, rapports sur le marché des cryptomonnaies, déclarations de politique des banques centrales",
+    "fin_sentiment_seed_guide": "Décrivez le scénario de marché : quel événement ou tendance se produit, quels secteurs/entreprises sont affectés, quels profils d'investisseurs doivent réagir. Incluez des données spécifiques si disponibles.",
+    "fin_sentiment_seed_example": "Exemple : « L'approbation de l'ETF Bitcoin a déclenché une hausse de 40 %. Les analystes de la finance traditionnelle sont divisés — certains voient une légitimation des cryptomonnaies, d'autres mettent en garde contre une bulle. Simulez les réactions des investisseurs particuliers, traders institutionnels, passionnés de crypto et fonds de pension averses au risque. »",
+
+    "content_lab_doc_guide": "Téléversez des politiques de contenu, directives communautaires, publications sur les réseaux sociaux, exemples de contenu viral ou rapports de modération de plateforme. Le système cartographie les types de contenu, comportements des utilisateurs et règles de modération.",
+    "content_lab_doc_examples": "Exemples : directives communautaires de plateforme, études de cas de modération de contenu, jeux de données de publications virales, rapports de désinformation",
+    "content_lab_seed_guide": "Décrivez le scénario de contenu : quel type de contenu se propage, sur quelle plateforme, quels défis de modération existent. Définissez les personas utilisateurs (créateurs, modérateurs, utilisateurs occasionnels).",
+    "content_lab_seed_example": "Exemple : « Une vidéo deepfake d'une célébrité promouvant un produit frauduleux devient virale sur la plateforme. Simulez comment les créateurs de contenu, vérificateurs de faits, utilisateurs occasionnels et systèmes de modération automatisés réagissent sur 48 heures. »",
+
+    "crisis_pr_doc_guide": "Téléversez des plans de communication de crise, études de cas RP, couverture médiatique, analyses des parties prenantes ou rapports de réputation de marque. Le système extrait les parties prenantes, canaux de communication et stratégies de réponse de crise.",
+    "crisis_pr_doc_examples": "Exemples : études de cas de crises d'entreprise, modèles de réponse médiatique, documents de cartographie des parties prenantes, rapports de surveillance des réseaux sociaux",
+    "crisis_pr_seed_guide": "Décrivez la crise : que s'est-il passé, qui est affecté, quelle est la réaction du public. Définissez les parties prenantes (médias, clients, employés, régulateurs) et leurs positions initiales.",
+    "crisis_pr_seed_example": "Exemple : « Une violation de données majeure a exposé 2 millions de dossiers clients. L'entreprise a retardé la divulgation de 3 semaines. Simulez les réactions médiatiques, le sentiment des clients, la réponse réglementaire et l'efficacité de différentes stratégies RP. »",
+
+    "policy_lab_doc_guide": "Téléversez des documents de politique, rapports de recherche, documents de position des parties prenantes, évaluations d'impact économique ou propositions législatives. Le système cartographie les parties prenantes, options politiques, données économiques et positions politiques.",
+    "policy_lab_doc_examples": "Exemples : livres blancs gouvernementaux, rapports de think tanks, documents de position de l'industrie, évaluations d'impact économique, sondages d'opinion publique",
+    "policy_lab_seed_guide": "Décrivez le scénario politique : quelle politique est proposée, qui sont les principales parties prenantes, quelles sont leurs positions. Incluez des chiffres spécifiques (coûts, populations affectées) et les intérêts concurrents.",
+    "policy_lab_seed_example": "Exemple : « Hong Kong évalue des politiques de remplacement de la main-d'œuvre par l'IA affectant 60 000 à 160 000 emplois d'ici 2030. Parties prenantes : lobby des entreprises (opposé à la réglementation), syndicats (exigent des filets de sécurité), secteur de l'éducation (veulent des financements de reconversion), industrie technologique (préfèrent l'autorégulation). Simulez la dynamique des coalitions et les évolutions de l'opinion publique pour quatre options politiques : taxe sur l'IA, subventions de reconversion, prestations portables et avis de transition. »",
+
+    "war_game_doc_guide": "Téléversez des rapports de veille concurrentielle, analyses de marché, profils d'entreprises, documents stratégiques ou benchmarks sectoriels. Le système cartographie les concurrents, positions de marché, actifs stratégiques et dynamiques concurrentielles.",
+    "war_game_doc_examples": "Exemples : rapports d'analyse concurrentielle, données de parts de marché, analyses SWOT, rapports de tendances sectorielles, études de cas de fusions-acquisitions",
+    "war_game_seed_guide": "Décrivez le scénario concurrentiel : quelles entreprises/acteurs sont impliqués, sur quel marché ils rivalisent, quels mouvements stratégiques sont envisagés. Définissez les forces, faiblesses et stratégies probables de chaque acteur.",
+    "war_game_seed_example": "Exemple : « Trois entreprises de VTC rivalisent en Asie du Sud-Est. L'entreprise A domine le marché mais brûle beaucoup de cash. L'entreprise B a une technologie solide mais est nouvelle sur le marché. L'entreprise C a des partenariats locaux mais une plateforme faible. Simulez leurs mouvements stratégiques sur 12 mois alors qu'un nouveau cadre réglementaire est introduit. »",
+
+    "train_lab_doc_guide": "Téléversez des scénarios d'entraînement, grilles d'évaluation, directives comportementales ou matériaux de référence. Le système construit une base de connaissances pour que les agents apprennent pendant l'entraînement interactif.",
+    "train_lab_doc_examples": "Exemples : manuels de formation, scripts de scénarios, critères d'évaluation, directives comportementales",
+    "train_lab_seed_guide": "Décrivez le scénario d'entraînement : quelle compétence ou comportement vous souhaitez entraîner/évaluer, dans quel environnement les agents opèrent, et à quoi ressemble le succès.",
+    "train_lab_seed_example": "Exemple : « Entraînez des agents de service client à gérer des clients en colère demandant un remboursement pour un produit livré en retard. Les agents doivent désamorcer la situation, proposer des solutions et respecter les directives de la marque. Évaluez l'empathie, le temps de résolution et la satisfaction client. »"
   },
   "steps": {
     "knowledgeGraph": "Graphe de connaissances",
@@ -83,22 +113,31 @@
     "building": "Construction...",
     "buildGraph": "Construire le graphe",
     "buildFailed": "Échec de la construction. Veuillez réessayer.",
-    "knowledgeGraph": "Graphe de connaissances"
+    "knowledgeGraph": "Graphe de connaissances",
+    "guidanceTitle": "Quels documents téléverser ?",
+    "guidanceGeneral": "Téléversez des documents qui fournissent un contexte de fond pour votre simulation. Le système extrait les entités, relations et faits clés pour construire un graphe de connaissances qui guide le comportement des agents.",
+    "guidanceFormats": "Formats acceptés : PDF, TXT, Markdown. Téléversements multiples pris en charge."
   },
   "step2": {
     "title": "Étape 2 : Configuration de l'environnement",
     "subtitle": "Configurez les agents et les paramètres de simulation.",
     "agentCount": "Nombre d'agents",
+    "agentCountTip": "Nombre d'agents IA participants. Plus d'agents = dynamiques plus riches mais temps d'exécution plus long. Recommandé : 5-15 pour des tests rapides, 20-50 pour une analyse détaillée.",
     "tickCount": "Nombre de ticks",
+    "tickCountTip": "Nombre de tours de simulation. Chaque tick représente un cycle d'interaction. Recommandé : 10-20 pour des tests rapides, 30-100 pour une analyse approfondie.",
     "seedContext": "Contexte initial",
+    "seedContextTip": "Le contexte initial définit le cadre de la simulation. Il indique aux agents qui ils sont, dans quelle situation ils se trouvent et sur quoi discuter ou réagir.",
     "seedContextPlaceholder": "Décrivez le contexte initial du scénario...",
     "platform": "Plateforme",
+    "platformTip": "Choisissez la plateforme de réseaux sociaux à simuler. Twitter : publications courtes, hashtags, retweets. Reddit : discussions en fil, subreddits, votes positifs.",
     "twitter": "Twitter",
     "reddit": "Reddit",
     "engineInfo": "Moteur sélectionné en fonction du type de scénario",
     "createFailed": "Échec de la création de la simulation. Veuillez réessayer.",
     "creating": "Création...",
-    "createSimulation": "Créer la simulation"
+    "createSimulation": "Créer la simulation",
+    "guidanceTitle": "Comment rédiger un bon contexte initial",
+    "guidanceGeneral": "Un bon contexte initial comprend : le cadre du scénario, les principales parties prenantes ou groupes, les enjeux ou événements spécifiques auxquels réagir, et ce que vous souhaitez observer."
   },
   "step3": {
     "title": "Étape 3 : Simulation",
