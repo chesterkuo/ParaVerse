@@ -10,6 +10,7 @@ import { simulation } from "./routes/simulation";
 import { report, reportExport } from "./routes/report";
 import { tasks } from "./routes/tasks";
 import { interaction, websocket } from "./routes/interaction";
+import { checkpoint } from "./routes/checkpoint";
 import { logger } from "./utils/logger";
 
 const app = new Hono();
@@ -25,6 +26,7 @@ api.route("/projects", projects);
 api.route("/projects", graph);
 api.route("/simulations", simulation);
 api.route("/simulations", report);
+api.route("/simulations", checkpoint);
 api.route("/tasks", tasks);
 // Mount PDF export before api routes (no auth middleware - uses query param token)
 app.route("/api/v1/simulations", reportExport);
