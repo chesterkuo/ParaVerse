@@ -299,7 +299,9 @@ paraverse/
 
 ## 许可证
 
-Copyright (c) 2026 Plusblocks Technology Limited. 保留所有权利。
+基于 [Apache License 2.0](LICENSE) 开源。
+
+Copyright (c) 2026 Plusblocks Technology Limited.
 
 ---
 
