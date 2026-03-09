@@ -13,7 +13,7 @@ export function Sidebar() {
   });
 
   return (
-    <aside className="w-64 bg-navy text-white flex flex-col h-full">
+    <div className="w-64 bg-navy text-white flex flex-col h-full">
       <div className="p-4 border-b border-white/10">
         <Link to="/" className="text-xl font-bold text-violet">ParaVerse</Link>
       </div>
@@ -36,6 +36,6 @@ export function Sidebar() {
           Logout
         </button>
       </div>
-    </aside>
+    </div>
   );
 }
