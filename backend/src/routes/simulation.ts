@@ -11,6 +11,7 @@ import {
   getSimulation,
   getSimulationForOwner,
   getSimulationEvents,
+  getSimulationsByProject,
 } from "../db/queries/simulations";
 import { getAgentsBySimulation } from "../db/queries/agents";
 import { computeAcceptanceMatrix } from "../services/matrixService";
@@ -50,6 +51,18 @@ const createSchema = z.object({
 const simulation = new Hono();
 
 simulation.use("*", authMiddleware);
+
+// List simulations for a project
+simulation.get("/by-project/:projectId", async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  const projectId = c.req.param("projectId");
+
+  const project = await getProject(projectId, auth.userId);
+  if (!project) throw new HTTPException(404, { message: "Project not found" });
+
+  const sims = await getSimulationsByProject(projectId);
+  return c.json({ ok: true, data: sims } satisfies ApiResponse);
+});
 
 // Create simulation (with agent generation)
 simulation.post("/", quotaCheck("simulation"), async (c) => {

@@ -1,6 +1,8 @@
 import { api } from "./client";
 
 export const simulationApi = {
+  listByProject: (projectId: string) =>
+    api.get(`/simulations/by-project/${projectId}`),
   create: (data: { project_id: string; config: { scenario_type: string; agent_count: number; tick_count: number; seed_context: string; platform?: string; branches?: unknown[] } }) =>
     api.post("/simulations", data),
   start: (id: string) => api.post(`/simulations/${id}/start`),

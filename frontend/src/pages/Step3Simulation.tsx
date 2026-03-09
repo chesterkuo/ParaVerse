@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { simulationApi } from "@/api/simulation";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useSimulationStore } from "@/store/simulationStore";
@@ -13,8 +13,53 @@ import { ScenarioBranch } from "@/components/simulation/ScenarioBranch";
 export default function Step3Simulation() {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const { simId, engine, status, events, groundedVars, setStatus, addEvent, setGroundedVars } =
+  const { simId, engine, status, events, groundedVars, setStatus, addEvent, setGroundedVars, setSimulation } =
     useSimulationStore();
+
+  // Load simulation from API if not in store (e.g. page refresh)
+  const { data: simList } = useQuery({
+    queryKey: ["simulations-by-project", projectId],
+    queryFn: () => simulationApi.listByProject(projectId!).then((r) => r.data.data),
+    enabled: !!projectId && !simId,
+  });
+
+  // Hydrate store from API data on first load
+  const hydratedRef = useRef(false);
+  useEffect(() => {
+    if (!simList || simList.length === 0 || simId || hydratedRef.current) return;
+    hydratedRef.current = true;
+    const latest = simList[0]; // already sorted by created_at DESC
+    setSimulation(latest.id, latest.engine as "oasis" | "concordia");
+    setStatus(latest.status);
+    if (latest.grounded_vars && Object.keys(latest.grounded_vars).length > 0) {
+      setGroundedVars(latest.grounded_vars);
+    }
+  }, [simList, simId, setSimulation, setStatus, setGroundedVars]);
+
+  // Load events from API for completed/running simulations
+  const effectiveSimId = simId || (simList?.[0]?.id ?? null);
+  const { data: apiEvents } = useQuery({
+    queryKey: ["simulation-events", effectiveSimId],
+    queryFn: () => simulationApi.getEvents(effectiveSimId!, 1000).then((r) => r.data.data),
+    enabled: !!effectiveSimId && events.length === 0,
+  });
+
+  // Hydrate events from API
+  const eventsHydratedRef = useRef(false);
+  useEffect(() => {
+    if (!apiEvents || apiEvents.length === 0 || eventsHydratedRef.current) return;
+    if (events.length > 0) return; // already have events from websocket
+    eventsHydratedRef.current = true;
+    for (const ev of apiEvents) {
+      addEvent({
+        event_type: ev.event_type,
+        content: ev.content ?? undefined,
+        sim_timestamp: ev.sim_timestamp,
+        agent_id: ev.agent_id ?? undefined,
+        metadata: ev.metadata,
+      });
+    }
+  }, [apiEvents, events.length, addEvent]);
 
   const { events: wsEvents, connected } = useWebSocket(
     simId ? `/ws/simulations/${simId}` : "",
@@ -92,13 +137,13 @@ export default function Step3Simulation() {
         </div>
       </div>
 
-      {!simId && (
+      {!simId && !simList?.length && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
           No simulation configured. Please go back to Step 2 to create a simulation.
         </div>
       )}
 
-      {simId && (
+      {(simId || simList?.length) && (
         <>
           {/* Controls */}
           <div className="flex items-center gap-3">
@@ -106,7 +151,7 @@ export default function Step3Simulation() {
               <button
                 onClick={() => startMutation.mutate()}
                 disabled={startMutation.isPending}
-                className="bg-violet text-white px-6 py-2 rounded hover:bg-violet/90 disabled:opacity-50"
+                className="bg-violet text-white px-6 py-2 rounded hover:bg-violet/90 disabled:opacity-50 cursor-pointer"
               >
                 {startMutation.isPending ? "Starting..." : "Start Simulation"}
               </button>
@@ -114,7 +159,7 @@ export default function Step3Simulation() {
             {isCompleted && (
               <button
                 onClick={() => navigate(`/projects/${projectId}/step/4`)}
-                className="bg-navy text-white px-6 py-2 rounded hover:bg-navy/90"
+                className="bg-navy text-white px-6 py-2 rounded hover:bg-navy/90 cursor-pointer"
               >
                 View Report
               </button>
