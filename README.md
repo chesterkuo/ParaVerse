@@ -1,16 +1,16 @@
 # ParaVerse
 
-**English** | [中文](./README.zh-CN.md)
-
-**Multi-Agent Simulation SaaS Platform** | **群体智能预测分析平台**
+**Multi-Agent Simulation SaaS Platform** | **群體智能預測分析平台**
 
 ParaVerse is a B2B multi-agent simulation platform powered by dual engines — [OASIS](https://github.com/camel-ai/oasis) (CAMEL-AI) and [Concordia](https://github.com/google-deepmind/concordia) (Google DeepMind). It enables businesses to model complex social dynamics, predict sentiment shifts, and analyze scenario outcomes through AI-driven agent simulations.
 
-ParaVerse 是一个 B2B 多智能体仿真平台，搭载双引擎架构 — [OASIS](https://github.com/camel-ai/oasis)（CAMEL-AI）和 [Concordia](https://github.com/google-deepmind/concordia)（Google DeepMind）。通过 AI 驱动的智能体仿真，帮助企业建模复杂社会动态、预测舆情变化，并分析场景结果。
+ParaVerse 是一個 B2B 多智能體仿真平台，搭載雙引擎架構 — [OASIS](https://github.com/camel-ai/oasis)（CAMEL-AI）和 [Concordia](https://github.com/google-deepmind/concordia)（Google DeepMind）。透過 AI 驅動的智能體仿真，幫助企業建模複雜社會動態、預測輿情變化，並分析場景結果。
 
 ---
 
 ## Features | 功能特性
+
+### Core Platform | 核心平台
 
 - **Dual Simulation Engines** — OASIS for social media simulation (Twitter/Reddit), Concordia for game-master-driven scenarios with grounded variables and branching
 - **5-Stage Pipeline** — Knowledge Graph → Environment Setup → Simulation → Report → Deep Interaction
@@ -22,21 +22,45 @@ ParaVerse 是一个 B2B 多智能体仿真平台，搭载双引擎架构 — [OA
 - **Agent Interviews** — Chat with simulated agents during and after simulation runs
 - **Multi-Tenant Auth** — JWT-based authentication with registration, login, token refresh
 
+### Advanced Analytics | 進階分析
+
+- **Stakeholder Acceptance Matrix** — Heatmap visualization of acceptance scores across stakeholder groups and scenario branches
+- **Policy Impact Charts** — Time-series visualization of grounded variable trends across branches
+- **Hybrid Search** — Combined vector similarity + BM25 full-text search with Reciprocal Rank Fusion (RRF)
+- **Scoring Dashboard** — Real-time grounded variable progress tracking with letter grades
+- **Checkpoint Management** — Save and load simulation checkpoints for Concordia scenarios
+- **Report Export** — Export analysis reports in PDF and DOCX formats
+- **Quota Enforcement** — Usage-based rate limiting with fail-open pattern
+
+### Enterprise UI | 企業級介面
+
+- **Enterprise Design System** — Inter font, professional color tokens, gradient branding
+- **Split-Panel Authentication** — Branded login/register with product value propositions
+- **Responsive Sidebar** — Mobile hamburger toggle, active project indicator, section grouping
+- **Dashboard Home** — Project cards with scenario descriptions, empty states, loading skeletons
+- **Accessibility** — Global focus rings, proper form labels, WCAG AA compliance
+- **Humanized Display** — NATO alphabet agent names, readable event labels, human-friendly keys
+
 ---
 
-- **双仿真引擎** — OASIS 支持社交媒体模拟（Twitter/Reddit），Concordia 支持游戏主持人驱动的场景（含可观测变量与分支）
-- **五阶段流水线** — 知识图谱 → 环境配置 → 仿真运行 → 报告生成 → 深度交互
-- **知识图谱（GraphRAG）** — 上传文档（PDF/TXT/MD），LLM 自动抽取实体和关系，向量嵌入支持语义搜索
-- **LLM 驱动智能体** — 由大模型生成具有丰富人设的智能体，每个智能体拥有独特的人口统计、性格和决策逻辑
-- **实时监控** — 基于 WebSocket 的仿真事件实时推送
-- **场景分支** — A/B/C 策略对比，含可观测变量追踪（Concordia）
-- **自动报告生成** — 多章节分析报告，包含执行摘要、方法论、关键发现和建议
-- **智能体访谈** — 在仿真期间或之后与智能体实时对话
-- **多租户认证** — 基于 JWT 的注册、登录、令牌刷新
+- **雙仿真引擎** — OASIS 支持社群媒體模擬（Twitter/Reddit），Concordia 支持遊戲主持人驅動的場景（含可觀測變數與分支）
+- **五階段流水線** — 知識圖譜 → 環境配置 → 仿真運行 → 報告生成 → 深度互動
+- **知識圖譜（GraphRAG）** — 上傳文件（PDF/TXT/MD），LLM 自動擷取實體和關係，向量嵌入支持語意搜尋
+- **LLM 驅動智能體** — 由大型語言模型生成具有豐富人設的智能體，每個智能體擁有獨特的人口統計、性格和決策邏輯
+- **即時監控** — 基於 WebSocket 的仿真事件即時推送
+- **場景分支** — A/B/C 策略對比，含可觀測變數追蹤（Concordia）
+- **自動報告生成** — 多章節分析報告，包含執行摘要、方法論、關鍵發現和建議
+- **智能體訪談** — 在仿真期間或之後與智能體即時對話
+- **多租戶認證** — 基於 JWT 的註冊、登入、權杖重新整理
+- **利害關係人接受度矩陣** — 跨利害關係人群組和場景分支的接受度分數熱力圖
+- **政策影響圖表** — 跨分支的可觀測變數趨勢時序圖
+- **混合搜尋** — 向量相似度 + BM25 全文檢索結合倒數排名融合（RRF）
+- **報告匯出** — 支持 PDF 和 DOCX 格式的分析報告匯出
+- **配額管控** — 基於使用量的頻率限制，採用失敗放行模式
 
 ---
 
-## Tech Stack | 技术栈
+## Tech Stack | 技術棧
 
 | Layer | Technology |
 |-------|-----------|
@@ -44,6 +68,8 @@ ParaVerse 是一个 B2B 多智能体仿真平台，搭载双引擎架构 — [OA
 | **Frontend** | [React](https://react.dev) 19 / [Vite](https://vite.dev) 7 / [TailwindCSS](https://tailwindcss.com) v4 / [React Router](https://reactrouter.com) v7 |
 | **State** | [Zustand](https://zustand.docs.pmnd.rs) v5 / [TanStack Query](https://tanstack.com/query) v5 |
 | **Visualization** | [D3.js](https://d3js.org) v7 / [Recharts](https://recharts.org) v3 |
+| **Icons** | [Lucide React](https://lucide.dev) |
+| **Typography** | [Inter](https://fonts.google.com/specimen/Inter) (Google Fonts) |
 | **Database** | PostgreSQL 17 + [pgvector](https://github.com/pgvector/pgvector) / Redis 7 |
 | **LLM** | OpenAI SDK compatible (default: Gemini 2.5 Flash) |
 | **OASIS Engine** | [CAMEL-AI](https://github.com/camel-ai/camel) ChatAgent (Python 3.12) |
@@ -54,7 +80,7 @@ ParaVerse 是一个 B2B 多智能体仿真平台，搭载双引擎架构 — [OA
 
 ---
 
-## Architecture | 架构
+## Architecture | 架構
 
 ```
 ┌─────────────┐     ┌──────────────────────────────────────────┐
@@ -79,33 +105,33 @@ ParaVerse 是一个 B2B 多智能体仿真平台，搭载双引擎架构 — [OA
 
 **IPC Protocol**: Backend communicates with Python simulation engines via stdin/stdout JSONL (JSON Lines). Each simulation runs as an isolated subprocess with its own virtual environment.
 
-**IPC 协议**：后端通过 stdin/stdout JSONL（JSON Lines）协议与 Python 仿真引擎通信。每个仿真作为独立子进程运行，拥有独立的虚拟环境。
+**IPC 協議**：後端透過 stdin/stdout JSONL（JSON Lines）協議與 Python 仿真引擎通訊。每個仿真作為獨立子程序運行，擁有獨立的虛擬環境。
 
 ---
 
-## Quick Start | 快速开始
+## Quick Start | 快速開始
 
-### Prerequisites | 前置条件
+### Prerequisites | 前置條件
 
 - [Bun](https://bun.sh) >= 1.3
 - [Docker](https://docs.docker.com/get-docker/) & Docker Compose
 - Python 3.12+
 - A Gemini API key (or any OpenAI-compatible LLM endpoint)
 
-### 1. Clone & Install | 克隆与安装
+### 1. Clone & Install | 複製與安裝
 
 ```bash
 git clone https://github.com/plusblocks/paraverse.git
 cd paraverse
 
-# Install backend dependencies
+# Install backend dependencies | 安裝後端依賴
 cd backend && bun install && cd ..
 
-# Install frontend dependencies
+# Install frontend dependencies | 安裝前端依賴
 cd frontend && bun install && cd ..
 ```
 
-### 2. Start Infrastructure | 启动基础设施
+### 2. Start Infrastructure | 啟動基礎設施
 
 ```bash
 # Start PostgreSQL + Redis
@@ -115,32 +141,32 @@ docker compose up -d postgres redis
 docker compose ps
 ```
 
-### 3. Configure Environment | 配置环境变量
+### 3. Configure Environment | 配置環境變數
 
 ```bash
 cp .env.example .env
 ```
 
-Edit `.env` and set your values:
+Edit `.env` and set your values | 編輯 `.env` 設定以下值：
 
 ```bash
-LLM_API_KEY=your-gemini-api-key        # Required
-JWT_SECRET=your-secret-32-chars-min     # Required
+LLM_API_KEY=your-gemini-api-key        # Required | 必填
+JWT_SECRET=your-secret-32-chars-min     # Required | 必填
 ```
 
-Copy to backend:
+Copy to backend | 複製到後端：
 
 ```bash
 cp .env backend/.env
 ```
 
-### 4. Run Database Migrations | 运行数据库迁移
+### 4. Run Database Migrations | 運行資料庫遷移
 
 ```bash
 cd backend && bun run src/db/migrate.ts
 ```
 
-### 5. Setup Python Environments | 配置 Python 环境
+### 5. Setup Python Environments | 配置 Python 環境
 
 ```bash
 # OASIS engine (CAMEL-AI)
@@ -152,30 +178,42 @@ python3 -m venv backend/simulations/concordia/.venv
 backend/simulations/concordia/.venv/bin/pip install -r backend/simulations/concordia/requirements.txt
 ```
 
-### 6. Start Development Servers | 启动开发服务器
+### 6. Start Development Servers | 啟動開發伺服器
 
 ```bash
-# Terminal 1: Backend
+# Terminal 1: Backend (port 5001)
 cd backend && bun run src/index.ts
 
-# Terminal 2: Frontend
+# Terminal 2: Frontend (port 3000)
 cd frontend && bun run dev
+```
+
+Or use PM2 for process management | 或使用 PM2 進行程序管理：
+
+```bash
+# Start with PM2
+pm2 start bun --name paraverse-backend --cwd backend -- run src/index.ts
+pm2 start node_modules/.bin/vite --name paraverse-frontend --cwd frontend -- --host 0.0.0.0
+
+# Optional: redirect port 80 → 3000
+sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 3000
+sudo iptables -t nat -A OUTPUT -o lo -p tcp --dport 80 -j REDIRECT --to-port 3000
 ```
 
 Open http://localhost:3000 in your browser.
 
-在浏览器中打开 http://localhost:3000。
+在瀏覽器中開啟 http://localhost:3000。
 
 ---
 
 ## Docker Deployment | Docker 部署
 
 ```bash
-# Set required environment variables
+# Set required environment variables | 設定必要的環境變數
 export JWT_SECRET="your-production-secret-here"
 export LLM_API_KEY="your-gemini-api-key"
 
-# Build and start all services
+# Build and start all services | 建置並啟動所有服務
 docker compose up -d --build
 
 # Frontend: http://localhost:3000
@@ -184,19 +222,19 @@ docker compose up -d --build
 
 ---
 
-## Project Structure | 项目结构
+## Project Structure | 專案結構
 
 ```
 paraverse/
 ├── backend/                    # Bun/Hono API server
 │   ├── src/
-│   │   ├── routes/             # API endpoints (auth, projects, graph, simulation, report)
-│   │   ├── services/           # Business logic & LLM integration
+│   │   ├── routes/             # API endpoints (auth, projects, graph, simulation, report, checkpoint)
+│   │   ├── services/           # Business logic, LLM, search, matrix
 │   │   │   └── runners/        # Python subprocess managers (OASIS, Concordia)
 │   │   ├── db/
-│   │   │   ├── migrations/     # 13 SQL migration files
+│   │   │   ├── migrations/     # 15 SQL migration files
 │   │   │   └── queries/        # Raw SQL query modules
-│   │   ├── middleware/         # Auth, error handling, rate limiting
+│   │   ├── middleware/         # Auth, error handling, rate limiting, quota
 │   │   └── utils/              # Logger, task manager, text chunking
 │   ├── simulations/
 │   │   ├── oasis/              # OASIS engine (CAMEL ChatAgent)
@@ -205,100 +243,112 @@ paraverse/
 │   └── tests/                  # Unit & integration tests
 ├── frontend/                   # React SPA
 │   ├── src/
-│   │   ├── pages/              # 5-step workflow pages
-│   │   ├── components/         # UI components (graph, simulation, report, interaction)
+│   │   ├── pages/              # 5-step workflow pages + TrainLab
+│   │   ├── components/
+│   │   │   ├── layout/         # AppShell, Sidebar, StepProgress
+│   │   │   ├── simulation/     # AgentFeed, SimulationStatus, AcceptanceMatrix, PolicyImpactChart
+│   │   │   ├── report/         # ExportButton
+│   │   │   ├── search/         # HybridSearch
+│   │   │   └── ui/             # FileUpload, TaskProgress, EngineTag
 │   │   ├── api/                # API client modules
 │   │   ├── store/              # Zustand state stores
 │   │   ├── hooks/              # Custom React hooks
+│   │   ├── utils/              # Humanize, formatters, engine labels
 │   │   └── router/             # React Router config
 │   └── e2e/                    # Playwright E2E tests
 ├── shared/                     # Shared TypeScript types
+├── docs/plans/                 # Implementation plans
 ├── docker-compose.yml          # Full-stack Docker config
 └── .env.example                # Environment variable template
 ```
 
 ---
 
-## API Overview | API 概览
+## API Overview | API 概覽
 
 All API routes are prefixed with `/api/v1`. Authentication via `Authorization: Bearer <token>` header.
 
-所有 API 路由以 `/api/v1` 为前缀，通过 `Authorization: Bearer <token>` 请求头认证。
+所有 API 路由以 `/api/v1` 為前綴，透過 `Authorization: Bearer <token>` 請求標頭認證。
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/auth/register` | Register new user / 注册新用户 |
-| POST | `/auth/login` | Login / 登录 |
-| POST | `/auth/refresh` | Refresh token / 刷新令牌 |
-| GET | `/projects` | List projects / 项目列表 |
-| POST | `/projects` | Create project / 创建项目 |
-| POST | `/projects/:id/documents` | Upload document / 上传文档 |
-| POST | `/projects/:id/graph/build` | Build knowledge graph / 构建知识图谱 |
-| GET | `/projects/:id/graph` | Get knowledge graph / 获取知识图谱 |
-| POST | `/simulations` | Create simulation / 创建仿真 |
-| POST | `/simulations/:id/start` | Start simulation / 启动仿真 |
-| GET | `/simulations/:id/status` | Get status / 获取状态 |
-| GET | `/simulations/:id/events` | Get events / 获取事件 |
-| POST | `/simulations/:id/interview` | Interview agent / 访谈智能体 |
-| POST | `/simulations/:id/fork` | Fork scenario (Concordia) / 分支场景 |
-| POST | `/simulations/:id/report` | Generate report / 生成报告 |
-| GET | `/simulations/:id/report` | Get report / 获取报告 |
-| GET | `/tasks/:id` | Poll async task / 轮询异步任务 |
-| WS | `/ws/simulations/:id` | Live simulation events / 实时仿真事件 |
+| POST | `/auth/register` | Register new user / 註冊新使用者 |
+| POST | `/auth/login` | Login / 登入 |
+| POST | `/auth/refresh` | Refresh token / 重新整理權杖 |
+| GET | `/projects` | List projects / 專案列表 |
+| POST | `/projects` | Create project / 建立專案 |
+| POST | `/projects/:id/documents` | Upload document / 上傳文件 |
+| POST | `/projects/:id/graph/build` | Build knowledge graph / 建構知識圖譜 |
+| GET | `/projects/:id/graph` | Get knowledge graph / 取得知識圖譜 |
+| POST | `/projects/:id/search` | Hybrid search / 混合搜尋 |
+| POST | `/simulations` | Create simulation / 建立仿真 |
+| POST | `/simulations/:id/start` | Start simulation / 啟動仿真 |
+| GET | `/simulations/:id/status` | Get status / 取得狀態 |
+| GET | `/simulations/:id/events` | Get events / 取得事件 |
+| GET | `/simulations/:id/acceptance-matrix` | Get acceptance matrix / 取得接受度矩陣 |
+| GET | `/simulations/:id/checkpoints` | List checkpoints / 檢查點列表 |
+| POST | `/simulations/:id/checkpoints/load` | Load checkpoint / 載入檢查點 |
+| POST | `/simulations/:id/interview` | Interview agent / 訪談智能體 |
+| POST | `/simulations/:id/fork` | Fork scenario (Concordia) / 分支場景 |
+| POST | `/simulations/:id/report` | Generate report / 生成報告 |
+| GET | `/simulations/:id/report` | Get report / 取得報告 |
+| GET | `/simulations/:id/report/export` | Export report (PDF/DOCX) / 匯出報告 |
+| GET | `/tasks/:id` | Poll async task / 輪詢非同步任務 |
+| WS | `/ws/simulations/:id` | Live simulation events / 即時仿真事件 |
 
 ---
 
 ## Simulation Engines | 仿真引擎
 
-### OASIS (Social Media Simulation)
+### OASIS (Social Media Simulation | 社群媒體模擬)
 
 Built on [CAMEL-AI](https://github.com/camel-ai/camel) ChatAgent framework. Simulates social media platforms where AI agents read feeds, post, reply, and react in character.
 
-基于 [CAMEL-AI](https://github.com/camel-ai/camel) ChatAgent 框架。模拟社交媒体平台，AI 智能体阅读信息流、发帖、回复和互动。
+基於 [CAMEL-AI](https://github.com/camel-ai/camel) ChatAgent 框架。模擬社群媒體平台，AI 智能體閱讀資訊流、發文、回覆和互動。
 
-**Supported scenarios**: `fin_sentiment`, `content_lab`
+**Supported scenarios | 支援場景**: `fin_sentiment`, `content_lab`
 
-**Platforms**: Twitter, Reddit
+**Platforms | 平台**: Twitter, Reddit
 
-### Concordia (Game-Master Simulation)
+### Concordia (Game-Master Simulation | 遊戲主持人模擬)
 
 Built on [gdm-concordia](https://github.com/google-deepmind/concordia) EntityAgent framework. Uses a game master to drive scenarios with grounded variables, branching, and checkpointing.
 
-基于 [gdm-concordia](https://github.com/google-deepmind/concordia) EntityAgent 框架。使用游戏主持人驱动场景，支持可观测变量、分支和存档。
+基於 [gdm-concordia](https://github.com/google-deepmind/concordia) EntityAgent 框架。使用遊戲主持人驅動場景，支持可觀測變數、分支和存檔。
 
-**Supported scenarios**: `crisis_pr`, `policy_lab`, `war_game`, `train_lab`
+**Supported scenarios | 支援場景**: `crisis_pr`, `policy_lab`, `war_game`, `train_lab`
 
-**Features**: A/B/C branching, grounded variable tracking, checkpoint save/load, manual action injection
+**Features | 功能**: A/B/C branching, grounded variable tracking, checkpoint save/load, manual action injection
 
 ---
 
-## Testing | 测试
+## Scenario Types | 場景類型
+
+| Type | Engine | Description |
+|------|--------|-------------|
+| `fin_sentiment` | OASIS | Financial sentiment analysis / 金融輿情分析 |
+| `content_lab` | OASIS | Content creation & viral dynamics / 內容創作與傳播 |
+| `crisis_pr` | Concordia | Crisis public relations / 危機公關 |
+| `policy_lab` | Concordia | Policy impact simulation / 政策影響模擬 |
+| `war_game` | Concordia | Geopolitical scenario modeling / 地緣政治場景建模 |
+| `train_lab` | Concordia | Training & decision-making / 培訓與決策演練 |
+
+---
+
+## Testing | 測試
 
 ```bash
-# Backend unit & integration tests
+# Backend unit & integration tests | 後端單元與整合測試
 cd backend && bun test
 
-# Frontend E2E tests (requires running dev servers)
+# Frontend E2E tests (requires running dev servers) | 前端 E2E 測試（需先啟動開發伺服器）
 cd frontend && bunx playwright install --with-deps
 cd frontend && bunx playwright test
 ```
 
 ---
 
-## Scenario Types | 场景类型
-
-| Type | Engine | Description |
-|------|--------|-------------|
-| `fin_sentiment` | OASIS | Financial sentiment analysis / 金融舆情分析 |
-| `content_lab` | OASIS | Content creation & viral dynamics / 内容创作与传播 |
-| `crisis_pr` | Concordia | Crisis public relations / 危机公关 |
-| `policy_lab` | Concordia | Policy impact simulation / 政策影响模拟 |
-| `war_game` | Concordia | Geopolitical scenario modeling / 地缘政治场景建模 |
-| `train_lab` | Concordia | Training & decision-making / 培训与决策演练 |
-
----
-
-## Environment Variables | 环境变量
+## Environment Variables | 環境變數
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
@@ -316,27 +366,13 @@ cd frontend && bunx playwright test
 
 ---
 
-## Screenshots | 截图
-
-### 5-Stage Pipeline | 五阶段流水线
-
-| Step 1: Knowledge Graph | Step 2: Environment Setup |
-|:-:|:-:|
-| Upload documents, build entity graph | Configure agents and simulation parameters |
-
-| Step 3: Simulation | Step 4: Report | Step 5: Interaction |
-|:-:|:-:|:-:|
-| Real-time event monitoring | Auto-generated analysis | Chat with AI agents |
-
----
-
-## License | 许可证
+## License | 授權條款
 
 Copyright (c) 2026 Plusblocks Technology Limited. All rights reserved.
 
 ---
 
-## Contributing | 贡献
+## Contributing | 貢獻
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
