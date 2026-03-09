@@ -16,13 +16,16 @@ B2B multi-agent simulation platform with dual engines (OASIS + Concordia).
 - Backend test: `cd backend && bun test`
 - Frontend dev: `cd frontend && bun run dev`
 - Frontend build: `cd frontend && bun run build`
+- E2E test: `cd frontend && bunx playwright test`
 - DB migrate: `cd backend && bun run src/db/migrate.ts`
 - Docker up: `docker compose up -d`
 
 ## Conventions
 - All code in English (comments, variables, commits)
+- Design docs and user-facing content in Chinese
 - Raw SQL with pg client (no ORM)
 - Shared types in `shared/types/`
+- TDD: write failing test → implement → verify
 - API response format: `{ success, data, error, meta }`
 - Cursor-based pagination
 - Async tasks return `task_id`, polled via `/tasks/:id/status`

@@ -1,7 +1,7 @@
 interface Agent {
   id: string;
   name: string;
-  role?: string;
+  demographics: { group?: string; role?: string };
 }
 
 export function AgentSelector({ agents, selectedId, onSelect }: {
@@ -22,7 +22,9 @@ export function AgentSelector({ agents, selectedId, onSelect }: {
               selectedId === agent.id ? "bg-violet/10 text-violet font-medium" : "hover:bg-gray-50 text-gray-700"
             }`}>
             <div className="font-medium">{agent.name}</div>
-            {agent.role && <div className="text-xs text-gray-500">{agent.role}</div>}
+            {(agent.demographics.role || agent.demographics.group) && (
+              <div className="text-xs text-gray-500">{agent.demographics.role || agent.demographics.group}</div>
+            )}
           </button>
         ))}
       </div>

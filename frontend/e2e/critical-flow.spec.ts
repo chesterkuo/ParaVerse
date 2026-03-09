@@ -37,6 +37,20 @@ test.describe("ParaVerse Critical Flow", () => {
     await page.click("text=FinSentiment");
     await page.click("text=Create");
 
-    await expect(page.locator("text=Step 1")).toBeVisible();
+    await expect(page.locator("text=Step 1: Knowledge Graph")).toBeVisible();
+
+    await page.click("text=Next Step");
+    await expect(page.locator("text=Step 2: Environment Setup")).toBeVisible();
+
+    await expect(page.locator("text=OASIS")).toBeVisible();
+  });
+
+  test("project appears in sidebar", async ({ page }) => {
+    await page.goto("/login");
+    await page.fill('input[placeholder="Email"]', testUser.email);
+    await page.fill('input[placeholder="Password"]', testUser.password);
+    await page.click('button[type="submit"]');
+
+    await expect(page.locator("text=E2E Test Project")).toBeVisible();
   });
 });
