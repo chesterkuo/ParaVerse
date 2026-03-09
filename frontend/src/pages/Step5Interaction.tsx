@@ -124,7 +124,7 @@ export default function Step5Interaction() {
                 placeholder="Enter agent ID..."
                 value={effectiveAgent}
                 onChange={(e) => setSelectedAgent(e.target.value)}
-                className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:outline-none focus:border-violet"
+                className="w-full px-3 py-2 text-sm border border-gray-300 rounded"
               />
             </div>
           </div>
@@ -171,7 +171,7 @@ export default function Step5Interaction() {
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
                 placeholder={effectiveAgent ? "Type your question..." : "Select an agent first"}
                 disabled={!effectiveAgent}
-                className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-violet disabled:opacity-50"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded disabled:opacity-50"
               />
               <button
                 onClick={handleSend}

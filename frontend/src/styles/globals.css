@@ -7,3 +7,21 @@
   --color-concordia: #00C4B4;
   --color-bg: #FAFAF9;
 }
+
+@layer base {
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(108, 63, 197, 0.4);
+    border-color: #6C3FC5;
+  }
+  button:focus-visible {
+    outline: 2px solid #6C3FC5;
+    outline-offset: 2px;
+  }
+  a:focus-visible {
+    outline: 2px solid #6C3FC5;
+    outline-offset: 2px;
+  }
+}
