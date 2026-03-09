@@ -35,21 +35,25 @@ export default function Step5Interaction() {
     }
   }, [events, selectedAgent]);
 
-  // Process interview responses
+  // Process interview responses (track last processed index)
+  const lastProcessedIdx = useRef(0);
   useEffect(() => {
-    if (events.length === 0) return;
-    const latest = events[events.length - 1];
-    if (latest.type === "interview_response") {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "agent",
-          content: (latest.response as string) ?? (latest.content as string) ?? "",
-          agentId: latest.agent_id as string,
-        },
-      ]);
+    if (events.length <= lastProcessedIdx.current) return;
+    for (let i = lastProcessedIdx.current; i < events.length; i++) {
+      const ev = events[i];
+      if (ev.type === "interview_response") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: "agent",
+            content: (ev.response as string) ?? (ev.content as string) ?? "",
+            agentId: ev.agent_id as string,
+          },
+        ]);
+      }
     }
-  }, [events.length, events]);
+    lastProcessedIdx.current = events.length;
+  }, [events]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });

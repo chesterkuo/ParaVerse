@@ -141,6 +141,7 @@ export function KnowledgeGraph({ nodes, links, width = 800, height = 600 }: Know
 
     return () => {
       simulation.stop();
+      svg.on(".zoom", null);
     };
   }, [nodes, links, width, height]);
 

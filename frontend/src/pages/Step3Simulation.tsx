@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { simulationApi } from "@/api/simulation";
@@ -20,42 +20,45 @@ export default function Step3Simulation() {
     simId ? `/ws/simulations/${simId}` : "",
   );
 
-  // Process incoming WebSocket events
+  // Process incoming WebSocket events (track last processed index)
+  const lastProcessedIdx = useRef(0);
   useEffect(() => {
-    if (wsEvents.length === 0) return;
-    const latest = wsEvents[wsEvents.length - 1];
+    if (wsEvents.length <= lastProcessedIdx.current) return;
 
-    if (latest.type === "agent_action" || latest.type === "interview_response") {
-      addEvent({
-        event_type: latest.type,
-        content: (latest.content as string) ?? "",
-        sim_timestamp: (latest.tick as number) ?? 0,
-        agent_id: latest.agent_id as string | undefined,
-        metadata: latest as Record<string, unknown>,
-      });
-    } else if (latest.type === "grounded_var") {
-      const vars = (latest.vars ?? latest.data ?? {}) as Record<string, number>;
-      setGroundedVars(vars);
-    } else if (latest.type === "status") {
-      setStatus((latest.status as string) ?? status);
-    } else if (latest.type === "simulation_complete") {
-      setStatus("completed");
-    } else if (latest.type === "error") {
-      setStatus("failed");
-      addEvent({
-        event_type: "error",
-        content: (latest.message as string) ?? "Unknown error",
-        sim_timestamp: (latest.tick as number) ?? 0,
-      });
-    } else if (latest.type === "branch_update") {
-      addEvent({
-        event_type: "branch_update",
-        content: (latest.label as string) ?? "",
-        sim_timestamp: (latest.tick as number) ?? 0,
-        metadata: latest as Record<string, unknown>,
-      });
+    for (let i = lastProcessedIdx.current; i < wsEvents.length; i++) {
+      const ev = wsEvents[i];
+      if (ev.type === "agent_action" || ev.type === "interview_response") {
+        addEvent({
+          event_type: ev.type,
+          content: (ev.content as string) ?? "",
+          sim_timestamp: (ev.tick as number) ?? 0,
+          agent_id: ev.agent_id as string | undefined,
+          metadata: ev as Record<string, unknown>,
+        });
+      } else if (ev.type === "grounded_var") {
+        setGroundedVars((ev.vars ?? ev.data ?? {}) as Record<string, number>);
+      } else if (ev.type === "status") {
+        setStatus((ev.status as string) ?? "running");
+      } else if (ev.type === "simulation_complete") {
+        setStatus("completed");
+      } else if (ev.type === "error") {
+        setStatus("failed");
+        addEvent({
+          event_type: "error",
+          content: (ev.message as string) ?? "Unknown error",
+          sim_timestamp: (ev.tick as number) ?? 0,
+        });
+      } else if (ev.type === "branch_update") {
+        addEvent({
+          event_type: "branch_update",
+          content: (ev.label as string) ?? "",
+          sim_timestamp: (ev.tick as number) ?? 0,
+          metadata: ev as Record<string, unknown>,
+        });
+      }
     }
-  }, [wsEvents.length, wsEvents, addEvent, setGroundedVars, setStatus, status]);
+    lastProcessedIdx.current = wsEvents.length;
+  }, [wsEvents, addEvent, setGroundedVars, setStatus]);
 
   const startMutation = useMutation({
     mutationFn: () => simulationApi.start(simId!),

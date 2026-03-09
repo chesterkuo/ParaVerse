@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { StepProgress } from "@/components/layout/StepProgress";
 import { useSimulationStore } from "@/store/simulationStore";
@@ -38,13 +38,17 @@ export default function Step4Report() {
     refetch();
   };
 
-  // Mock emotion chart data
-  const emotionData = Array.from({ length: 20 }, (_, i) => ({
-    tick: i + 1,
-    positive: 0.3 + Math.random() * 0.4,
-    neutral: 0.2 + Math.random() * 0.2,
-    negative: 0.05 + Math.random() * 0.2,
-  }));
+  // Mock emotion chart data (stable across renders)
+  const emotionData = useMemo(
+    () =>
+      Array.from({ length: 20 }, (_, i) => ({
+        tick: i + 1,
+        positive: 0.3 + Math.sin(i * 0.7) * 0.2 + 0.1,
+        neutral: 0.2 + Math.cos(i * 0.5) * 0.1 + 0.05,
+        negative: 0.05 + Math.sin(i * 0.3 + 1) * 0.1 + 0.05,
+      })),
+    [],
+  );
 
   const sections: { title: string; content: string }[] = report?.sections ?? [];
 

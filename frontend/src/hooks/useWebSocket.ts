@@ -13,8 +13,12 @@ export function useWebSocket(path: string) {
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeout = useRef<ReturnType<typeof setTimeout>>(undefined);
   const retriesRef = useRef(0);
+  const closedIntentionally = useRef(false);
 
   const connect = useCallback(() => {
+    if (!path) return;
+
+    closedIntentionally.current = false;
     const token = localStorage.getItem("access_token");
     const url = token
       ? `${WS_BASE}${path}?token=${encodeURIComponent(token)}`
@@ -36,6 +40,7 @@ export function useWebSocket(path: string) {
 
     ws.onclose = () => {
       setConnected(false);
+      if (closedIntentionally.current) return;
       // Exponential backoff: 1s, 2s, 4s, 8s... capped at 30s
       const delay = Math.min(1000 * Math.pow(2, retriesRef.current), 30000);
       retriesRef.current++;
@@ -48,12 +53,14 @@ export function useWebSocket(path: string) {
   }, [path]);
 
   useEffect(() => {
+    if (!path) return;
     connect();
     return () => {
+      closedIntentionally.current = true;
       clearTimeout(reconnectTimeout.current);
       wsRef.current?.close();
     };
-  }, [connect]);
+  }, [connect, path]);
 
   const send = useCallback((data: unknown) => {
     wsRef.current?.send(JSON.stringify(data));

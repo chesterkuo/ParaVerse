@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+
 interface SimEvent {
   event_type: string;
   content?: string;
@@ -22,15 +24,16 @@ function getTypeClass(t: string): string {
 
 export function EventTimeline({ events }: { events: SimEvent[] }) {
   // Group events by tick (sim_timestamp)
-  const tickMap = new Map<number, SimEvent[]>();
-  for (const ev of events) {
-    const tick = ev.sim_timestamp;
-    const arr = tickMap.get(tick);
-    if (arr) arr.push(ev);
-    else tickMap.set(tick, [ev]);
-  }
-
-  const ticks = Array.from(tickMap.entries()).sort(([a], [b]) => a - b);
+  const ticks = useMemo(() => {
+    const tickMap = new Map<number, SimEvent[]>();
+    for (const ev of events) {
+      const tick = ev.sim_timestamp;
+      const arr = tickMap.get(tick);
+      if (arr) arr.push(ev);
+      else tickMap.set(tick, [ev]);
+    }
+    return Array.from(tickMap.entries()).sort(([a], [b]) => a - b);
+  }, [events]);
 
   if (ticks.length === 0) {
     return (
