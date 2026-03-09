@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("ParaVerse Critical Flow", () => {
   const testUser = {
-    email: `e2e-${Date.now()}@test.com`,
+    email: `e2e-${Date.now()}-${Math.random().toString(36).slice(2, 8)}@test.com`,
     password: "testpassword123",
     name: "E2E Test User",
   };

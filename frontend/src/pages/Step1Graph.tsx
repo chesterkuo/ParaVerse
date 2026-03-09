@@ -8,6 +8,22 @@ import { TaskProgress } from "@/components/ui/TaskProgress";
 import { KnowledgeGraph } from "@/components/graph/KnowledgeGraph";
 import { GraphControls } from "@/components/graph/GraphControls";
 
+interface GraphNodeResponse {
+  id: string;
+  name?: string;
+  label?: string;
+  type: string;
+}
+
+interface GraphEdgeResponse {
+  source_node_id?: string;
+  source?: string;
+  target_node_id?: string;
+  target?: string;
+  relation_type?: string;
+  label?: string;
+}
+
 export default function Step1Graph() {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -45,22 +61,6 @@ export default function Step1Graph() {
   const handleFileSelect = (file: File) => {
     uploadMutation.mutate(file);
   };
-
-  interface GraphNodeResponse {
-    id: string;
-    name?: string;
-    label?: string;
-    type: string;
-  }
-
-  interface GraphEdgeResponse {
-    source_node_id?: string;
-    source?: string;
-    target_node_id?: string;
-    target?: string;
-    relation_type?: string;
-    label?: string;
-  }
 
   const { data: graphData } = useQuery({
     queryKey: ["graph", projectId],

@@ -36,7 +36,7 @@ services:
       LLM_BASE_URL: ${LLM_BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai/}
       LLM_MODEL_GENERAL: ${LLM_MODEL_GENERAL:-gemini-2.5-flash}
       LLM_MODEL_BOOST: ${LLM_MODEL_BOOST:-gemini-2.5-flash}
-      JWT_SECRET: ${JWT_SECRET:-dev-secret-change-in-production-32chars!}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set}
       PORT: "5001"
     depends_on:
       postgres:

@@ -11,10 +11,14 @@ RUN bun install --frozen-lockfile
 COPY backend/ .
 COPY shared/ /shared
 
-# Set up Python venvs for simulation engines
-RUN cd simulations/oasis && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt || true
-RUN cd simulations/concordia && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt || true
-
-CMD ["sh", "-c", "bun run src/db/migrate.ts && bun run src/index.ts"]
+# Set up Python venvs for simulation engines (skip if requirements.txt missing)
+RUN if [ -f simulations/oasis/requirements.txt ]; then \
+      cd simulations/oasis && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt; \
+    fi
+RUN if [ -f simulations/concordia/requirements.txt ]; then \
+      cd simulations/concordia && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt; \
+    fi
 
 EXPOSE 5001
+
+CMD ["sh", "-c", "exec bun run src/db/migrate.ts && exec bun run src/index.ts"]

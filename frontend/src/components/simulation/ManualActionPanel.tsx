@@ -25,12 +25,12 @@ export function ManualActionPanel({ onAction, onSave, onLoad, disabled }: {
           className="bg-concordia text-white px-4 py-2 rounded text-sm font-medium hover:bg-concordia/90 disabled:opacity-50">
           Submit Action
         </button>
-        <button onClick={onSave}
-          className="border border-gray-300 px-3 py-2 rounded text-sm hover:bg-gray-50">
+        <button onClick={onSave} disabled={disabled}
+          className="border border-gray-300 px-3 py-2 rounded text-sm hover:bg-gray-50 disabled:opacity-50">
           Save Checkpoint
         </button>
-        <button onClick={onLoad}
-          className="border border-gray-300 px-3 py-2 rounded text-sm hover:bg-gray-50">
+        <button onClick={onLoad} disabled={disabled}
+          className="border border-gray-300 px-3 py-2 rounded text-sm hover:bg-gray-50 disabled:opacity-50">
           Load Checkpoint
         </button>
       </div>
