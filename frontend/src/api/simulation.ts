@@ -13,6 +13,10 @@ export const simulationApi = {
     api.post(`/simulations/${id}/fork`, { branch_label: branchLabel, override_vars: overrideVars }),
   checkpoint: (id: string) =>
     api.post(`/simulations/${id}/checkpoint`),
+  listCheckpoints: (id: string) =>
+    api.get(`/simulations/${id}/checkpoints`),
+  loadCheckpoint: (id: string, filename: string) =>
+    api.post(`/simulations/${id}/checkpoints/load`, { filename }),
   manualAction: (id: string, action: Record<string, unknown>) =>
     api.post(`/simulations/${id}/manual-action`, { action }),
   getTaskStatus: (taskId: string) => api.get(`/tasks/${taskId}`),

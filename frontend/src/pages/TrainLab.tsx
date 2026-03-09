@@ -6,6 +6,7 @@ import { useWebSocket } from "@/hooks/useWebSocket";
 import { useSimulationStore } from "@/store/simulationStore";
 import { SimulationStatus } from "@/components/simulation/SimulationStatus";
 import { AgentFeed } from "@/components/simulation/AgentFeed";
+import { CheckpointManager } from "@/components/simulation/CheckpointManager";
 
 export default function TrainLab() {
   const { projectId } = useParams();
@@ -106,6 +107,12 @@ export default function TrainLab() {
                 <p className="text-xs text-red-600">Failed to inject action</p>
               )}
             </div>
+
+            {/* Checkpoints */}
+            <CheckpointManager
+              simulationId={simId!}
+              disabled={status !== "running"}
+            />
 
             {/* Status */}
             <SimulationStatus status={status} stats={{}} groundedVars={groundedVars} />
