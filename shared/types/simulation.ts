@@ -51,3 +51,19 @@ export interface IpcEvent {
   type: "agent_action" | "grounded_var" | "branch_update" | "simulation_complete" | "error" | "interview_response" | "status";
   [key: string]: unknown;
 }
+
+export interface StakeholderAcceptance {
+  stakeholder_group: string;
+  branch_label: string;
+  acceptance_score: number;
+  sentiment: "positive" | "neutral" | "negative";
+  sample_size: number;
+}
+
+export interface AcceptanceMatrix {
+  simulation_id: string;
+  groups: string[];
+  branches: string[];
+  cells: StakeholderAcceptance[];
+  generated_at: string;
+}
