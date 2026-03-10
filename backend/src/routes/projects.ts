@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { HTTPException } from "hono/http-exception";
 import { authMiddleware, type AuthContext } from "../middleware/auth";
+import { scenarioAccessCheck } from "../middleware/scenarioAccess";
 import {
   createProject,
   getProjectsByOwner,
@@ -29,9 +30,9 @@ const projects = new Hono();
 
 projects.use("*", authMiddleware);
 
-projects.post("/", async (c) => {
+projects.post("/", scenarioAccessCheck("body"), async (c) => {
   const auth = c.get("auth") as AuthContext;
-  const body = await c.req.json();
+  const body = c.get("parsedBody") ?? (await c.req.json());
   const input = createSchema.parse(body);
 
   const project = await createProject({
