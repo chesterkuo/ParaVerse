@@ -293,6 +293,41 @@ simulation.post("/:simulationId/manual-action", async (c) => {
   } satisfies ApiResponse);
 });
 
+// Set Concordia grounded variable
+simulation.post("/:simulationId/set-var", async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  const simulationId = c.req.param("simulationId");
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
+  if (sim.engine !== "concordia") {
+    throw new HTTPException(400, {
+      message: "set-var is only supported for Concordia simulations",
+    });
+  }
+
+  const body = await c.req.json();
+  const setVarSchema = z.object({
+    var_name: z.string().min(1),
+    value: z.number(),
+  });
+  const input = setVarSchema.parse(body);
+
+  const simService = getSimulationService();
+  await simService.forwardCommand(simulationId, {
+    type: "set_grounded_var",
+    var_name: input.var_name,
+    value: input.value,
+  });
+
+  return c.json({
+    success: true,
+    data: { var_name: input.var_name, value: input.value },
+    error: null,
+  } satisfies ApiResponse);
+});
+
 // Get acceptance matrix
 simulation.get("/:simulationId/acceptance-matrix", async (c) => {
   const auth = c.get("auth") as AuthContext;
