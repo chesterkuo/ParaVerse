@@ -11,6 +11,7 @@ import { report, reportExport } from "./routes/report";
 import { tasks } from "./routes/tasks";
 import { interaction, websocket } from "./routes/interaction";
 import { checkpoint } from "./routes/checkpoint";
+import { docs } from "./routes/docs";
 import { logger } from "./utils/logger";
 
 const app = new Hono();
@@ -18,6 +19,7 @@ app.use("*", errorHandler);
 app.use("*", cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000" }));
 app.use("*", honoLogger());
 app.get("/health", (c) => c.json({ status: "ok" }));
+app.route("/docs", docs);
 
 const api = new Hono();
 api.use("*", rateLimit({ windowMs: 60_000, max: 100, keyPrefix: "rl:api" }));
