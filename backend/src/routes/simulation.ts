@@ -15,6 +15,7 @@ import {
 } from "../db/queries/simulations";
 import { getAgentsBySimulation } from "../db/queries/agents";
 import { computeAcceptanceMatrix } from "../services/matrixService";
+import { compareSentimentCurves } from "../services/contentLabCompareService";
 import type { ApiResponse } from "@shared/types/api";
 import { logger } from "../utils/logger";
 
@@ -343,6 +344,37 @@ simulation.get("/:simulationId/acceptance-matrix", async (c) => {
     data: matrix,
     error: null,
   } satisfies ApiResponse);
+});
+
+// POST /:simulationId/compare — compare two ContentLab simulation runs
+simulation.post("/:simulationId/compare", async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  const simulationId = c.req.param("simulationId");
+  const { compareWithId } = await c.req.json();
+
+  if (!compareWithId) {
+    return c.json({ success: false, error: "compareWithId is required" }, 400);
+  }
+
+  const sim = await getSimulationForOwner(simulationId, auth.userId);
+  if (!sim) throw new HTTPException(404, { message: "Simulation not found" });
+
+  const simB = await getSimulationForOwner(compareWithId, auth.userId);
+  if (!simB) throw new HTTPException(404, { message: "Comparison simulation not found" });
+
+  const eventsA = await getSimulationEvents(simulationId, { limit: 500, eventType: "agent_action" });
+  const eventsB = await getSimulationEvents(compareWithId, { limit: 500, eventType: "agent_action" });
+
+  const extractCurve = (events: any[]) =>
+    events
+      .filter((e) => e.metadata?.sentiment_score != null)
+      .map((e) => e.metadata.sentiment_score as number);
+
+  const curveA = extractCurve(eventsA);
+  const curveB = extractCurve(eventsB);
+
+  const comparison = compareSentimentCurves(curveA, curveB);
+  return c.json({ success: true, data: comparison });
 });
 
 export { simulation };
