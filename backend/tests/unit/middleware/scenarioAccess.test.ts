@@ -109,10 +109,17 @@ describe("scenarioAccessCheck (body source)", () => {
   });
 
   test("blocks war_game for unverified user", async () => {
-    mockQuery.mockResolvedValue({
-      rows: [{ institution_verified: false }],
-      rowCount: 1,
-    });
+    // First call: check institution_verified
+    // Second call: fallback check organization_approvals (no approved record)
+    mockQuery
+      .mockResolvedValueOnce({
+        rows: [{ institution_verified: false }],
+        rowCount: 1,
+      })
+      .mockResolvedValueOnce({
+        rows: [],
+        rowCount: 0,
+      });
 
     const app = createBodyApp();
     const res = await app.request("/projects", {
@@ -125,7 +132,11 @@ describe("scenarioAccessCheck (body source)", () => {
   });
 
   test("blocks war_game when user not found", async () => {
-    mockQuery.mockResolvedValue({ rows: [], rowCount: 0 });
+    // First call: check institution_verified (user not found)
+    // Second call: fallback check organization_approvals (no approved record)
+    mockQuery
+      .mockResolvedValueOnce({ rows: [], rowCount: 0 })
+      .mockResolvedValueOnce({ rows: [], rowCount: 0 });
 
     const app = createBodyApp();
     const res = await app.request("/projects", {
@@ -162,6 +173,7 @@ describe("scenarioAccessCheck (project source)", () => {
   test("blocks restricted scenario from project lookup for unverified user", async () => {
     // First call: lookup scenario_type from project
     // Second call: check institution_verified
+    // Third call: fallback check organization_approvals (no approved record)
     mockQuery
       .mockResolvedValueOnce({
         rows: [{ scenario_type: "war_game" }],
@@ -170,6 +182,10 @@ describe("scenarioAccessCheck (project source)", () => {
       .mockResolvedValueOnce({
         rows: [{ institution_verified: false }],
         rowCount: 1,
+      })
+      .mockResolvedValueOnce({
+        rows: [],
+        rowCount: 0,
       });
 
     const app = createProjectApp();

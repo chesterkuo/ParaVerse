@@ -2,6 +2,7 @@ import type { Context, Next } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { AuthContext } from "./auth";
 import { query } from "../db/client";
+import { getApprovalByUserId } from "../db/queries/organizationApprovals";
 import { logger } from "../utils/logger";
 
 export const RESTRICTED_SCENARIOS = ["war_game"] as const;
@@ -43,14 +44,18 @@ export function scenarioAccessCheck(source: "body" | "project") {
 
     const user = result.rows[0];
     if (!user || !user.institution_verified) {
-      logger.warn(
-        { userId: auth.userId, scenarioType },
-        "Blocked access to restricted scenario: institutional verification required"
-      );
-      throw new HTTPException(403, {
-        message:
-          "Access denied: institutional verification is required to use war_game scenarios. Please contact your administrator.",
-      });
+      // Fallback: check organization_approvals for an approved record
+      const approval = await getApprovalByUserId(auth.userId);
+      if (!approval || approval.status !== "approved") {
+        logger.warn(
+          { userId: auth.userId, scenarioType },
+          "Blocked access to restricted scenario: institutional verification required"
+        );
+        throw new HTTPException(403, {
+          message:
+            "Access denied: institutional verification is required to use war_game scenarios. Please contact your administrator.",
+        });
+      }
     }
 
     await next();

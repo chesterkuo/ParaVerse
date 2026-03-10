@@ -14,6 +14,7 @@ import { checkpoint } from "./routes/checkpoint";
 import { docs } from "./routes/docs";
 import { lti } from "./routes/lti";
 import { backtest } from "./routes/backtest";
+import { admin } from "./routes/admin";
 import { logger } from "./utils/logger";
 
 const app = new Hono();
@@ -34,6 +35,7 @@ api.route("/simulations", report);
 api.route("/simulations", checkpoint);
 api.route("/tasks", tasks);
 api.route("/backtests", backtest);
+api.route("/admin", admin);
 // Mount PDF export before api routes (no auth middleware - uses query param token)
 app.route("/api/v1/simulations", reportExport);
 app.route("/api/v1", api);
