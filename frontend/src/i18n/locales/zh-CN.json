@@ -210,6 +210,14 @@
     "interview_response": "响应",
     "status": "状态"
   },
+  "warGame": {
+    "dashboard": "兵棋推演分析仪表板",
+    "infoPenetration": "信息渗透率",
+    "countryBreakdown": "各国态势",
+    "trustIndex": "信任指数",
+    "beliefScore": "认知偏移分数",
+    "noData": "暂无仿真数据。"
+  },
   "task": {
     "label": "任务",
     "failed": "失败",

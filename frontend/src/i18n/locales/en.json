@@ -210,6 +210,14 @@
     "interview_response": "Response",
     "status": "Status"
   },
+  "warGame": {
+    "dashboard": "WarGame Analysis Dashboard",
+    "infoPenetration": "Information Penetration Rate",
+    "countryBreakdown": "Country Breakdown",
+    "trustIndex": "Trust Index",
+    "beliefScore": "Belief Score",
+    "noData": "No simulation data available yet."
+  },
   "task": {
     "label": "Task",
     "failed": "Failed",
