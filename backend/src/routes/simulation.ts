@@ -18,6 +18,7 @@ import { computeAcceptanceMatrix } from "../services/matrixService";
 import { compareSentimentCurves } from "../services/contentLabCompareService";
 import type { ApiResponse } from "@shared/types/api";
 import { logger } from "../utils/logger";
+import { getCachedEvents, setCachedEvents } from "../services/llmCacheService";
 
 const VALID_SCENARIO_TYPES = [
   "fin_sentiment",
@@ -170,11 +171,29 @@ simulation.get("/:simulationId/events", async (c) => {
   const offset = offsetRaw && offsetRaw >= 0 ? offsetRaw : undefined;
   const eventType = c.req.query("event_type") || undefined;
 
+  // Cache events only for completed simulations
+  const cacheKey = `${limit ?? "d"}:${offset ?? 0}:${eventType ?? "all"}`;
+  if (sim.status === "completed") {
+    const cached = await getCachedEvents(simulationId, cacheKey);
+    if (cached) {
+      return c.json({
+        success: true,
+        data: JSON.parse(cached),
+        error: null,
+      } satisfies ApiResponse);
+    }
+  }
+
   const events = await getSimulationEvents(simulationId, {
     limit,
     offset,
     eventType,
   });
+
+  // Cache if simulation is completed (immutable data)
+  if (sim.status === "completed") {
+    await setCachedEvents(simulationId, cacheKey, JSON.stringify(events));
+  }
 
   return c.json({
     success: true,

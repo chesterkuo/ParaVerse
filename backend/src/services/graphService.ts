@@ -2,6 +2,7 @@ import { getLlmService } from "./llmService";
 import { getVectorService } from "./vectorService";
 import { query } from "../db/client";
 import { logger } from "../utils/logger";
+import { getCachedGraphNeighbors, setCachedGraphNeighbors, invalidateGraphCache } from "./llmCacheService";
 
 export interface OntologyEntity {
   type: "person" | "org" | "event" | "concept" | "location";
@@ -76,17 +77,30 @@ export class GraphService {
         edgeCount++;
       }
     }
+    // Invalidate graph cache after rebuild
+    await invalidateGraphCache(projectId);
     logger.info({ projectId, nodes: allEntities.size, edges: edgeCount }, "Ontology extracted");
     return { nodeCount: allEntities.size, edgeCount };
   }
 
   async getGraph(projectId: string) {
+    // Check cache first (depth 0 = full graph)
+    const cached = await getCachedGraphNeighbors(projectId, "full", 0);
+    if (cached) {
+      return JSON.parse(cached);
+    }
+
     const nodes = await query(`SELECT id, type, name, description, properties FROM ontology_nodes WHERE project_id = $1`, [projectId]);
     const edges = await query(
       `SELECT e.id, e.source_node_id, e.target_node_id, e.relation_type, e.weight
        FROM ontology_edges e JOIN ontology_nodes n ON e.source_node_id = n.id WHERE n.project_id = $1`, [projectId]
     );
-    return { nodes: nodes.rows, edges: edges.rows };
+    const result = { nodes: nodes.rows, edges: edges.rows };
+
+    // Cache the full graph
+    await setCachedGraphNeighbors(projectId, "full", 0, JSON.stringify(result));
+
+    return result;
   }
 
   async searchGraph(projectId: string, queryText: string, limit = 10) {
