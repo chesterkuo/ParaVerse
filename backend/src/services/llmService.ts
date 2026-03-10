@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { logger } from "../utils/logger";
+import { buildCacheKey, getCached, setCached } from "./llmCacheService";
 
 export interface LlmConfig {
   apiKey: string;
@@ -33,15 +34,31 @@ export class LlmService {
     responseFormat?: { type: "json_object" | "text" };
   }): Promise<string> {
     const tier = options?.tier || "general";
+    const model = this.getModel(tier);
+    const cacheParams = {
+      temperature: options?.temperature ?? 0.7,
+      maxTokens: options?.maxTokens,
+      responseFormat: options?.responseFormat,
+    };
+    const cacheKey = buildCacheKey(model, messages, cacheParams);
+
+    const cached = await getCached(cacheKey);
+    if (cached !== null) {
+      logger.debug({ tier, model, cacheKey }, "LLM cache hit");
+      return cached;
+    }
+
     const response = await this.client.chat.completions.create({
-      model: this.getModel(tier), messages,
+      model, messages,
       temperature: options?.temperature ?? 0.7,
       max_tokens: options?.maxTokens,
       response_format: options?.responseFormat,
     });
     const content = response.choices[0]?.message?.content;
     if (!content) throw new Error("LLM returned empty response");
-    logger.debug({ tier, model: this.getModel(tier), tokens: response.usage }, "LLM chat");
+    logger.debug({ tier, model, tokens: response.usage }, "LLM chat");
+
+    await setCached(cacheKey, content);
     return content;
   }
 
