@@ -66,6 +66,7 @@ export const openApiSpec = {
     { name: "Report", description: "Report generation and export" },
     { name: "Tasks", description: "Async task status polling" },
     { name: "Backtest", description: "Backtest management" },
+    { name: "Admin", description: "WarGame access control and organization management" },
   ],
   paths: {
     // ── Auth ──────────────────────────────────────────────────────
@@ -414,6 +415,34 @@ export const openApiSpec = {
         },
       },
     },
+    "/simulations/{simulationId}/compare": {
+      post: {
+        tags: ["Simulation"],
+        summary: "Compare two ContentLab simulation outcomes",
+        parameters: [simulationIdParam],
+        requestBody: jsonBody({
+          type: "object",
+          required: ["compareWithId"],
+          properties: {
+            compareWithId: { type: "string", format: "uuid", description: "ID of the simulation to compare with" },
+          },
+        }),
+        responses: {
+          "200": apiResponse(
+            {
+              type: "object",
+              properties: {
+                simulation_a: { type: "string", format: "uuid" },
+                simulation_b: { type: "string", format: "uuid" },
+                sentiment_comparison: { type: "object", additionalProperties: true },
+              },
+            },
+            "Sentiment comparison result",
+          ),
+          ...errorResponses,
+        },
+      },
+    },
     "/simulations/{simulationId}/acceptance-matrix": {
       get: {
         tags: ["Simulation"],
@@ -696,6 +725,110 @@ export const openApiSpec = {
         ],
         responses: {
           "200": apiResponse({ type: "object" }, "Backtest details"),
+          ...errorResponses,
+        },
+      },
+    },
+
+    // ── Admin ───────────────────────────────────────────────────
+    "/admin/wargame-request": {
+      post: {
+        tags: ["Admin"],
+        summary: "Request WarGame access",
+        requestBody: jsonBody({
+          type: "object",
+          required: ["organization_name", "organization_type", "justification"],
+          properties: {
+            organization_name: { type: "string", minLength: 1 },
+            organization_type: { type: "string", enum: ["academic", "think_tank", "government", "enterprise"] },
+            justification: { type: "string", minLength: 1 },
+          },
+        }),
+        responses: {
+          "201": apiResponse(
+            {
+              type: "object",
+              properties: {
+                id: { type: "string", format: "uuid" },
+                status: { type: "string", enum: ["pending", "approved", "rejected"] },
+                created_at: { type: "string", format: "date-time" },
+              },
+            },
+            "Approval request created",
+          ),
+          ...errorResponses,
+        },
+      },
+    },
+    "/admin/wargame-request/me": {
+      get: {
+        tags: ["Admin"],
+        summary: "Get my WarGame approval status",
+        responses: {
+          "200": apiResponse(
+            {
+              type: "object",
+              nullable: true,
+              properties: {
+                id: { type: "string", format: "uuid" },
+                organization_name: { type: "string" },
+                organization_type: { type: "string" },
+                status: { type: "string", enum: ["pending", "approved", "rejected"] },
+                notes: { type: "string", nullable: true },
+                created_at: { type: "string", format: "date-time" },
+                updated_at: { type: "string", format: "date-time" },
+              },
+            },
+            "Approval record or null",
+          ),
+          ...errorResponses,
+        },
+      },
+    },
+    "/admin/wargame-approvals": {
+      get: {
+        tags: ["Admin"],
+        summary: "List WarGame approval requests (admin only)",
+        parameters: [
+          { name: "status", in: "query", schema: { type: "string", enum: ["pending", "approved", "rejected"] }, description: "Filter by approval status" },
+        ],
+        responses: {
+          "200": apiResponse(
+            { type: "array", items: { type: "object" } },
+            "List of approval requests",
+          ),
+          ...errorResponses,
+        },
+      },
+    },
+    "/admin/wargame-approvals/{id}": {
+      patch: {
+        tags: ["Admin"],
+        summary: "Review a WarGame approval request (admin only)",
+        parameters: [
+          { name: "id", in: "path", required: true, schema: { type: "string", format: "uuid" }, description: "Approval request UUID" },
+        ],
+        requestBody: jsonBody({
+          type: "object",
+          required: ["status"],
+          properties: {
+            status: { type: "string", enum: ["approved", "rejected"] },
+            notes: { type: "string" },
+          },
+        }),
+        responses: {
+          "200": apiResponse(
+            {
+              type: "object",
+              properties: {
+                id: { type: "string", format: "uuid" },
+                status: { type: "string", enum: ["approved", "rejected"] },
+                notes: { type: "string", nullable: true },
+                updated_at: { type: "string", format: "date-time" },
+              },
+            },
+            "Updated approval",
+          ),
           ...errorResponses,
         },
       },
