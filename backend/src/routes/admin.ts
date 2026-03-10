@@ -14,7 +14,11 @@ const requestSchema = z.object({
 
 admin.post("/wargame-request", authMiddleware, async (c) => {
   const auth = c.get("auth") as AuthContext;
-  const body = requestSchema.parse(await c.req.json());
+  const parsed = requestSchema.safeParse(await c.req.json());
+  if (!parsed.success) {
+    return c.json({ success: false, error: parsed.error.issues[0]?.message || "Validation failed" }, 400);
+  }
+  const body = parsed.data;
   const existing = await getApprovalByUserId(auth.userId);
   if (existing && existing.status === "pending") {
     return c.json({ success: false, error: "You already have a pending request" }, 409);
@@ -24,6 +28,10 @@ admin.post("/wargame-request", authMiddleware, async (c) => {
 });
 
 admin.get("/wargame-approvals", authMiddleware, async (c) => {
+  const auth = c.get("auth") as AuthContext;
+  if (auth.role !== "admin") {
+    return c.json({ success: false, error: "Forbidden: admin access required" }, 403);
+  }
   const status = c.req.query("status") || "pending";
   const approvals = await getApprovalsByStatus(status);
   return c.json({ success: true, data: approvals });
@@ -36,8 +44,15 @@ const reviewSchema = z.object({
 
 admin.patch("/wargame-approvals/:id", authMiddleware, async (c) => {
   const auth = c.get("auth") as AuthContext;
+  if (auth.role !== "admin") {
+    return c.json({ success: false, error: "Forbidden: admin access required" }, 403);
+  }
   const approvalId = c.req.param("id");
-  const body = reviewSchema.parse(await c.req.json());
+  const parsed = reviewSchema.safeParse(await c.req.json());
+  if (!parsed.success) {
+    return c.json({ success: false, error: parsed.error.issues[0]?.message || "Validation failed" }, 400);
+  }
+  const body = parsed.data;
   const result = await reviewApproval(approvalId, body.status, auth.userId, body.notes);
   if (!result) return c.json({ success: false, error: "Approval not found" }, 404);
   return c.json({ success: true, data: result });

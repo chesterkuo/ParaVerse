@@ -50,6 +50,9 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
       }
 
       const json = await response.json() as any;
+      if (!json.data?.[0]?.embedding) {
+        throw new Error(`Embedding API returned invalid data for text in batch ${batchIndex}`);
+      }
       embeddings.push(json.data[0].embedding);
     }
 

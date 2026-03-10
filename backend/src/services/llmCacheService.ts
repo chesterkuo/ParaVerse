@@ -84,24 +84,28 @@ export async function setCachedAgentState(simId: string, agentId: string, data: 
 }
 
 // --- Cache Invalidation ---
+async function scanAndDelete(redis: any, pattern: string): Promise<void> {
+  let cursor = "0";
+  do {
+    const [nextCursor, keys] = await redis.scan(cursor, "MATCH", pattern, "COUNT", 100);
+    cursor = nextCursor;
+    if (keys.length > 0) {
+      await redis.del(...keys);
+    }
+  } while (cursor !== "0");
+}
+
 export async function invalidateSimCache(simId: string): Promise<void> {
   try {
     const redis = getRedis();
-    const keys = await redis.keys(`sim:${simId}:*`);
-    const agentKeys = await redis.keys(`agents:${simId}:*`);
-    const allKeys = [...keys, ...agentKeys];
-    if (allKeys.length > 0) {
-      await redis.del(...allKeys);
-    }
+    await scanAndDelete(redis, `sim:${simId}:*`);
+    await scanAndDelete(redis, `agents:${simId}:*`);
   } catch { /* fail-open */ }
 }
 
 export async function invalidateGraphCache(projectId: string): Promise<void> {
   try {
     const redis = getRedis();
-    const keys = await redis.keys(`graph:${projectId}:*`);
-    if (keys.length > 0) {
-      await redis.del(...keys);
-    }
+    await scanAndDelete(redis, `graph:${projectId}:*`);
   } catch { /* fail-open */ }
 }

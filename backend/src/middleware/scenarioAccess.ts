@@ -51,10 +51,11 @@ export function scenarioAccessCheck(source: "body" | "project") {
           { userId: auth.userId, scenarioType },
           "Blocked access to restricted scenario: institutional verification required"
         );
-        throw new HTTPException(403, {
-          message:
-            "Access denied: institutional verification is required to use war_game scenarios. Please contact your administrator.",
-        });
+        return c.json({
+          success: false,
+          data: null,
+          error: "Access denied: institutional verification is required to use war_game scenarios. Please contact your administrator.",
+        }, 403);
       }
     }
 
