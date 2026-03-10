@@ -1,0 +1,15 @@
+{
+  "name": "@paraverse/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for ParaVerse multi-agent simulation API",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "generate": "bun run generate.ts",
+    "test": "bun test"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.0.0"
+  },
+  "license": "Apache-2.0"
+}
