@@ -10,6 +10,7 @@ import Step4Report from "@/pages/Step4Report";
 import Step5Interaction from "@/pages/Step5Interaction";
 import TrainLab from "@/pages/TrainLab";
 import WarGameDashboard from "@/pages/WarGameDashboard";
+import ContentLabResults from "@/pages/ContentLabResults";
 import LtiCallback from "@/pages/LtiCallback";
 
 export const router = createBrowserRouter([
@@ -33,6 +34,7 @@ export const router = createBrowserRouter([
         ],
       },
       { path: "simulations/:id/wargame", element: <WarGameDashboard /> },
+      { path: "simulations/:id/content-lab", element: <ContentLabResults /> },
     ],
   },
 ]);
