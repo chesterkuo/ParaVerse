@@ -1,5 +1,16 @@
 import type { ScenarioType } from "./project";
 
+export interface NestedCountryConfig {
+  id: string;
+  language: string;
+  agent_count: number;
+  trust_index_init: number;
+}
+
+export interface NestedConfig {
+  countries: NestedCountryConfig[];
+}
+
 export interface SimConfig {
   scenario_type: ScenarioType;
   agent_count: number;
@@ -8,6 +19,7 @@ export interface SimConfig {
   platform?: "twitter" | "reddit";
   branches?: BranchConfig[];
   custom_params?: Record<string, unknown>;
+  nested_config?: NestedConfig;
 }
 
 export interface BranchConfig {

@@ -49,6 +49,7 @@ class ConcordiaSimulation:
             WarGameGameMaster,
             TrainLabGameMaster,
         )
+        from game_masters.nested_war_game_gm import NestedWarGameGM
 
         # Create the language model
         self.model = GeminiLanguageModel(
@@ -68,14 +69,17 @@ class ConcordiaSimulation:
         })
 
         # Setup game master
-        SCENARIO_GM_MAP = {
-            "crisis_pr": CrisisPrGameMaster,
-            "policy_lab": PolicyLabGameMaster,
-            "war_game": WarGameGameMaster,
-            "train_lab": TrainLabGameMaster,
-        }
-        gm_class = SCENARIO_GM_MAP.get(self.scenario_type, BaseGameMaster)
-        self.game_master = gm_class(self.config)
+        if self.scenario_type == "war_game" and self.config.get("nested_config"):
+            self.game_master = NestedWarGameGM(self.config, self.model)
+        else:
+            SCENARIO_GM_MAP = {
+                "crisis_pr": CrisisPrGameMaster,
+                "policy_lab": PolicyLabGameMaster,
+                "war_game": WarGameGameMaster,
+                "train_lab": TrainLabGameMaster,
+            }
+            gm_class = SCENARIO_GM_MAP.get(self.scenario_type, BaseGameMaster)
+            self.game_master = gm_class(self.config)
 
         # Build agent dicts for game master (backward compat)
         agent_dicts = [
