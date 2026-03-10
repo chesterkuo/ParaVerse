@@ -31,6 +31,31 @@ ParaVerse 是一個 B2B 多智能體仿真平台，搭載雙引擎架構 — [OA
 - **Checkpoint Management** — Save and load simulation checkpoints for Concordia scenarios
 - **Report Export** — Export analysis reports in PDF and DOCX formats
 - **Quota Enforcement** — Usage-based rate limiting with fail-open pattern
+- **ContentLab A/B Comparison** — Compare two simulation outcomes with sentiment trajectory divergence analysis
+- **WarGame Dashboard** — Per-country trust index trends, belief scores, and information penetration timeline
+- **FinSentiment Backtesting** — Cosine similarity scoring between predicted and actual sentiment distributions
+
+### WarGame Module | 兵棋推演模組
+
+- **Nested World Architecture** — Each country runs as an independent sub-GM with its own agent pool, language, and grounded variables
+- **Multi-Language Simulation** — Agents operate in their country's language (English, Chinese, Japanese, Korean)
+- **Cross-Border Spillover** — Master GM coordinates information flow and influence between countries
+- **Institutional Access Control** — WarGame access restricted to verified academic institutions, think tanks, and government research departments
+- **Organization Approval Workflow** — Self-service request with admin review for WarGame qualification
+
+### Performance | 效能優化
+
+- **Parallel Embedding** — Bun Worker threads for 8-10x speedup on large document embedding
+- **HNSW Tuning** — pgvector indexes optimized for 1M+ vectors (m=24, ef_construction=128)
+- **Multi-Tier Redis Cache** — LLM responses (30min), simulation events (1h), graph queries (24h), agent state (2h)
+- **LLM Response Cache** — SHA-256 keyed cache with fail-open pattern
+
+### API & Integration | API 與整合
+
+- **Interactive API Docs** — OpenAPI 3.1 spec with Scalar UI at `/docs`
+- **TypeScript SDK** — Auto-generated type-safe client library (`@paraverse/sdk`)
+- **LTI 1.3 Integration** — LMS embedding for Canvas/Moodle (TrainLab scenarios)
+- **Grounded Variable API** — `POST /simulations/:id/set-var` for Concordia variable injection
 
 ### Enterprise UI | 企業級介面
 
@@ -43,6 +68,8 @@ ParaVerse 是一個 B2B 多智能體仿真平台，搭載雙引擎架構 — [OA
 
 ---
 
+### 核心平台
+
 - **雙仿真引擎** — OASIS 支持社群媒體模擬（Twitter/Reddit），Concordia 支持遊戲主持人驅動的場景（含可觀測變數與分支）
 - **五階段流水線** — 知識圖譜 → 環境配置 → 仿真運行 → 報告生成 → 深度互動
 - **知識圖譜（GraphRAG）** — 上傳文件（PDF/TXT/MD），LLM 自動擷取實體和關係，向量嵌入支持語意搜尋
@@ -52,11 +79,50 @@ ParaVerse 是一個 B2B 多智能體仿真平台，搭載雙引擎架構 — [OA
 - **自動報告生成** — 多章節分析報告，包含執行摘要、方法論、關鍵發現和建議
 - **智能體訪談** — 在仿真期間或之後與智能體即時對話
 - **多租戶認證** — 基於 JWT 的註冊、登入、權杖重新整理
+
+### 進階分析
+
 - **利害關係人接受度矩陣** — 跨利害關係人群組和場景分支的接受度分數熱力圖
 - **政策影響圖表** — 跨分支的可觀測變數趨勢時序圖
 - **混合搜尋** — 向量相似度 + BM25 全文檢索結合倒數排名融合（RRF）
+- **評分儀表板** — 可觀測變數即時進度追蹤與等級評分
+- **檢查點管理** — Concordia 場景的仿真存檔與載入
 - **報告匯出** — 支持 PDF 和 DOCX 格式的分析報告匯出
 - **配額管控** — 基於使用量的頻率限制，採用失敗放行模式
+- **ContentLab A/B 對比** — 兩組仿真結果的情感軌跡分歧分析
+- **兵棋推演儀表板** — 各國信任指數趨勢、信念分數與資訊滲透率時序圖
+- **FinSentiment 回測** — 預測與實際情感分佈的餘弦相似度評分
+
+### 兵棋推演模組
+
+- **巢狀世界架構** — 每個國家作為獨立子 GM 運行，擁有自己的智能體池、語言和可觀測變數
+- **多語言仿真** — 智能體以所在國語言運行（英語、中文、日語、韓語）
+- **跨境溢出效應** — 主 GM 協調各國間的資訊流與影響力傳播
+- **機構準入控制** — 兵棋推演僅限經驗證的學術機構、智庫和政府研究部門使用
+- **機構審批流程** — 自助申請 + 管理員審核的兵棋推演資格認證
+
+### 效能優化
+
+- **並行嵌入** — Bun Worker 執行緒實現大型文件嵌入 8-10 倍加速
+- **HNSW 調優** — pgvector 索引針對百萬級向量優化（m=24, ef_construction=128）
+- **多層 Redis 快取** — LLM 回應（30分鐘）、仿真事件（1小時）、圖譜查詢（24小時）、智能體狀態（2小時）
+- **LLM 回應快取** — SHA-256 鍵值快取，採用失敗放行模式
+
+### API 與整合
+
+- **互動式 API 文件** — OpenAPI 3.1 規範搭配 Scalar UI，路徑 `/docs`
+- **TypeScript SDK** — 自動生成的型別安全客戶端程式庫（`@paraverse/sdk`）
+- **LTI 1.3 整合** — 支持 Canvas/Moodle LMS 嵌入（TrainLab 場景）
+- **可觀測變數 API** — `POST /simulations/:id/set-var` 用於 Concordia 變數注入
+
+### 企業級介面
+
+- **企業設計系統** — Inter 字體、專業色彩標記、漸層品牌風格
+- **分割面板認證** — 品牌登入/註冊頁面，附產品價值說明
+- **響應式側邊欄** — 行動端漢堡選單、目前專案指示器、分區群組
+- **儀表板首頁** — 專案卡片含場景描述、空狀態、載入骨架屏
+- **無障礙** — 全域焦點環、正確表單標籤、WCAG AA 合規
+- **人性化顯示** — NATO 字母表智能體名稱、可讀事件標籤
 
 ---
 
@@ -228,25 +294,28 @@ docker compose up -d --build
 paraverse/
 ├── backend/                    # Bun/Hono API server
 │   ├── src/
-│   │   ├── routes/             # API endpoints (auth, projects, graph, simulation, report, checkpoint)
-│   │   ├── services/           # Business logic, LLM, search, matrix
+│   │   ├── routes/             # API endpoints (auth, projects, graph, simulation, report, checkpoint, admin)
+│   │   ├── services/           # Business logic, LLM, search, matrix, caching
 │   │   │   └── runners/        # Python subprocess managers (OASIS, Concordia)
+│   │   ├── workers/            # Bun Worker threads (parallel embedding)
 │   │   ├── db/
-│   │   │   ├── migrations/     # 15 SQL migration files
+│   │   │   ├── migrations/     # 21 SQL migration files
 │   │   │   └── queries/        # Raw SQL query modules
-│   │   ├── middleware/         # Auth, error handling, rate limiting, quota
+│   │   ├── middleware/         # Auth, error handling, rate limiting, quota, scenario access
+│   │   ├── openapi/            # OpenAPI 3.1 spec + Scalar UI
 │   │   └── utils/              # Logger, task manager, text chunking
 │   ├── simulations/
-│   │   ├── oasis/              # OASIS engine (CAMEL ChatAgent)
-│   │   └── concordia/          # Concordia engine (EntityAgent + GameMaster)
-│   ├── scripts/                # PDF extraction (PyMuPDF)
+│   │   ├── oasis/              # OASIS engine (CAMEL ChatAgent, ContentLab)
+│   │   └── concordia/          # Concordia engine (EntityAgent + GameMaster, NestedWarGameGM)
+│   ├── scripts/                # PDF extraction, HNSW benchmark
 │   └── tests/                  # Unit & integration tests
 ├── frontend/                   # React SPA
 │   ├── src/
-│   │   ├── pages/              # 5-step workflow pages + TrainLab
+│   │   ├── pages/              # 5-step workflow + WarGameDashboard, ContentLabResults, TrainLab
 │   │   ├── components/
 │   │   │   ├── layout/         # AppShell, Sidebar, StepProgress
 │   │   │   ├── simulation/     # AgentFeed, SimulationStatus, AcceptanceMatrix, PolicyImpactChart
+│   │   │   │                   # TrustHeatmap, SentimentComparisonChart
 │   │   │   ├── report/         # ExportButton
 │   │   │   ├── search/         # HybridSearch
 │   │   │   └── ui/             # FileUpload, TaskProgress, EngineTag
@@ -254,8 +323,10 @@ paraverse/
 │   │   ├── store/              # Zustand state stores
 │   │   ├── hooks/              # Custom React hooks
 │   │   ├── utils/              # Humanize, formatters, engine labels
+│   │   ├── i18n/               # i18n locales (en, zh-CN)
 │   │   └── router/             # React Router config
 │   └── e2e/                    # Playwright E2E tests
+├── sdk/                        # @paraverse/sdk — auto-generated TypeScript client
 ├── shared/                     # Shared TypeScript types
 ├── docs/plans/                 # Implementation plans
 ├── docker-compose.yml          # Full-stack Docker config
@@ -293,6 +364,12 @@ All API routes are prefixed with `/api/v1`. Authentication via `Authorization: B
 | POST | `/simulations/:id/report` | Generate report / 生成報告 |
 | GET | `/simulations/:id/report` | Get report / 取得報告 |
 | GET | `/simulations/:id/report/export` | Export report (PDF/DOCX) / 匯出報告 |
+| POST | `/simulations/:id/compare` | ContentLab A/B comparison / ContentLab A/B 對比 |
+| POST | `/simulations/:id/set-var` | Set grounded variable / 設定可觀測變數 |
+| POST | `/admin/wargame-request` | Submit WarGame access request / 提交兵棋推演準入申請 |
+| GET | `/admin/wargame-request/me` | Get my access request / 取得我的準入申請 |
+| GET | `/admin/wargame-approvals` | List approvals (admin) / 審批列表（管理員） |
+| PATCH | `/admin/wargame-approvals/:id` | Review approval (admin) / 審批操作（管理員） |
 | GET | `/tasks/:id` | Poll async task / 輪詢非同步任務 |
 | WS | `/ws/simulations/:id` | Live simulation events / 即時仿真事件 |
 
