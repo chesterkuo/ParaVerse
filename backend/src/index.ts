@@ -12,6 +12,7 @@ import { tasks } from "./routes/tasks";
 import { interaction, websocket } from "./routes/interaction";
 import { checkpoint } from "./routes/checkpoint";
 import { docs } from "./routes/docs";
+import { lti } from "./routes/lti";
 import { logger } from "./utils/logger";
 
 const app = new Hono();
@@ -19,6 +20,7 @@ app.use("*", errorHandler);
 app.use("*", cors({ origin: process.env.CORS_ORIGIN || "http://localhost:3000" }));
 app.use("*", honoLogger());
 app.get("/health", (c) => c.json({ status: "ok" }));
+app.route("/lti", lti);
 app.route("/docs", docs);
 
 const api = new Hono();
