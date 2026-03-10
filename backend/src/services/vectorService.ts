@@ -89,6 +89,18 @@ export class VectorService {
     );
     return result.rows[0].id as string;
   }
+
+  async updateAgentMetadata(
+    agentId: string,
+    metadata: Record<string, unknown>
+  ): Promise<void> {
+    await query(
+      `UPDATE agent_profiles
+       SET demographics = demographics || $2::jsonb
+       WHERE id = $1`,
+      [agentId, JSON.stringify(metadata)]
+    );
+  }
 }
 
 let instance: VectorService | null = null;

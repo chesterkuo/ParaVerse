@@ -4,6 +4,14 @@ Builds Concordia EntityAgent objects from ParaVerse agent profiles.
 """
 from typing import Any
 
+LANGUAGE_INSTRUCTIONS: dict[str, str] = {
+    "en": "You must respond in English.",
+    "zh-Hans": "你必须用简体中文回答。",
+    "zh-Hant": "你必須用繁體中文回答。",
+    "ja": "日本語で回答してください。",
+    "ko": "한국어로 답변해 주세요.",
+}
+
 from concordia.agents.entity_agent import EntityAgent
 from concordia.components.agent.concat_act_component import ConcatActComponent
 from concordia.components.agent.instructions import Instructions
@@ -35,6 +43,11 @@ def create_concordia_agents(
         persona = profile.get("persona", "")
         demographics = profile.get("demographics", {})
         goal = profile.get("goal") or _infer_goal(demographics)
+        language = profile.get("language", "")
+
+        # Prepend language instruction to persona if language is specified
+        if language and language in LANGUAGE_INSTRUCTIONS:
+            persona = f"{LANGUAGE_INSTRUCTIONS[language]}\n\n{persona}"
 
         agent = _build_entity_agent(name, persona, goal, model)
         agents.append(agent)

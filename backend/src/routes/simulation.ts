@@ -117,12 +117,17 @@ simulation.post("/:simulationId/start", async (c) => {
   const simService = getSimulationService();
   const config = {
     ...(sim.config as Record<string, unknown>),
-    agents: agents.map((a) => ({
-      id: a.id,
-      name: a.name,
-      persona: a.persona,
-      demographics: a.demographics,
-    })),
+    agents: agents.map((a) => {
+      const demo = (a.demographics || {}) as Record<string, unknown>;
+      return {
+        id: a.id,
+        name: a.name,
+        persona: a.persona,
+        demographics: demo,
+        ...(demo.country ? { country: demo.country } : {}),
+        ...(demo.language ? { language: demo.language } : {}),
+      };
+    }),
   };
   await simService.start(simulationId, config as any);
 

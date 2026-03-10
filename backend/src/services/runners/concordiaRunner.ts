@@ -1,5 +1,5 @@
 import { BaseRunner } from "./baseRunner";
-import type { IpcCommand } from "@shared/types/simulation";
+import type { IpcCommand, NestedConfig } from "@shared/types/simulation";
 import path from "path";
 
 const SUPPORTED_COMMANDS = new Set([

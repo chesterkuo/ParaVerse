@@ -2,6 +2,7 @@ import { getLlmService } from "./llmService";
 import { getVectorService } from "./vectorService";
 import { logger } from "../utils/logger";
 import type { ScenarioType } from "@shared/types/project";
+import type { NestedConfig } from "@shared/types/simulation";
 
 export interface DemographicGroup {
   group_name: string;
@@ -89,7 +90,8 @@ export class AgentService {
   async generateAgents(
     simulationId: string,
     scenarioType: ScenarioType,
-    agentCount: number
+    agentCount: number,
+    nestedConfig?: NestedConfig
   ): Promise<string[]> {
     const distribution = buildDemographicDistribution(scenarioType, agentCount);
     const agentIds: string[] = [];
@@ -104,6 +106,28 @@ export class AgentService {
         const ids = await Promise.all(batch);
         agentIds.push(...ids);
       }
+    }
+
+    // For war_game scenarios with nested_config, assign country and language metadata
+    if (scenarioType === "war_game" && nestedConfig?.countries) {
+      let agentIdx = 0;
+      for (const country of nestedConfig.countries) {
+        const count = Math.min(country.agent_count, agentIds.length - agentIdx);
+        for (let i = 0; i < count; i++) {
+          const id = agentIds[agentIdx];
+          if (id) {
+            await this.vectors.updateAgentMetadata(id, {
+              country: country.id,
+              language: country.language,
+            });
+          }
+          agentIdx++;
+        }
+      }
+      logger.info(
+        { simulationId, countries: nestedConfig.countries.length },
+        "Assigned country/language metadata to war_game agents"
+      );
     }
 
     logger.info(
