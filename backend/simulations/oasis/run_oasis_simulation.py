@@ -103,14 +103,35 @@ def handle_start(config: dict):
 
     try:
         from agent_factory import build_oasis_agents
-        from platform_config import create_twitter_platform, create_reddit_platform, SocialPost
+        from platform_config import (
+            create_twitter_platform,
+            create_reddit_platform,
+            create_twitter_fan_platform,
+            create_forum_platform,
+            SocialPost,
+        )
 
-        # Build agents
+        scenario_type = config.get("scenario_type", "")
+
+        # Build agents — append content-specific suffix for content_lab
         _agents = build_oasis_agents(agent_configs, model_name, api_key, base_url)
+        if scenario_type == "content_lab":
+            content_suffix = (
+                " You are reacting to entertainment content (scripts, game characters, "
+                "trailers, etc.) as a fan. Express genuine emotional reactions, discuss "
+                "plot details, debate character choices, and share fan theories."
+            )
+            for agent_data in _agents:
+                agent = agent_data["agent"]
+                if hasattr(agent, "system_message"):
+                    agent.system_message += content_suffix
         emit_status(progress=5, events_count=0)
 
         # Create platform
-        if platform_type == "reddit":
+        if scenario_type == "content_lab":
+            # ContentLab uses a fan-oriented Twitter platform
+            _platform = create_twitter_fan_platform(len(_agents))
+        elif platform_type == "reddit":
             _platform = create_reddit_platform(len(_agents))
         else:
             _platform = create_twitter_platform(len(_agents))

@@ -84,6 +84,32 @@ class SocialPlatform:
         return "\n".join(lines)
 
 
+CONTENT_LAB_CONFIG = {
+    "platforms": ["twitter_fan", "forum"],
+    "twitter_fan": {
+        "max_post_length": 280,
+        "hashtag_required": True,
+        "engagement_algorithm": "heat_decay",
+        "polarization_enabled": True,
+    },
+    "forum": {
+        "max_post_length": 2000,
+        "thread_based": True,
+        "engagement_algorithm": "heat_decay",
+    },
+}
+
+
+def create_twitter_fan_platform(num_agents: int) -> SocialPlatform:
+    """Create a Twitter-like fan community platform for ContentLab."""
+    return SocialPlatform(platform_type="twitter_fan", max_feed_size=min(num_agents * 2, 20))
+
+
+def create_forum_platform(num_agents: int) -> SocialPlatform:
+    """Create a forum-style platform for ContentLab deep discussions."""
+    return SocialPlatform(platform_type="forum", max_feed_size=min(num_agents * 3, 30))
+
+
 def create_twitter_platform(num_agents: int) -> SocialPlatform:
     return SocialPlatform(platform_type="twitter", max_feed_size=min(num_agents * 2, 20))
 
